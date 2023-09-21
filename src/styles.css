@@ -1,8 +1,14 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 body {
   margin: 0;
 }
 html,
 body {
   height: 100%;
-  background-color: #080f25;
+  background-color: #080f25 !important;
+}
+
+p {
+  font-family: Mona sans, sans-serif;
 }

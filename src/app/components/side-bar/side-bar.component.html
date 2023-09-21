@@ -11,6 +11,26 @@
     </div>
   </div>
   <div *ngIf="isExpanded" [@menuAnimation]="isExpanded ? 'open' : 'closed'">
-    <app-input-increase [title]="'Matriz A'"> </app-input-increase>
+    <div class="input-increase">
+      <app-input-increase
+        [title]="'Ordem do Sistema'"
+        [valor]="sistema"
+        (valorChange)="atualizarSistema($event)"
+      ></app-input-increase>
+      <app-input-increase
+        [title]="'Número de entradas'"
+        [valor]="entrada"
+        (valorChange)="atualizarEntrada($event)"
+      ></app-input-increase>
+      <app-input-increase
+        [title]="'Número de saídas'"
+        [valor]="saida"
+        (valorChange)="atualizarSaida($event)"
+      >
+      </app-input-increase>
+    </div>
+    <p>Ordem do sistema: {{ sistema }}</p>
+    <p>Ordem do entrada: {{ entrada }}</p>
+    <p>Ordem do saida: {{ saida }}</p>
   </div>
 </section>

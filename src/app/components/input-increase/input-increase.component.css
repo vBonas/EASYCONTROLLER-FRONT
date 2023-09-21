@@ -1,13 +1,8 @@
-.example-input {
-  min-width: 50px;
-  max-width: 100px;
-  height: 200px;
-}
-
-.example-full-width {
-  width: 100%;
-}
-
 .external-div {
-  margin-left: 24px;
+  max-width: 90px;
+}
+
+p {
+  margin-bottom: 4px;
+  font-size: 14px;
 }

@@ -57,3 +57,10 @@
     color: #aeb9e1;
   }
 }
+
+.input-increase {
+  display: flex; /* Usando flexbox para criar uma linha */
+  justify-content: space-between; /* Espaço igual entre as colunas */
+  align-items: center; /* Centralizar verticalmente */
+  padding: 0 20px; /* Espaçamento interno */
+}

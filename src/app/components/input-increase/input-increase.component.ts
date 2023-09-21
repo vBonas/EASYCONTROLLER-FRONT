@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-increase',
@@ -7,15 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class InputIncreaseComponent {
   @Input() title!: string;
-  valor: number = 1;
+  @Input() valor!: number;
+  @Output() valorChange: EventEmitter<number> = new EventEmitter<number>();
 
-  aumentar() {
-    this.valor++;
-  }
-
-  diminuir() {
-    if (this.valor > 0) {
-      this.valor--;
-    }
+  emitirValor() {
+    this.valorChange.emit(this.valor);
   }
 }

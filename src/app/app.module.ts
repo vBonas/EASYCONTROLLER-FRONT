@@ -8,7 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-//FormsModule
+//MatGridListModule
+import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
@@ -26,6 +27,7 @@ import { InputIncreaseComponent } from './components/input-increase/input-increa
     MatIconModule,
     MatInputModule,
     FormsModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
