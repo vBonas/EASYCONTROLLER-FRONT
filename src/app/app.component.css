@@ -6,6 +6,8 @@
   background-size: cover; /* Ajuste o tamanho da imagem de fundo conforme necessário */
   background-position: center; /* Ajuste a posição da imagem de fundo conforme necessário */
   background-image: url("/assets/svg/bg.svg");
+  background-color: #080f25;
+  color: #b4bddf;
 }
 
 mat-sidenav[style] {

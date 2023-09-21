@@ -8,7 +8,7 @@ import {
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'side-nav',
+  selector: 'app-side-nav',
   styleUrls: ['./side-bar.component.css'],
   templateUrl: './side-bar.component.html',
   animations: [

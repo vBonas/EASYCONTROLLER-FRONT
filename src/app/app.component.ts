@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   svgPath = '/assets/svg/tt.svg'; // Substitua pelo caminho correto do seu arquivo SVG
 
-  title = 'aula-0teste';
   public isExpanded = true;
 
   public toggleMenu() {
