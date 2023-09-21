@@ -1,0 +1,16 @@
+<section
+  [class.sidenav]="isExpanded"
+  [@menuAnimation]="isExpanded ? 'open' : 'closed'"
+>
+  <div class="title">
+    <p *ngIf="isExpanded">EaseController</p>
+    <div class="toggle">
+      <mat-icon (click)="toggleMenu.emit(null)">
+        {{ isExpanded ? "keyboard_arrow_left" : "dehaze" }}
+      </mat-icon>
+    </div>
+  </div>
+  <div *ngIf="isExpanded" [@menuAnimation]="isExpanded ? 'open' : 'closed'">
+    <app-input-increase [title]="'Matriz A'"> </app-input-increase>
+  </div>
+</section>
