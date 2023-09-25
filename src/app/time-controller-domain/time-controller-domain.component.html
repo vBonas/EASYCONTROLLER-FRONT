@@ -145,20 +145,21 @@
                   </p>
                   <p class="text-card">{{ obsv_rank }}</p>
                 </div>
-                <div class="vl"></div>
+                <div *ngIf="isControlable()" class="vl"></div>
                 <!-- divisor na vertical -->
-                <div style="col">
+                <div *ngIf="isControlable()" style="col">
                   <mat-card-title class="title-card"
                     >Escolha o controlador<br
                   /></mat-card-title>
                   <mat-form-field style="margin-top: 25px">
-                    <select matNativeControl>
-                      <option value="LQR" (click)="costMatrixLqr()">LQR</option>
-                      <option value="LQR_Integrador" (click)="costMatrixLqi()">
-                        LQR + Integrador
-                      </option>
-                      <option value="LQG" (click)="costMatrixLqg()">LQG</option>
-                      <option value="LQG_Integrador" (click)="costMatrixLqgi()">
+                    <select
+                      matNativeControl
+                      (change)="selectValueChanged($event)"
+                    >
+                      <option value="LQR">LQR</option>
+                      <option value="LQR_Integrador">LQR + Integrador</option>
+                      <option *ngIf="isOberservable()" value="LQG">LQG</option>
+                      <option *ngIf="isOberservable()" value="LQG_Integrador">
                         LQG + Integrador
                       </option>
                     </select>

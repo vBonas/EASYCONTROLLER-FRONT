@@ -29,3 +29,10 @@ p {
   background: #985bc0;
   border-radius: 10px;
 }
+
+
+.mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: blue;
+    --mdc-snackbar-container-color: #f23a2f;
+    --mdc-snackbar-supporting-text-color: white;
+}

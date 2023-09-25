@@ -233,3 +233,10 @@ button:hover {
   height: 200px;
   background-color: #37446b;
 }
+
+
+.mat-snack-bar-container.red-snackbar
+{
+  color:red;
+  background: #F44336 !important;
+}

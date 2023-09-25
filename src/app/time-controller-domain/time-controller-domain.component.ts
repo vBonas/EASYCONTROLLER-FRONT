@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Matriz } from './Matriz';
 import { TimeControllerDomainService } from './time-controller-domain.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //import Swal from 'sweetalert2';
 
 @Component({
@@ -28,12 +29,7 @@ export class TimeControllerDomainComponent implements OnInit {
   quadN: number = 1;
   inL: number = 1;
   outM: number = 1;
-  matrizes: Matriz[] = [
-    new Matriz('A'),
-    new Matriz('B'),
-    new Matriz('C'),
-    // new Matriz('D'),
-  ];
+  matrizes: Matriz[] = [new Matriz('A'), new Matriz('B'), new Matriz('C')];
   matriz_custo: Matriz[] = [new Matriz('Q'), new Matriz('R')];
   matriz_kalman: Matriz[] = [new Matriz('QN'), new Matriz('RN')];
   initialCond: Matriz[] = [new Matriz('CI')];
@@ -84,7 +80,8 @@ export class TimeControllerDomainComponent implements OnInit {
 
   constructor(
     private timeControllerDomainService: TimeControllerDomainService,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackBar: MatSnackBar
   ) {
     this.createTables();
   }
@@ -532,8 +529,32 @@ export class TimeControllerDomainComponent implements OnInit {
       console.log(`data: ${data} ${JSON.stringify(data)}`);
       // @ts-ignore
       this.control_rank = data['control_rank'];
+
+      if (!this.isControlable()) {
+        this.snackBar.open(
+          'O sistema não é controlaver, Favor alterar matriz de entradas (B)',
+          'Fechar',
+          {
+            duration: 5000, // Duração em milissegundos (5 segundos)
+            panelClass: ['red-snackbar'], // Classe CSS personalizada para o estilo vermelho
+          }
+        );
+      }
       // @ts-ignore
       this.obsv_rank = data['obsv_rank'];
+      if (!this.isOberservable()) {
+        this.snackBar.open(
+          'O sistema não é observavel, Favor alterar matriz de saída (C)',
+          'Fechar',
+          {
+            duration: 5000,
+            panelClass: ['red-snackbar'],
+            politeness: 'assertive',
+          }
+        );
+      } else {
+        this.costMatrixLqr();
+      }
       this.stepMA = [];
       // @ts-ignore
       this.vY = data['outY_total'];
@@ -585,6 +606,24 @@ export class TimeControllerDomainComponent implements OnInit {
 
   layoutInt() {
     return this.layout_title('Resposta à referência tipo degrau unitário');
+  }
+
+  selectValueChanged(event: any) {
+    const selectedValue = event.target.value;
+
+    // Aqui você pode realizar a lógica desejada com o valor selecionado
+    console.log(`Valor selecionado: ${selectedValue}`);
+
+    // Por exemplo, você pode chamar funções com base no valor selecionado:
+    if (selectedValue === 'LQR') {
+      this.costMatrixLqr();
+    } else if (selectedValue === 'LQR_Integrador') {
+      this.costMatrixLqi();
+    } else if (selectedValue === 'LQG' && this.isOberservable()) {
+      this.costMatrixLqg();
+    } else if (selectedValue === 'LQG_Integrador' && this.isOberservable()) {
+      this.costMatrixLqgi();
+    }
   }
 
   layout_title(title: string) {
@@ -917,6 +956,14 @@ export class TimeControllerDomainComponent implements OnInit {
         element.value = '';
       }
     });
+  }
+
+  isOberservable() {
+    return this.obsv_rank === 'O sistema é observável';
+  }
+
+  isControlable() {
+    return this.control_rank === 'O sistema é controlável';
   }
 
   getCodeLQR(matriz_custo_lqr: any, data: Object) {

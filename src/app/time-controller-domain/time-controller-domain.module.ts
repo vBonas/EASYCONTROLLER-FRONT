@@ -21,6 +21,8 @@ import { LoadingInterceptor } from '../loading.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//MatSnackBarModule
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -45,6 +47,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ClipboardModule,
     MatCardModule,
     MatSidenavModule,
+    MatSnackBarModule,
   ],
 
   providers: [
