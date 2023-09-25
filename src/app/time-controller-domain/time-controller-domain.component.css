@@ -190,3 +190,46 @@ button:hover {
   cursor: pointer;
   opacity: 0.7;
 }
+
+.card-box {
+  padding: 15px 25px 25px 25px;
+  margin: 0px;
+  background-color: #fff;
+  opacity: 0.9;
+  border-radius: 12px;
+}
+
+.title-card {
+  font-size: 2em;
+  color: #080f25;
+  font-weight: 600 !important ;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.text-card {
+  font-size: 1em;
+  color: #080f25 !important;
+  margin: 0;
+  padding: 0;
+  font-weight: 500 !important ;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.row-controlabilidade {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Espaço igual entre as colunas */
+  align-items: start; /* Centralizar verticalmente */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.vl {
+  width: 1px;
+  height: 200px;
+  background-color: #37446b;
+}

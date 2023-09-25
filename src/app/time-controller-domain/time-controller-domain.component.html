@@ -96,11 +96,11 @@
                       type="text"
                       id="cell_{{ i }}_{{ j }}"
                       appDecimalNumber
-                      value=""
+                      value="1"
                       matInput
                       (blur)="matrizValueChange(matriz, i, j, $event)"
                       placeholder="0"
-                      defaultValue=""
+                      defaultValue="1"
                       (keydown)="handleEnterKey($event, i, j)"
                     />
                   </td>
@@ -126,64 +126,56 @@
       </div>
     </section>
   </mat-sidenav>
-  <mat-sidenav-content [style.margin-left.px]="!isExpanded ? 60 : 350">
+  <mat-sidenav-content [style.margin-left.px]="!isExpanded ? 75 : 350">
     <!-- seu-componente.component.html -->
 
     <div class="elemento-com-svg-de-fundo">
-      <div class="navbar-container">
+      <div class="navbar-container" style="padding: 25px">
         <div>
           <div *ngIf="panelMA">
-            <mat-card style="margin-top: 10px">
-              <mat-card-title
-                >Controlabilidade e Observabilidade</mat-card-title
-              >
-              <h5>{{ control_rank }}</h5>
-              <h5>{{ obsv_rank }}</h5>
-            </mat-card>
+            <!-- Controlabilidade -->
+            <div class="card-box">
+              <div class="row-controlabilidade">
+                <div>
+                  <mat-card-title class="title-card"
+                    >Controlabilidade e<br />Observabilidade</mat-card-title
+                  >
+                  <p class="text-card" style="margin-top: 10px">
+                    {{ control_rank }}
+                  </p>
+                  <p class="text-card">{{ obsv_rank }}</p>
+                </div>
+                <div class="vl"></div>
+                <!-- divisor na vertical -->
+                <div style="col">
+                  <mat-card-title class="title-card"
+                    >Escolha o controlador<br
+                  /></mat-card-title>
+                  <mat-form-field style="margin-top: 25px">
+                    <select matNativeControl required>
+                      <option value="LQR" (click)="costMatrixLqr()">LQR</option>
+                      <option value="LQR_Integrador" (click)="costMatrixLqi()">
+                        LQR + Integrador
+                      </option>
+                      <option value="LQG" (click)="costMatrixLqg()">LQG</option>
+                      <option value="LQG_Integrador" (click)="costMatrixLqgi()">
+                        LQG + Integrador
+                      </option>
+                    </select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
 
-            <mat-card style="margin-top: 10px">
-              <mat-card-title> Dinâmica da planta</mat-card-title>
-              <h5>Saídas</h5>
+            <div class="card-box" style="margin-top: 10px">
+              <mat-card-title class="title-card">
+                Dinâmica da planta</mat-card-title
+              >
               <plotly-plot
                 [data]="this.stepMA[0]"
                 [layout]="graph.layout"
               ></plotly-plot>
-            </mat-card>
-
-            <mat-card style="margin-top: 10px; height: 250px">
-              <div class="row; dropdiv;">
-                <div class="col">
-                  <div ngbDropdown class="d-inline-block">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary"
-                      id="dropdownBasic1"
-                      ngbDropdownToggle
-                    >
-                      Escolha o controlador
-                    </button>
-                    <div
-                      class="dropdown-menu"
-                      ngbDropdownMenu
-                      aria-labelledby="dropdownBasic1"
-                    >
-                      <button ngbDropdownItem (click)="costMatrixLqr()">
-                        LQR
-                      </button>
-                      <button ngbDropdownItem (click)="costMatrixLqi()">
-                        LQR + Integrador
-                      </button>
-                      <button ngbDropdownItem (click)="costMatrixLqg()">
-                        LQG
-                      </button>
-                      <button ngbDropdownItem (click)="costMatrixLqgi()">
-                        LQG + Integrador
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </mat-card>
+            </div>
           </div>
 
           <div *ngIf="panelCostMatrixLQR">
