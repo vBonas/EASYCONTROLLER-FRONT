@@ -15,14 +15,17 @@
       </div>
       <div *ngIf="isExpanded" [@menuAnimation]="isExpanded ? 'open' : 'closed'">
         <div>
-          <h2>Controle em Espaço de Estados em Tempo Contínuo</h2>
+          <h2 class="parametrosDoSistema">
+            Controle em Espaço de Estados em Tempo Contínuo
+          </h2>
 
-          <div>
-            <mat-card-title> Parâmetros do sistema</mat-card-title>
+          <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">Parâmetros do sistema</p>
 
             <div class="input-increase">
               <div class="inputRow">
-                <p class="inputText">Ordem do Sistema</p>
+                <h5 class="inputText">Ordem do Sistema</h5>
                 <mat-form-field
                   class="example-full-width"
                   appearance="fill"
@@ -39,35 +42,49 @@
                 </mat-form-field>
               </div>
 
-              <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Número de Entradas</mat-label>
-                <input
-                  type="number"
-                  [(ngModel)]="inL"
-                  matInput
-                  placeholder="Número de Entradas"
-                  (change)="createTables()"
-                />
-              </mat-form-field>
-
-              <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Número de Saídas</mat-label>
-                <input
-                  type="number"
-                  [(ngModel)]="outM"
-                  matInput
-                  placeholder="Número de Saídas"
-                  (change)="createTables()"
-                />
-              </mat-form-field>
+              <div class="inputRow">
+                <h5 class="inputText">Número de Entradas</h5>
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  [style.width.px]="80"
+                >
+                  <mat-label></mat-label>
+                  <input
+                    type="number"
+                    [(ngModel)]="inL"
+                    matInput
+                    placeholder="Número de Entradas"
+                    (change)="createTables()"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="inputRow">
+                <h5 class="inputText">Número de Saídas</h5>
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  [style.width.px]="80"
+                >
+                  <mat-label></mat-label>
+                  <input
+                    type="number"
+                    [(ngModel)]="outM"
+                    matInput
+                    placeholder="Número de Saídas"
+                    (change)="createTables()"
+                  />
+                </mat-form-field>
+              </div>
             </div>
           </div>
 
-          <mat-card style="margin-top: 10px">
-            <mat-card-title> Preenchimento das matrizes</mat-card-title>
+          <!-- MATRIZES -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">Preenchimento das matrizes</p>
 
             <div *ngFor="let matriz of matrizes; index as c">
-              <h4>Matriz {{ matriz.label }}</h4>
+              <h5>Matriz {{ matriz.label }}</h5>
 
               <table>
                 <tr *ngFor="let vx of matriz.values; let i = index">
@@ -75,6 +92,7 @@
                     *ngFor="let vy of vx; let j = index; trackBy: trackByFilter"
                   >
                     <input
+                      class="inputMatriz"
                       type="text"
                       id="cell_{{ i }}_{{ j }}"
                       appDecimalNumber
@@ -82,13 +100,13 @@
                       matInput
                       (blur)="matrizValueChange(matriz, i, j, $event)"
                       placeholder="0"
-                      style="width: 60px"
+                      (keydown)="handleEnterKey($event, i, j)"
                     />
                   </td>
                 </tr>
               </table>
             </div>
-          </mat-card>
+          </div>
 
           <button
             mat-raised-button

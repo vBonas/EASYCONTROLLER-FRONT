@@ -1,5 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Matriz } from './Matriz';
 import { TimeControllerDomainService } from './time-controller-domain.service';
 //import Swal from 'sweetalert2';
@@ -135,7 +141,6 @@ export class TimeControllerDomainComponent implements OnInit {
 
   matrizValueChange(matryz: any, line: any, col: any, event: any) {
     matryz.values[line][col] = event.target.value;
-    // console.log('matyz.values', matryz.values);
   }
 
   trackByFilter(index: number, item: any): number {
@@ -884,6 +889,25 @@ export class TimeControllerDomainComponent implements OnInit {
     //   showConfirmButton: false,
     //   timer: 1500,
     // });
+  }
+
+  handleEnterKey(event: KeyboardEvent, i: number, j: number) {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Evita o comportamento padrão de quebra de linha do Enter
+      const id = `cell_${i}_${j}`;
+      const formElements = document.querySelectorAll('.inputMatriz');
+      const formElementsArray = Array.from(formElements);
+      console.log('formElementsArray', formElementsArray[0]);
+
+      const currentIndex = formElementsArray.findIndex(
+        (element) => element.id === id && element.attributes[8].value === '0'
+      );
+      const nextIndex = currentIndex + 1;
+      const nextElement = formElements[nextIndex] as HTMLElement;
+      if (nextElement) {
+        nextElement.focus();
+      }
+    }
   }
 
   getCodeLQR(matriz_custo_lqr: any, data: Object) {
