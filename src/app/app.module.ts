@@ -1,33 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { SideBarComponent } from './components/side-bar/side-bar.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material/list';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonModule } from '@angular/material/button';
-//MatGridListModule
-import { MatGridListModule } from '@angular/material/grid-list';
-import { FormsModule } from '@angular/forms';
 
-import { MatInputModule } from '@angular/material/input';
-import { InputIncreaseComponent } from './components/input-increase/input-increase.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+//CommonModule
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [AppComponent, SideBarComponent, InputIncreaseComponent],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatIconModule,
-    MatInputModule,
-    FormsModule,
-    MatGridListModule,
+    HttpClientModule,
+    BrowserModule,
+    AppRoutingModule,
+    CommonModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

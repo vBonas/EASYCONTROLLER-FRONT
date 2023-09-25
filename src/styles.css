@@ -11,4 +11,9 @@ body {
 
 p {
   font-family: Mona sans, sans-serif;
+  color: #fff;
+}
+
+.teste {
+  color: #ffffff;
 }
