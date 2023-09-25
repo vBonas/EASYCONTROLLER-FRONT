@@ -152,14 +152,41 @@ h5 {
 
 .inputMatriz {
   width: 30px;
-  border: 1px solid #ccc; /* Exemplo de borda sólida cinza */
-  padding: 5px; /* Exemplo de preenchimento interno de 5px */
-  font-size: 16px; /* Exemplo de tamanho de fonte de 16px */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 16px;
+  text-align: center;
   outline: none;
+  caret-color: #852fbe;
 }
 
 .inputMatriz:focus {
   border: 2.5px solid #852fbe; /* Exemplo de uma borda azul ao receber foco */
   background-color: #f0f0f0; /* Exemplo de cor de fundo cinza ao receber foco */
-  /* Outros estilos personalizados conforme necessário */
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.iconDelete {
+  color: #aeb9e1;
+  margin-left: 10px;
+  background-color: #080f25;
+  border: none;
+  :hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+
+button:hover {
+  transform: scale(1.025);
+  cursor: pointer;
+  opacity: 0.7;
 }

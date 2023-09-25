@@ -900,7 +900,7 @@ export class TimeControllerDomainComponent implements OnInit {
       console.log('formElementsArray', formElementsArray[0]);
 
       const currentIndex = formElementsArray.findIndex(
-        (element) => element.id === id && element.attributes[8].value === '0'
+        (element) => element.id === id && element.attributes[8].value === ''
       );
       const nextIndex = currentIndex + 1;
       const nextElement = formElements[nextIndex] as HTMLElement;
@@ -908,6 +908,15 @@ export class TimeControllerDomainComponent implements OnInit {
         nextElement.focus();
       }
     }
+  }
+
+  limparInput() {
+    const formElements = document.querySelectorAll('.inputMatriz');
+    formElements.forEach((element) => {
+      if (element instanceof HTMLInputElement) {
+        element.value = '';
+      }
+    });
   }
 
   getCodeLQR(matriz_custo_lqr: any, data: Object) {

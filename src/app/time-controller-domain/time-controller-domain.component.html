@@ -96,10 +96,11 @@
                       type="text"
                       id="cell_{{ i }}_{{ j }}"
                       appDecimalNumber
-                      value="{{ vy }}"
+                      value=""
                       matInput
                       (blur)="matrizValueChange(matriz, i, j, $event)"
                       placeholder="0"
+                      defaultValue=""
                       (keydown)="handleEnterKey($event, i, j)"
                     />
                   </td>
@@ -108,14 +109,19 @@
             </div>
           </div>
 
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="calc()"
-            style="margin: 10px"
-          >
-            Calcular
-          </button>
+          <div class="row">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="calc()"
+              style="margin-left: 25px"
+            >
+              Calcular dinâmica da planta
+            </button>
+            <button class="iconDelete" (click)="limparInput()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </section>
