@@ -234,13 +234,39 @@ button:hover {
   background-color: #37446b;
 }
 
-
-.mat-snack-bar-container.red-snackbar
-{
-  color:red;
-  background: #F44336 !important;
+.mat-snack-bar-container.red-snackbar {
+  color: red;
+  background: #f44336 !important;
 }
 
 mat-sidenav-content {
-  background-color: #080f25 ;
+  background-color: #080f25;
+}
+
+mat-card-title {
+  font-size: 2em;
+  color: #080f25;
+  font-weight: 600 !important ;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+mat-card {
+  padding: 15px 25px 25px 25px !important;
+  margin: 24px 0px 0px 0px !important;
+  background-color: #fff !important;
+  opacity: 0.9 !important;
+  border-radius: 12px !important;
+}
+
+code {
+  color: #080f25 !important;
+}
+
+.rowMatrixLQG {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
 }

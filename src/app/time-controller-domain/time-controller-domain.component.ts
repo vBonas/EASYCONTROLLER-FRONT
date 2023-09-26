@@ -644,7 +644,7 @@ export class TimeControllerDomainComponent implements OnInit {
         title: 'Tempo',
         titlefont: {
           family: 'Arial, sans-serif',
-          size: 14,
+          size: 15,
           color: 'black',
         },
         showticklabels: true,
@@ -659,7 +659,7 @@ export class TimeControllerDomainComponent implements OnInit {
         title: 'Amplitude',
         titlefont: {
           family: 'Arial, sans-serif',
-          size: 14,
+          size: 15,
           color: 'black',
         },
         showticklabels: true,
@@ -684,21 +684,22 @@ export class TimeControllerDomainComponent implements OnInit {
       title: title,
       titlefont: {
         family: 'Arial, sans-serif',
-        size: 12,
+        size: 16,
         color: 'black',
+        
       },
       xaxis: {
         title: 'Tempo',
         titlefont: {
           family: 'Arial, sans-serif',
-          size: 12,
+          size: 15,
           color: 'black',
         },
         showticklabels: true,
         tickangle: 'auto',
         tickfont: {
           family: 'Old Standard TT, serif',
-          size: 12,
+          size: 15,
           color: 'black',
         },
       },
@@ -706,11 +707,11 @@ export class TimeControllerDomainComponent implements OnInit {
         title: 'Amplitude',
         titlefont: {
           family: 'Arial, sans-serif',
-          size: 12,
+          size: 15,
           color: 'black',
         },
         showticklabels: true,
-        tickangle: 45,
+        tickangle: 0,
         tickfont: {
           family: 'Old Standard TT, serif',
           size: 12,

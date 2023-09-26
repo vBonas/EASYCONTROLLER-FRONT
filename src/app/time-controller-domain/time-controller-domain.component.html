@@ -201,14 +201,14 @@
                         value=""
                         matInput
                         (blur)="matrizValueChange(CI, i, j, $event)"
-                        placeholder="valor"
+                        placeholder="0"
                       />
                     </td>
                   </tr>
                 </table>
               </div>
               <div *ngFor="let myLQR of matriz_custo">
-                <h4>Matriz {{ myLQR.label }}</h4>
+                <h4 class="text-card">Matriz {{ myLQR.label }}</h4>
                 <table>
                   <tr *ngFor="let vx of myLQR.values; let i = index">
                     <td
@@ -226,7 +226,7 @@
                         value=""
                         matInput
                         (blur)="matrizValueChange(myLQR, i, j, $event)"
-                        placeholder="valor"
+                        placeholder="0"
                       />
                     </td>
                   </tr>
@@ -238,30 +238,33 @@
                 (click)="calc_lqr()"
                 style="margin: 10px"
               >
-                Calcular
+                Calcular controlador LQR
               </button>
             </div>
 
             <div *ngIf="panelCalc_lqr">
-              <mat-card style="margin-top: 10px">
-                <mat-card-title>Resposta para controlador LQR</mat-card-title>
-                <h5>Saída</h5>
+              <div class="card-box" style="margin-top: 24px">
+                <mat-card-title class="title-card"
+                  >Resposta para controlador LQR</mat-card-title
+                >
                 <plotly-plot
                   [data]="this.yLQR[0]"
                   [layout]="graphCI.layout"
                 ></plotly-plot>
-              </mat-card>
+              </div>
               <mat-card style="margin-top: 10px">
-                <h5>Sinal de Controle</h5>
+                <mat-card-title class="title-card"
+                  >Sinal de Controle</mat-card-title
+                >
                 <plotly-plot
                   [data]="this.uLQR[0]"
                   [layout]="graphCI.layout"
                 ></plotly-plot>
               </mat-card>
               <button
-                style="top: 20px"
+                *ngIf="!this.panelState"
                 mat-raised-button
-                color="basic"
+                color="primary"
                 style="margin: 10px"
                 (click)="showCode()"
               >
@@ -274,7 +277,7 @@
                   }}</code>
                   <button
                     mat-raised-button
-                    color="basic"
+                    color="primary"
                     style="margin: 10px"
                     [cdkCopyToClipboard]="codes.lqr"
                     (click)="codeCopied()"
@@ -292,7 +295,7 @@
                 Definir Matrizes de Custo para LQR + Integrador</mat-card-title
               >
               <div *ngFor="let myLQI of matriz_custo">
-                <h4>Matriz {{ myLQI.label }}</h4>
+                <h4 class="text-card">Matriz {{ myLQI.label }}</h4>
                 <table>
                   <tr *ngFor="let vx of myLQI.values; let i = index">
                     <td
@@ -310,7 +313,7 @@
                         value=""
                         matInput
                         (blur)="matrizValueChange(myLQI, i, j, $event)"
-                        placeholder="valor"
+                        placeholder="0"
                       />
                     </td>
                   </tr>
@@ -329,7 +332,6 @@
             <div *ngIf="panelCalc_lqi">
               <mat-card style="margin-top: 10px">
                 <mat-card-title>Resposta para controlador LQI</mat-card-title>
-                <h5>Saída</h5>
                 <plotly-plot
                   [data]="this.yLQI[0]"
                   [layout]="graphCI.layout"
@@ -343,8 +345,9 @@
                 ></plotly-plot>
               </mat-card>
               <button
+                *ngIf="!this.panelState"
                 mat-raised-button
-                color="basic"
+                color="primary"
                 style="margin: 10px"
                 (click)="showCode()"
               >
@@ -357,7 +360,7 @@
                   }}</code>
                   <button
                     mat-raised-button
-                    color="basic"
+                    color="primary"
                     style="margin: 10px"
                     [cdkCopyToClipboard]="codes.lqi"
                     (click)="codeCopied()"
@@ -369,117 +372,128 @@
             </div>
           </div>
 
-          <div *ngIf="panelCostMatrixLQG">
-            <mat-card style="margin-top: 10px">
+          <div *ngIf="panelCostMatrixLQG" style="margin-top: 24px">
+            <mat-card style="margin-top: 24px">
+              <!-- TITLE -->
               <mat-card-title
                 >Definir Matrizes de Custo e Condições Iniciais para
                 LQG</mat-card-title
               >
-              <div *ngFor="let CI of initialCond">
-                <h4>Condições Iniciais</h4>
-                <table>
-                  <tr *ngFor="let vx of CI.values; let i = index">
-                    <td
-                      *ngFor="
-                        let vy of vx;
-                        let j = index;
-                        trackBy: trackByFilter
-                      "
-                    >
-                      <input
-                        class="inputMatriz"
-                        type="text"
-                        id="cell_{{ i }}_{{ j }}"
-                        appDecimalNumber
-                        value=""
-                        matInput
-                        (blur)="matrizValueChange(CI, i, j, $event)"
-                        placeholder="valor"
-                      />
-                    </td>
-                  </tr>
-                </table>
-              </div>
 
-              <div *ngFor="let myLQG of matriz_custo">
-                <h4>Matriz {{ myLQG.label }}</h4>
-                <table>
-                  <tr *ngFor="let vx of myLQG.values; let i = index">
-                    <td
-                      *ngFor="
-                        let vy of vx;
-                        let j = index;
-                        trackBy: trackByFilter
-                      "
-                    >
-                      <input
-                        class="inputMatriz"
-                        type="text"
-                        id="cell_{{ i }}_{{ j }}"
-                        appDecimalNumber
-                        value=""
-                        matInput
-                        (blur)="matrizValueChange(myLQG, i, j, $event)"
-                        placeholder="valor"
-                      />
-                    </td>
-                  </tr>
-                </table>
+              <div class="rowMatrixLQG">
+                <div style="margin-top: 24px">
+                  <!-- CONDICAO INICIAL -->
+                  <div *ngFor="let CI of initialCond">
+                    <h4 class="text-card">Condições Iniciais</h4>
+                    <table>
+                      <tr *ngFor="let vx of CI.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(CI, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div *ngFor="let myLQG of matriz_custo">
+                    <h4 class="text-card">Matriz {{ myLQG.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myLQG.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myLQG, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <!-- MATRIZ QN & RN -->
+                <div style="margin-top: 24px">
+                  <div *ngFor="let myKalman of matriz_kalman">
+                    <h4 class="text-card">{{ myKalman.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myKalman.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myKalman, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div *ngFor="let myKalman of matriz_kalman">
-                <h4>{{ myKalman.label }}</h4>
-                <table>
-                  <tr *ngFor="let vx of myKalman.values; let i = index">
-                    <td
-                      *ngFor="
-                        let vy of vx;
-                        let j = index;
-                        trackBy: trackByFilter
-                      "
-                    >
-                      <input
-                        class="inputMatriz"
-                        type="text"
-                        id="cell_{{ i }}_{{ j }}"
-                        appDecimalNumber
-                        value=""
-                        matInput
-                        (blur)="matrizValueChange(myKalman, i, j, $event)"
-                        placeholder="valor"
-                      />
-                    </td>
-                  </tr>
-                </table>
-              </div>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calc_lqg()"
+                style="margin: 10px"
+              >
+                Calcular controlador LQG
+              </button>
             </mat-card>
 
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="calc_lqg()"
-              style="margin: 10px"
-            >
-              Calcular
-            </button>
-            <div *ngIf="panelCalc_lqg">
+            <div *ngIf="panelCalc_lqg" style="margin-top: 24px">
               <mat-card style="margin-top: 10px">
                 <mat-card-title>Resposta para controlador LQG</mat-card-title>
-                <h4>Saída</h4>
+
                 <plotly-plot
                   [data]="this.yLQG[0]"
                   [layout]="graphCI.layout"
                 ></plotly-plot>
               </mat-card>
-              <mat-card style="margin-top: 10px">
-                <h4>Sinal de Controle</h4>
+              <mat-card style="padding-top: 24px">
+                <h4 class="title-card">Sinal de Controle</h4>
                 <plotly-plot
                   [data]="this.uLQG[0]"
                   [layout]="graphCI.layout"
                 ></plotly-plot>
               </mat-card>
               <button
+                *ngIf="!this.panelState"
                 mat-raised-button
-                color="basic"
+                color="primary"
                 style="margin: 10px"
                 (click)="showCode()"
               >
@@ -492,7 +506,7 @@
                   }}</code>
                   <button
                     mat-raised-button
-                    color="basic"
+                    color="primary"
                     style="margin: 10px"
                     [cdkCopyToClipboard]="codes.lqg"
                     (click)="codeCopied()"
@@ -509,81 +523,86 @@
               <mat-card-title
                 >Definir Matrizes de Custo para LQG + Integrador</mat-card-title
               >
-              <div *ngFor="let myLQGI of matriz_custo">
-                <h4>Matriz {{ myLQGI.label }}</h4>
-                <table>
-                  <tr *ngFor="let vx of myLQGI.values; let i = index">
-                    <td
-                      *ngFor="
-                        let vy of vx;
-                        let j = index;
-                        trackBy: trackByFilter
-                      "
-                    >
-                      <input
-                        class="inputMatriz"
-                        type="text"
-                        id="cell_{{ i }}_{{ j }}"
-                        appDecimalNumber
-                        value=""
-                        matInput
-                        (blur)="matrizValueChange(myLQGI, i, j, $event)"
-                        placeholder="valor"
-                      />
-                    </td>
-                  </tr>
-                </table>
+              <div class="rowMatrixLQG">
+                <div style="margin-top: 24px">
+                  <div *ngFor="let myLQGI of matriz_custo">
+                    <h4 class="text-card">Matriz {{ myLQGI.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myLQGI.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myLQGI, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div style="margin-top: 24px">
+                  <div *ngFor="let myKalman of matriz_kalman">
+                    <h4 class="text-card">{{ myKalman.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myKalman.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myKalman, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div *ngFor="let myKalman of matriz_kalman">
-                <h4>{{ myKalman.label }}</h4>
-                <table>
-                  <tr *ngFor="let vx of myKalman.values; let i = index">
-                    <td
-                      *ngFor="
-                        let vy of vx;
-                        let j = index;
-                        trackBy: trackByFilter
-                      "
-                    >
-                      <input
-                        class="inputMatriz"
-                        type="text"
-                        id="cell_{{ i }}_{{ j }}"
-                        appDecimalNumber
-                        value=""
-                        matInput
-                        (blur)="matrizValueChange(myKalman, i, j, $event)"
-                        placeholder="valor"
-                        style="width: 60px"
-                      />
-                    </td>
-                  </tr>
-                </table>
-              </div>
+
+              <button
+                mat-raised-button
+                color="primary"
+                style="margin: 10px"
+                (click)="calc_lqgi()"
+                style="margin: 10px"
+              >
+                Calcular controlador LQG com integrador
+              </button>
             </mat-card>
 
-            <button
-              mat-raised-button
-              color="primary"
-              style="margin: 10px"
-              (click)="calc_lqgi()"
-              style="margin: 10px"
-            >
-              Calcular
-            </button>
             <div *ngIf="panelCalc_lqgi">
               <mat-card style="margin-top: 10px">
                 <mat-card-title
                   >Resposta para controlador LQG com integrador</mat-card-title
                 >
-                <h4>Saída</h4>
                 <plotly-plot
                   [data]="this.yLQGI[0]"
                   [layout]="graphCI.layout"
                 ></plotly-plot>
               </mat-card>
               <mat-card style="margin-top: 10px">
-                <h4>Sinal de Controle</h4>
+                <h4 class="title-card">Sinal de Controle</h4>
                 <plotly-plot
                   [data]="this.uLQGI[0]"
                   [layout]="graphCI.layout"
@@ -591,8 +610,9 @@
               </mat-card>
 
               <button
+                *ngIf="!this.panelState"
                 mat-raised-button
-                color="basic"
+                color="primary"
                 style="margin: 10px"
                 (click)="showCode()"
               >
@@ -605,7 +625,7 @@
                   }}</code>
                   <button
                     mat-raised-button
-                    color="basic"
+                    color="primary"
                     style="margin: 10px"
                     [cdkCopyToClipboard]="codes.lqgi"
                     (click)="codeCopied()"
