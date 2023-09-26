@@ -158,10 +158,10 @@ export class TimeControllerDomainComponent implements OnInit {
       R: this.matriz_custo[1].values,
       CI: this.initialCond[0].values,
     };
-    console.log('Matriz_custo_lqr:', matriz_custo_lqr);
+    //console.log('Matriz_custo_lqr:', matriz_custo_lqr);
 
     this.timeControllerDomainService.calc_lqr(matriz_custo_lqr).then((data) => {
-      console.log(data);
+      //console.log(data);
 
       // @ts-ignore
       this.Nx = JSON.parse(data['Nx']);
@@ -222,7 +222,8 @@ export class TimeControllerDomainComponent implements OnInit {
         data: dataYlqr,
         layout: this.layout_CI(),
       };
-      this.yLQR.push(this.graphCI.data), console.log('yLQR', this.yLQR);
+      this.yLQR.push(this.graphCI.data);
+      //   console.log('yLQR', this.yLQR);
       this.codes.lqr = this.getCodeLQR(matriz_custo_lqr, data);
     });
   }
@@ -240,10 +241,10 @@ export class TimeControllerDomainComponent implements OnInit {
       R: this.matriz_custo[1].values,
       CI: this.initialCond[0].values,
     };
-    console.log('Matriz_custo_lqi:', matriz_custo_lqi);
+    // console.log('Matriz_custo_lqi:', matriz_custo_lqi);
 
     this.timeControllerDomainService.calc_lqi(matriz_custo_lqi).then((data) => {
-      console.log(data);
+      //   console.log(data);
 
       // @ts-ignore
       this.Nx = JSON.parse(data['Nx']);
@@ -263,11 +264,11 @@ export class TimeControllerDomainComponent implements OnInit {
       // @ts-ignore
       this.u_enc = data['Uhat'];
       this.u_lqi = JSON.parse(this.u_enc);
-      console.log('u_lqi', this.u_lqi);
+      //   console.log('u_lqi', this.u_lqi);
       // @ts-ignore
       this.y_enc = data['Yout'];
       this.y_lqi = JSON.parse(this.y_enc);
-      console.log('y_lqi:', this.y_lqi);
+      //   console.log('y_lqi:', this.y_lqi);
       // @ts-ignore
       const vTime = data['time'];
       var dataUlqi = [];
@@ -329,7 +330,7 @@ export class TimeControllerDomainComponent implements OnInit {
     };
 
     this.timeControllerDomainService.calc_lqg(matriz_custo_lqg).then((data) => {
-      console.log(data);
+      //   console.log(data);
 
       // @ts-ignore
       this.Nx = JSON.parse(data['Nx']);
@@ -349,12 +350,12 @@ export class TimeControllerDomainComponent implements OnInit {
       // @ts-ignore
       this.u_enc = data['Uhat'];
       this.u_lqg = JSON.parse(this.u_enc);
-      console.log('u_lqg', this.u_lqg);
+      //   console.log('u_lqg', this.u_lqg);
 
       // @ts-ignore
       this.y_enc = data['Yout'];
       this.y_lqg = JSON.parse(this.y_enc);
-      console.log('y_lqg:', this.y_lqg);
+      //   console.log('y_lqg:', this.y_lqg);
       // @ts-ignore
       const vTime = data['time'];
 
@@ -377,7 +378,7 @@ export class TimeControllerDomainComponent implements OnInit {
       };
       this.yLQG.push(this.graphCI.data);
 
-      console.log('yLQG', this.yLQG);
+      //   console.log('yLQG', this.yLQG);
 
       var dataUlqg = [];
       for (let i = 0; i < this.u_lqg.length; i++) {
@@ -420,7 +421,7 @@ export class TimeControllerDomainComponent implements OnInit {
 
     this.timeControllerDomainService.calc_lqgi(matriz_custo_lqgi).then(
       (data) => {
-        console.log(data);
+        // console.log(data);
 
         // @ts-ignore
         this.Nx = JSON.parse(data['Nx']);
@@ -489,7 +490,7 @@ export class TimeControllerDomainComponent implements OnInit {
         this.codes.lqgi = this.getCodeLQGI(matriz_custo_lqgi, data);
       },
       (err) => {
-        console.log(err);
+        // console.log(err);
         // TODO
         // Swal.fire({
         //   title: 'Algoritmo não converge',
@@ -511,13 +512,6 @@ export class TimeControllerDomainComponent implements OnInit {
     this.panelCostMatrixLQI = false;
     this.panelCostMatrixLQG = false;
     this.panelCostMatrixLQGI = false;
-    for (let i = 0; i < this.matrizes.length; i++) {
-      console.log(
-        'Calcular matrix ',
-        this.matrizes[i].label,
-        this.matrizes[i].values
-      );
-    }
 
     const input = {
       A: this.matrizes[0].values,
@@ -525,26 +519,79 @@ export class TimeControllerDomainComponent implements OnInit {
       C: this.matrizes[2].values,
     };
 
-    this.timeControllerDomainService.calcStep(input).then((data) => {
-      console.log(`data: ${data} ${JSON.stringify(data)}`);
-      // @ts-ignore
-      this.control_rank = data['control_rank'];
+    this.timeControllerDomainService
+      .calcStep(input)
+      .then((data) => {
+        //   console.log(`data: ${data} ${JSON.stringify(data)}`);
+        // @ts-ignore
+        this.control_rank = data['control_rank'];
 
-      if (!this.isControlable()) {
-        this.snackBar.open(
-          'O sistema não é controlaver, Favor alterar matriz de entradas (B)',
-          'Fechar',
-          {
-            duration: 5000, // Duração em milissegundos (5 segundos)
-            panelClass: ['red-snackbar'], // Classe CSS personalizada para o estilo vermelho
+        if (!this.isControlable()) {
+          this.snackBar.open(
+            'O sistema não é controlaver, Favor alterar matriz de entradas (B)',
+            'Fechar',
+            {
+              duration: 5000, // Duração em milissegundos (5 segundos)
+              panelClass: ['red-snackbar'], // Classe CSS personalizada para o estilo vermelho
+            }
+          );
+        }
+        // @ts-ignore
+        this.obsv_rank = data['obsv_rank'];
+        if (!this.isOberservable()) {
+          this.snackBar.open(
+            'O sistema não é observavel, Favor alterar matriz de saída (C)',
+            'Fechar',
+            {
+              duration: 5000,
+              panelClass: ['red-snackbar'],
+              politeness: 'assertive',
+            }
+          );
+        } else {
+          this.costMatrixLqr();
+        }
+        this.stepMA = [];
+        // @ts-ignore
+        this.vY = data['outY_total'];
+        // @ts-ignore
+        const vTime = data['time'];
+
+        var datas = [];
+        this.lineNameIndex = 0;
+        let outIndex = 0;
+        for (let i = 0; i < this.vY.length; i++) {
+          var datatmp = {
+            x: vTime,
+            y: this.vY[i],
+            mode: 'lines',
+            type: 'scatter',
+            connectgaps: true,
+            name: this.getLineName(i + 1, outIndex),
+          };
+          datas.push(datatmp);
+          if (this.lineNameIndex == this.outM) {
+            this.lineNameIndex = 0;
+            if (this.outM > this.inL) {
+              outIndex += this.outM - this.inL;
+            }
+            if (this.outM == 1) {
+              outIndex = 0;
+            } else {
+              outIndex++;
+            }
           }
-        );
-      }
-      // @ts-ignore
-      this.obsv_rank = data['obsv_rank'];
-      if (!this.isOberservable()) {
+        }
+
+        this.graph = {
+          data: datas,
+          layout: this.layout(),
+        };
+        this.stepMA.push(this.graph.data);
+      })
+      .catch((err) => {
         this.snackBar.open(
-          'O sistema não é observavel, Favor alterar matriz de saída (C)',
+          'Ocorreu um erro, sistema não calculavel',
           'Fechar',
           {
             duration: 5000,
@@ -552,47 +599,7 @@ export class TimeControllerDomainComponent implements OnInit {
             politeness: 'assertive',
           }
         );
-      } else {
-        this.costMatrixLqr();
-      }
-      this.stepMA = [];
-      // @ts-ignore
-      this.vY = data['outY_total'];
-      // @ts-ignore
-      const vTime = data['time'];
-
-      var datas = [];
-      this.lineNameIndex = 0;
-      let outIndex = 0;
-      for (let i = 0; i < this.vY.length; i++) {
-        var datatmp = {
-          x: vTime,
-          y: this.vY[i],
-          mode: 'lines',
-          type: 'scatter',
-          connectgaps: true,
-          name: this.getLineName(i + 1, outIndex),
-        };
-        datas.push(datatmp);
-        if (this.lineNameIndex == this.outM) {
-          this.lineNameIndex = 0;
-          if (this.outM > this.inL) {
-            outIndex += this.outM - this.inL;
-          }
-          if (this.outM == 1) {
-            outIndex = 0;
-          } else {
-            outIndex++;
-          }
-        }
-      }
-
-      this.graph = {
-        data: datas,
-        layout: this.layout(),
-      };
-      this.stepMA.push(this.graph.data);
-    });
+      });
   }
 
   getLineName(index: number, outIndex: number) {
@@ -612,7 +619,6 @@ export class TimeControllerDomainComponent implements OnInit {
     const selectedValue = event.target.value;
 
     // Aqui você pode realizar a lógica desejada com o valor selecionado
-    console.log(`Valor selecionado: ${selectedValue}`);
 
     // Por exemplo, você pode chamar funções com base no valor selecionado:
     if (selectedValue === 'LQR') {
@@ -914,8 +920,8 @@ export class TimeControllerDomainComponent implements OnInit {
           myKalman.values[i][j] = 0;
         }
       }
-      console.log('matriz_kalman:', this.matriz_kalman);
-      console.log('myLQG:', myKalman);
+      //   console.log('matriz_kalman:', this.matriz_kalman);
+      //   console.log('myLQG:', myKalman);
     }
   }
 
@@ -936,7 +942,6 @@ export class TimeControllerDomainComponent implements OnInit {
       const id = `cell_${i}_${j}`;
       const formElements = document.querySelectorAll('.inputMatriz');
       const formElementsArray = Array.from(formElements);
-      console.log('formElementsArray', formElementsArray[0]);
 
       const currentIndex = formElementsArray.findIndex(
         (element) => element.id === id && element.attributes[8].value === ''

@@ -96,11 +96,11 @@
                       type="text"
                       id="cell_{{ i }}_{{ j }}"
                       appDecimalNumber
-                      value="1"
+                      value=""
                       matInput
                       (blur)="matrizValueChange(matriz, i, j, $event)"
                       placeholder="0"
-                      defaultValue="1"
+                      defaultValue=""
                       (keydown)="handleEnterKey($event, i, j)"
                     />
                   </td>
@@ -127,8 +127,6 @@
     </section>
   </mat-sidenav>
   <mat-sidenav-content [style.margin-left.px]="!isExpanded ? 75 : 350">
-    <!-- seu-componente.component.html -->
-
     <div class="elemento-com-svg-de-fundo">
       <div class="navbar-container" style="padding: 25px">
         <div>
@@ -180,8 +178,8 @@
           </div>
 
           <div *ngIf="panelCostMatrixLQR">
-            <mat-card style="margin-top: 10px">
-              <mat-card-title
+            <div class="card-box" style="margin-top: 10px">
+              <mat-card-title class="title-card"
                 >Definir Matrizes de Custo e Condições Iniciais para
                 LQR</mat-card-title
               >
@@ -197,14 +195,14 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(CI, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
@@ -222,20 +220,20 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(myLQR, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
                 </table>
               </div>
-            </mat-card>
+            </div>
 
             <button
               mat-raised-button
@@ -294,17 +292,6 @@
               <mat-card-title>
                 Definir Matrizes de Custo para LQR + Integrador</mat-card-title
               >
-              <!-- <div  *ngFor="let CI of initialCond">
-          <h4>Condições Iniciais</h4>
-          <table>
-            <tr *ngFor="let vx of CI.values; let i = index">
-              <td *ngFor="let vy of vx; let j = index; trackBy: trackByFilter">
-                  <input type="text"  id="cell_{{i}}_{{j}}" appDecimalNumber value="{{vy}}" matInput (blur)="matrizVaueChange(CI, i, j, $event)" placeholder="valor"
-                        style="width: 60px;">
-              </td>
-            </tr>
-          </table>
-        </div> -->
               <div *ngFor="let myLQI of matriz_custo">
                 <h4>Matriz {{ myLQI.label }}</h4>
                 <table>
@@ -317,14 +304,14 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(myLQI, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
@@ -401,14 +388,14 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(CI, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
@@ -427,14 +414,14 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(myLQG, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
@@ -452,14 +439,14 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(myKalman, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
@@ -535,14 +522,14 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(myLQGI, i, j, $event)"
                         placeholder="valor"
-                        style="width: 60px"
                       />
                     </td>
                   </tr>
@@ -560,10 +547,11 @@
                       "
                     >
                       <input
+                        class="inputMatriz"
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value="{{ vy }}"
+                        value=""
                         matInput
                         (blur)="matrizValueChange(myKalman, i, j, $event)"
                         placeholder="valor"
