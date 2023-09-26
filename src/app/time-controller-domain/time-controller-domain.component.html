@@ -184,7 +184,9 @@
                 LQR</mat-card-title
               >
               <div *ngFor="let CI of initialCond">
-                <h4>Condições Iniciais</h4>
+                <h4 class="text-card" style="margin-top: 24px">
+                  Condições Iniciais
+                </h4>
                 <table>
                   <tr *ngFor="let vx of CI.values; let i = index">
                     <td
@@ -233,16 +235,16 @@
                   </tr>
                 </table>
               </div>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calc_lqr()"
+                style="margin: 10px"
+              >
+                Calcular
+              </button>
             </div>
 
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="calc_lqr()"
-              style="margin: 10px"
-            >
-              Calcular
-            </button>
             <div *ngIf="panelCalc_lqr">
               <mat-card style="margin-top: 10px">
                 <mat-card-title>Resposta para controlador LQR</mat-card-title>
@@ -288,8 +290,8 @@
           </div>
 
           <div *ngIf="panelCostMatrixLQI">
-            <mat-card style="margin-top: 10px">
-              <mat-card-title>
+            <div class="card-box" style="margin-top: 10px">
+              <mat-card-title class="title-card">
                 Definir Matrizes de Custo para LQR + Integrador</mat-card-title
               >
               <div *ngFor="let myLQI of matriz_custo">
@@ -317,16 +319,16 @@
                   </tr>
                 </table>
               </div>
-            </mat-card>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calc_lqi()"
+                style="margin: 10px"
+              >
+                Calcular
+              </button>
+            </div>
 
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="calc_lqi()"
-              style="margin: 10px"
-            >
-              Calcular
-            </button>
             <div *ngIf="panelCalc_lqi">
               <mat-card style="margin-top: 10px">
                 <mat-card-title>Resposta para controlador LQI</mat-card-title>

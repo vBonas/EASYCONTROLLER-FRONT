@@ -240,3 +240,7 @@ button:hover {
   color:red;
   background: #F44336 !important;
 }
+
+mat-sidenav-content {
+  background-color: #080f25 ;
+}
