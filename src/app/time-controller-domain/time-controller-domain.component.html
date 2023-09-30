@@ -139,11 +139,6 @@
             <section [class.sidenav]="isExpanded">
               <div class="title">
                 <p *ngIf="isExpanded">EaseController</p>
-                <div class="toggle">
-                  <mat-icon (click)="toggleMenu()">
-                    {{ isExpanded ? "first_page" : "dehaze" }}
-                  </mat-icon>
-                </div>
               </div>
               <div *ngIf="isExpanded">
                 <div>
@@ -161,7 +156,7 @@
                         <mat-form-field
                           class="example-full-width"
                           appearance="fill"
-                          [style.width.px]="80"
+                          [style.width.px]="60"
                         >
                           <mat-label></mat-label>
                           <input
@@ -179,7 +174,7 @@
                         <mat-form-field
                           class="example-full-width"
                           appearance="fill"
-                          [style.width.px]="80"
+                          [style.width.px]="60"
                         >
                           <mat-label></mat-label>
                           <input
@@ -196,7 +191,7 @@
                         <mat-form-field
                           class="example-full-width"
                           appearance="fill"
-                          [style.width.px]="80"
+                          [style.width.px]="60"
                         >
                           <mat-label></mat-label>
                           <input

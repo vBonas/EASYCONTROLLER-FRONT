@@ -12,3 +12,8 @@ Projeto com o professor Rodrio Trentini, com base no TCC do Almir e Wesley
 - npm install -g @angular/cli --> INSTALAR ANGULAR CLI
 - npm i --> INSTALAR DEPENDENCIAS
 - npm i --legacy-peer-deps -->
+
+## DEPLOY
+
+- npm run build
+- firebase deploy

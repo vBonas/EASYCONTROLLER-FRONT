@@ -20,23 +20,12 @@ mat-sidenav[style] {
   transform: none !important;
 }
 
-.content-container {
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: 25px;
-  color: white;
-}
-
 .sidenav {
   width: 350px;
   min-width: 60px;
   color: #aeb9e1;
-  transition: min-width 2s ease-in-out;
 }
 
-.menu-transition {
-  transition: min-width 2s ease-in-out;
-}
 
 .title {
   padding: 25px 25px;
@@ -96,6 +85,14 @@ mat-sidenav[style] {
   width: 90px;
 }
 
+@media screen and (max-width: 767px) {
+  .inputRow {
+    width: 80px;
+  }
+}
+
+
+
 .inputText {
   margin: 0;
   padding: 0;
@@ -105,20 +102,7 @@ mat-sidenav[style] {
   margin: 10px 25px;
 }
 
-p {
-  color: #aeb9e1;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
 
-h5 {
-  color: #aeb9e1;
-  padding: 0;
-  margin: 15px 0 0 0;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-weight: 500;
-}
 
 .titles-navBar {
   padding: 0;
@@ -163,11 +147,7 @@ h5 {
   }
 }
 
-button:hover {
-  transform: scale(1.025);
-  cursor: pointer;
-  opacity: 0.7;
-}
+
 
 .card-box {
   padding: 15px 25px 25px 25px;
@@ -221,22 +201,11 @@ button:hover {
   background-color: #37446b;
 }
 
-/* Estilos para telas pequenas (por exemplo, largura máxima de 767px) */
 @media screen and (max-width: 767px) {
   .row-controlabilidade {
-    /* Estilos específicos para telas pequenas (dispositivos móveis) */
-    /* Por exemplo, você pode alterar o flex-direction para column */
     flex-direction: column;
-    /* E ajustar o alinhamento e margens conforme necessário */
     align-items: center;
-    margin: 0 auto; /* Centralizar horizontalmente */
-  }
-
-  .vl {
-    margin: 25px;
-    width: 200px;
-    height: 1px;
-    background-color: #37446b;
+    margin: 0 auto;
   }
 }
 
@@ -245,29 +214,7 @@ button:hover {
   background: #f44336 !important;
 }
 
-mat-sidenav-content {
-  background-color: #080f25;
-}
 
-mat-card-title {
-  font-size: 2em;
-  color: #080f25;
-  font-weight: 600 !important ;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
-}
-
-mat-card {
-  padding: 15px 25px 25px 25px !important;
-  margin: 24px 0px 0px 0px !important;
-  background-color: #fff !important;
-  opacity: 0.9 !important;
-  border-radius: 12px !important;
-}
-
-code {
-  color: #080f25 !important;
-}
 
 .rowMatrixLQG {
   display: flex;
@@ -277,41 +224,10 @@ code {
   width: 100%;
 }
 
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-
-body {
-  margin: 0;
-}
-html,
-body {
-  height: 100%;
-  background-color: #080f25 !important;
-}
-
-p {
-  font-family: Mona sans, sans-serif;
-  color: #fff;
-}
-
-.teste {
-  color: #ffffff;
-}
-
-::-webkit-scrollbar {
-  width: 4px;
-  overflow-y: scroll;
-  background: #9857c4;
-  box-shadow: inset 0 0 4px #707070;
-}
-/* //852fbe */
-::-webkit-scrollbar-thumb {
-  background: #985bc0;
-  border-radius: 10px;
-}
 
 
-.mat-mdc-snack-bar-container {
-    --mat-mdc-snack-bar-button-color: blue;
-    --mdc-snackbar-container-color: #f23a2f;
-    --mdc-snackbar-supporting-text-color: white;
-}
+
+
+
+
+
