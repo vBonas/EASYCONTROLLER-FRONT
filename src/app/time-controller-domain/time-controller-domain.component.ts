@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   ViewChild,
   ViewEncapsulation,
@@ -18,7 +19,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   encapsulation: ViewEncapsulation.None,
 })
 export class TimeControllerDomainComponent implements OnInit {
-  svgPath = '/assets/svg/tt.svg'; // Substitua pelo caminho correto do seu arquivo SVG
+  isLargeScreen = window.innerWidth >= 768; // Defina o valor inicial com base na largura atual
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.isLargeScreen = window.innerWidth >= 768; 
+  }
 
   public isExpanded = true;
 
@@ -686,7 +692,6 @@ export class TimeControllerDomainComponent implements OnInit {
         family: 'Arial, sans-serif',
         size: 16,
         color: 'black',
-        
       },
       xaxis: {
         title: 'Tempo',

@@ -1,6 +1,12 @@
 <app-spinner></app-spinner>
 <mat-sidenav-container autosize>
-  <mat-sidenav #sidenav fixedInViewport="true" mode="side" opened="{{ true }}">
+  <mat-sidenav
+    *ngIf="isLargeScreen"
+    #sidenav
+    fixedInViewport="true"
+    mode="side"
+    opened="{{ true }}"
+  >
     <section [class.sidenav]="isExpanded">
       <div class="title">
         <p *ngIf="isExpanded">EaseController</p>
@@ -123,10 +129,140 @@
       </div>
     </section>
   </mat-sidenav>
-  <mat-sidenav-content [style.margin-left.px]="!isExpanded ? 75 : 350">
+  <mat-sidenav-content
+    [style.margin-left.px]="isLargeScreen ? (isExpanded ? 350 : 75) : 0"
+  >
     <div class="elemento-com-svg-de-fundo">
       <div class="navbar-container" style="padding: 25px">
         <div>
+          <div class="card-box-nav" *ngIf="!isLargeScreen">
+            <section [class.sidenav]="isExpanded">
+              <div class="title">
+                <p *ngIf="isExpanded">EaseController</p>
+                <div class="toggle">
+                  <mat-icon (click)="toggleMenu()">
+                    {{ isExpanded ? "first_page" : "dehaze" }}
+                  </mat-icon>
+                </div>
+              </div>
+              <div *ngIf="isExpanded">
+                <div>
+                  <h2 class="parametrosDoSistema">
+                    Controle em Espaço de Estados em Tempo Contínuo
+                  </h2>
+
+                  <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
+                  <div class="matrizes-input">
+                    <p class="titles-navBar">Parâmetros do sistema</p>
+
+                    <div class="input-increase">
+                      <div class="inputRow">
+                        <h5 class="inputText">Ordem do Sistema</h5>
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                          [style.width.px]="80"
+                        >
+                          <mat-label></mat-label>
+                          <input
+                            type="number"
+                            [(ngModel)]="quadN"
+                            matInput
+                            placeholder="Estado da Matriz"
+                            (change)="createTables()"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="inputRow">
+                        <h5 class="inputText">Número de Entradas</h5>
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                          [style.width.px]="80"
+                        >
+                          <mat-label></mat-label>
+                          <input
+                            type="number"
+                            [(ngModel)]="inL"
+                            matInput
+                            placeholder="Número de Entradas"
+                            (change)="createTables()"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <div class="inputRow">
+                        <h5 class="inputText">Número de Saídas</h5>
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                          [style.width.px]="80"
+                        >
+                          <mat-label></mat-label>
+                          <input
+                            type="number"
+                            [(ngModel)]="outM"
+                            matInput
+                            placeholder="Número de Saídas"
+                            (change)="createTables()"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- MATRIZES -->
+                  <div class="matrizes-input">
+                    <p class="titles-navBar">Preenchimento das matrizes</p>
+
+                    <div *ngFor="let matriz of matrizes; index as c">
+                      <h5>Matriz {{ matriz.label }}</h5>
+
+                      <table>
+                        <tr *ngFor="let vx of matriz.values; let i = index">
+                          <td
+                            *ngFor="
+                              let vy of vx;
+                              let j = index;
+                              trackBy: trackByFilter
+                            "
+                          >
+                            <input
+                              class="inputMatriz"
+                              type="text"
+                              id="cell_{{ i }}_{{ j }}"
+                              appDecimalNumber
+                              value=""
+                              matInput
+                              (blur)="matrizValueChange(matriz, i, j, $event)"
+                              placeholder="0"
+                              defaultValue=""
+                              (keydown)="handleEnterKey($event, i, j)"
+                            />
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      (click)="calc()"
+                      style="margin-left: 25px"
+                    >
+                      Calcular dinâmica da planta
+                    </button>
+                    <button class="iconDelete" (click)="limparInput()">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
           <div *ngIf="panelMA">
             <!-- Controlabilidade -->
             <div class="card-box">

@@ -1,27 +1,5 @@
 @import "@angular/cdk/overlay-prebuilt.css";
 
-#snackbar {
-  visibility: hidden;
-  color: #fff;
-  background-color: #333;
-  min-width: 250px;
-  margin-left: -125px;
-  border-radius: 2px;
-  padding: 16px;
-  text-align: center;
-  left: 50%;
-  bottom: 30px;
-  z-index: 1;
-  position: fixed;
-}
-
-/* This will be activated when the snackbar's class is 'show' which will be added through JS */
-#snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
 .elemento-com-svg-de-fundo {
   width: 100%;
   height: 100vh;
@@ -199,6 +177,14 @@ button:hover {
   border-radius: 12px;
 }
 
+.card-box-nav{
+  padding: 15px 0px 15px 0px;
+  margin: 0px 0px 25px 0px;
+  background-color: #080f25;
+  opacity: 0.9;
+  border-radius: 12px;
+}
+
 .title-card {
   font-size: 2em;
   color: #080f25;
@@ -228,10 +214,30 @@ button:hover {
   padding: 0;
 }
 
+
 .vl {
   width: 1px;
   height: 200px;
   background-color: #37446b;
+}
+
+/* Estilos para telas pequenas (por exemplo, largura máxima de 767px) */
+@media screen and (max-width: 767px) {
+  .row-controlabilidade {
+    /* Estilos específicos para telas pequenas (dispositivos móveis) */
+    /* Por exemplo, você pode alterar o flex-direction para column */
+    flex-direction: column;
+    /* E ajustar o alinhamento e margens conforme necessário */
+    align-items: center;
+    margin: 0 auto; /* Centralizar horizontalmente */
+  }
+
+  .vl {
+    margin: 25px;
+    width: 200px;
+    height: 1px;
+    background-color: #37446b;
+  }
 }
 
 .mat-snack-bar-container.red-snackbar {
@@ -269,4 +275,43 @@ code {
   justify-content: space-around;
   flex-wrap: wrap;
   width: 100%;
+}
+
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+body {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+  background-color: #080f25 !important;
+}
+
+p {
+  font-family: Mona sans, sans-serif;
+  color: #fff;
+}
+
+.teste {
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  overflow-y: scroll;
+  background: #9857c4;
+  box-shadow: inset 0 0 4px #707070;
+}
+/* //852fbe */
+::-webkit-scrollbar-thumb {
+  background: #985bc0;
+  border-radius: 10px;
+}
+
+
+.mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: blue;
+    --mdc-snackbar-container-color: #f23a2f;
+    --mdc-snackbar-supporting-text-color: white;
 }
