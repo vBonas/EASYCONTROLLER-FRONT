@@ -188,7 +188,7 @@ mat-sidenav[style] {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around; /* Espaço igual entre as colunas */
-  align-items: start; /* Centralizar verticalmente */
+  align-items: flex-start; /* Centralizar verticalmente */
   width: 100%;
   margin: 0;
   padding: 0;

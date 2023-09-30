@@ -19,11 +19,7 @@ export class TimeControllerDomainService {
 
   async calc_lqr(data: any) {
     return await firstValueFrom(
-      this.http.post(
-        'http://almir.pythonanywhere.com/appview/easy-controller/lqr',
-        data,
-        { headers: this.headers }
-      )
+      this.http.post(`${this.url}/lqr`, data, { headers: this.headers })
     );
   }
 
