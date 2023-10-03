@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: 'laplace',
     component: LaplaceControllerDomainComponent,
+    // loadChildren: () =>
+    //   import(
+    //     './components/laplace-controller-domain/laplace-controller-domain.module'
+    //   ).then((m) => m.LaplaceControllerDomainModule),
   },
   {
     path: '**',

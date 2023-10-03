@@ -1,13 +1,10 @@
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TimeControllerDomainComponent } from './time-controller-domain.component';
-import { TimeControllerDomainRoutingModule } from './time-controller-domain-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { TimeControllerDomainService } from './time-controller-domain.service';
 import { PlotlyModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -18,20 +15,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DecimalNumberDirective } from 'src/app/onlyDecimal.directive';
 import { LoadingInterceptor } from 'src/app/loading.interceptor';
+import { LaplaceControllerDomainComponent } from './laplace-controller-domain.component';
+import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
-  declarations: [
-    TimeControllerDomainComponent,
-    DecimalNumberDirective,
-    SpinnerComponent,
-  ],
+  declarations: [LaplaceControllerDomainComponent],
   imports: [
     FormsModule,
     MatExpansionModule,
     CommonModule,
-    TimeControllerDomainRoutingModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
@@ -44,7 +38,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
   ],
 
   providers: [
-    TimeControllerDomainService,
+    LaplaceControllerDomainService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
@@ -52,4 +46,4 @@ PlotlyModule.plotlyjs = PlotlyJS;
     },
   ],
 })
-export class TimeControllerDomainModule {}
+export class LaplaceControllerDomainModule {}

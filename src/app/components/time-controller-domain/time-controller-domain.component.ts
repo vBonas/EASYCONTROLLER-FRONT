@@ -8,7 +8,6 @@ import {
 import { Matriz } from './Matriz';
 import { TimeControllerDomainService } from './time-controller-domain.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
