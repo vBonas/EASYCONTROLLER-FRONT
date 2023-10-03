@@ -1,21 +1,129 @@
-<app-spinner></app-spinner>
 <mat-sidenav-container autosize>
-  <mat-sidenav
-    *ngIf="isLargeScreen"
-    #sidenav
-    fixedInViewport="true"
-    mode="side"
-    opened="{{ true }}"
-  >
-    Teste
+  <mat-sidenav #sidenav fixedInViewport="true" mode="side" opened="{{ true }}">
+    <section [class.sidenav]="isExpanded">
+      <div class="title">
+        <p *ngIf="isExpanded">EaseController</p>
+        <div class="toggle">
+          <mat-icon (click)="toggleMenu()">
+            {{ isExpanded ? "first_page" : "dehaze" }}
+          </mat-icon>
+        </div>
+      </div>
+      <div *ngIf="isExpanded">
+        <div>
+          <h2 class="parametrosDoSistema">
+            Controle em Espaço de Estados em Tempo Contínuo
+          </h2>
+
+          <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S) -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">
+              INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S)
+            </p>
+
+            <div>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Numerador para P(s):</mat-label>
+                <input
+                  [(ngModel)]="numeradorPs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="focusNext('input1')"
+                  id="input0"
+                />
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Denomidador para P(s):</mat-label>
+                <input
+                  [(ngModel)]="denominadorPs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="focusNext('input2')"
+                  id="input1"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA D(S) -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">
+              INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA D(S)
+            </p>
+
+            <div>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Numerador para P(s):</mat-label>
+                <input
+                  [(ngModel)]="numeradorDs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="focusNext('input3')"
+                  id="input2"
+                />
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Denomidador para P(s):</mat-label>
+                <input
+                  [(ngModel)]="denominadorDs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="calc()"
+                  id="input3"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!--BOTOES-->
+          <div class="row">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="calc()"
+              style="margin-left: 25px"
+            >
+              Calcular dinâmica da planta
+            </button>
+            <button class="iconDelete" (click)="limparInput()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   </mat-sidenav>
   <mat-sidenav-content
     [style.margin-left.px]="isLargeScreen ? (isExpanded ? 350 : 75) : 0"
   >
     <div class="elemento-com-svg-de-fundo">
       <div class="navbar-container" style="padding: 25px">
-        <div>
-          <div class="card-box-nav">Ariel sam</div>
+        <div class="card-box">
+          <div class="card-body">
+            <h5 class="title-card">Seus sinais em malha fechada são:</h5>
+            <div class="text-card" #numeradoreq1></div>
+            <div class="text-card" #barraeq1></div>
+            <div class="text-card" #denominadoreq1></div>
+            &nbsp;
+            <div id="controle-saida"></div>
+
+            <div id="controle-controle"></div>
+
+            <plotly-plot
+              [data]="this.graficoDegrauUnitario[0]"
+              [layout]="graph.layout"
+            ></plotly-plot>
+          </div>
         </div>
       </div>
     </div>

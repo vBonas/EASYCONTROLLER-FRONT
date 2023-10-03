@@ -280,6 +280,12 @@ mat-sidenav[style] {
   background: #f44336 !important;
 }
 
+.green-snackbar {
+  --mdc-snackbar-container-color: green;
+  color: green;
+  background: green !important;
+}
+
 .rowMatrixLQG {
   display: flex;
   flex-direction: row;
