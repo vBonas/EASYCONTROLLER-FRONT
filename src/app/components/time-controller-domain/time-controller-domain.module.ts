@@ -10,19 +10,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { TimeControllerDomainService } from './time-controller-domain.service';
 import { PlotlyModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { DecimalNumberDirective } from '../onlyDecimal.directive';
-import { BrowserModule } from '@angular/platform-browser';
 import { SpinnerComponent } from '../spinner/spinner.component';
-import { LoadingInterceptor } from '../loading.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//MatSnackBarModule
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DecimalNumberDirective } from 'src/app/onlyDecimal.directive';
+import { LoadingInterceptor } from 'src/app/loading.interceptor';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 

@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
-  ElementRef,
   HostListener,
   OnInit,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { Matriz } from './Matriz';
@@ -23,7 +21,7 @@ export class TimeControllerDomainComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
-    this.isLargeScreen = window.innerWidth >= 768; 
+    this.isLargeScreen = window.innerWidth >= 768;
   }
 
   public isExpanded = true;
