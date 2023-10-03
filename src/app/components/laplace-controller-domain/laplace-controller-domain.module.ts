@@ -17,11 +17,12 @@ import { DecimalNumberDirective } from 'src/app/onlyDecimal.directive';
 import { LoadingInterceptor } from 'src/app/loading.interceptor';
 import { LaplaceControllerDomainComponent } from './laplace-controller-domain.component';
 import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
+import { LaplaceControllerDomainRoutingModule } from './laplace-controller-domain-routing.module';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
-  declarations: [LaplaceControllerDomainComponent],
+  declarations: [LaplaceControllerDomainComponent, DecimalNumberDirective],
   imports: [
     FormsModule,
     MatExpansionModule,
@@ -35,6 +36,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatCardModule,
     MatSidenavModule,
     MatSnackBarModule,
+    LaplaceControllerDomainRoutingModule,
   ],
 
   providers: [

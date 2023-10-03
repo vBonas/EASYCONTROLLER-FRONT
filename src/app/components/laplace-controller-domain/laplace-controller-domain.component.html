@@ -1,1 +1,23 @@
-<p>laplace-controller-domain works!</p>
+<app-spinner></app-spinner>
+<mat-sidenav-container autosize>
+  <mat-sidenav
+    *ngIf="isLargeScreen"
+    #sidenav
+    fixedInViewport="true"
+    mode="side"
+    opened="{{ true }}"
+  >
+    Teste
+  </mat-sidenav>
+  <mat-sidenav-content
+    [style.margin-left.px]="isLargeScreen ? (isExpanded ? 350 : 75) : 0"
+  >
+    <div class="elemento-com-svg-de-fundo">
+      <div class="navbar-container" style="padding: 25px">
+        <div>
+          <div class="card-box-nav">Ariel sam</div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
