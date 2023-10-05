@@ -16,6 +16,7 @@ import { LoadingInterceptor } from 'src/app/loading.interceptor';
 import { LaplaceControllerDomainComponent } from './laplace-controller-domain.component';
 import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
 import { LaplaceControllerDomainRoutingModule } from './laplace-controller-domain-routing.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -28,6 +29,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatCheckboxModule,
     PlotlyModule,
     HttpClientModule,
     ClipboardModule,

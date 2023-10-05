@@ -1,0 +1,14 @@
+.disabledInput {
+  background-color: red; /* Cor de fundo cinza */
+  pointer-events: none; /* Impede a interação com o campo */
+}
+
+.rowInputStepTwo {
+  display: flex;
+}
+
+.checkboxEnable {
+  color: green;
+  margin-top: 10px;
+}
+

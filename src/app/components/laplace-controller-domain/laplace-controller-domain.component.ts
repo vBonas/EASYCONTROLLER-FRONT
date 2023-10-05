@@ -38,6 +38,30 @@ export class LaplaceControllerDomainComponent {
   @ViewChild('denominadorEq1') denominadorElement!: ElementRef;
   graficoDegrauUnitario: any = [];
   graphData: object[] = [];
+  stepOne: boolean = false;
+
+  inputAmostragem: string = '1';
+  inputReferencia: string = '2';
+  inputSaturacao: string = '3';
+
+  hasAmostragem: boolean = true;
+  hasSaturacao: boolean = true;
+
+  changeAmostragem() {
+    if (!this.hasAmostragem) {
+      this.inputAmostragem = 'N/A';
+    } else {
+      this.inputAmostragem = '1';
+    }
+  }
+
+  changeSaturacao() {
+    if (!this.hasSaturacao) {
+      this.inputSaturacao = 'N/A';
+    } else {
+      this.inputSaturacao = '1';
+    }
+  }
 
   graph = { data: this.graphData, layout: this.layout() };
 
@@ -108,7 +132,7 @@ export class LaplaceControllerDomainComponent {
       this.showMessageError('Preencha todos os campos');
       return;
     }
-    console.log('calculando');
+    this.stepOne = true;
     this.laplaceControllerDomainService
       .calcula({
         numerador: this.numeradorPs,
@@ -158,6 +182,7 @@ export class LaplaceControllerDomainComponent {
     this.denominadorPs = '';
     this.numeradorDs = '';
     this.denominadorDs = '';
+    this.stepOne = false;
   }
 
   showMessageError(message: string) {
@@ -174,5 +199,9 @@ export class LaplaceControllerDomainComponent {
       panelClass: ['green-snackbar'],
       politeness: 'assertive',
     });
+  }
+
+  hasStepOne() {
+    return this.stepOne;
   }
 }
