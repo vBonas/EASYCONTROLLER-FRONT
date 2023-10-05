@@ -33,9 +33,9 @@ export class LaplaceControllerDomainComponent {
   denominadorPs: string = '1,2';
   numeradorDs: string = '1';
   denominadorDs: string = '1';
-  @ViewChild('numeradoreq1') numeradorElement!: ElementRef;
-  @ViewChild('barraeq1') barraElement!: ElementRef;
-  @ViewChild('denominadoreq1') denominadorElement!: ElementRef;
+  @ViewChild('numeradorEq1') numeradorElement!: ElementRef;
+  @ViewChild('barraEq1') barraElement!: ElementRef;
+  @ViewChild('denominadorEq1') denominadorElement!: ElementRef;
   graficoDegrauUnitario: any = [];
   graphData: object[] = [];
 
@@ -123,8 +123,11 @@ export class LaplaceControllerDomainComponent {
         this.barraElement.nativeElement.textContent = newEquacao[2];
         this.denominadorElement.nativeElement.textContent = newEquacao[3];
 
-
-
+        //adicionar na posicao 0 o valor -1
+        if (eixoX[0] === '[0.0' && eixoY[0] === '[0.0') {
+          eixoX.unshift(0.0);
+          eixoY.unshift(0.0);
+        }
         var datas = [
           {
             x: eixoX,

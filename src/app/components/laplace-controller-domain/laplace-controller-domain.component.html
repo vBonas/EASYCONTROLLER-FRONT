@@ -110,14 +110,22 @@
       <div class="navbar-container" style="padding: 25px">
         <div class="card-box">
           <div class="card-body">
-            <h5 class="title-card">Seus sinais em malha fechada são:</h5>
-            <div class="text-card" #numeradoreq1></div>
-            <div class="text-card" #barraeq1></div>
-            <div class="text-card" #denominadoreq1></div>
-            &nbsp;
-            <div id="controle-saida"></div>
-
-            <div id="controle-controle"></div>
+            <h5 class="title-card">
+              Sua resposta ao degrau unitário em malha aberta é:
+            </h5>
+            <div
+              class="al"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="text-card" #numeradorEq1></div>
+              <div class="text-card" #barraEq1></div>
+              <div class="text-card" #denominadorEq1></div>
+            </div>
 
             <plotly-plot
               [data]="this.graficoDegrauUnitario[0]"
