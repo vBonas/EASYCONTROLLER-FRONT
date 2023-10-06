@@ -41,8 +41,14 @@ export class LaplaceControllerDomainComponent {
   stepOne: boolean = false;
 
   inputAmostragem: string = '1';
-  inputReferencia: string = '2';
-  inputSaturacao: string = '3';
+  inputSaturacao: string = '2';
+  inputReferencia: string = '3';
+
+  hasPID: boolean = false;
+
+  inputP: string = '';
+  inputI: string = '';
+  inputD: string = '';
 
   hasAmostragem: boolean = true;
   hasSaturacao: boolean = true;
@@ -204,4 +210,24 @@ export class LaplaceControllerDomainComponent {
   hasStepOne() {
     return this.stepOne;
   }
+
+  selectValueChanged(event: any) {
+    const selectedValue = event.target.value;
+
+    if (selectedValue === 'Inserir valores') {
+      this.hasPID = true;
+    } else {
+      this.hasPID = false;
+
+      if (selectedValue === 'PID') {
+        console.log('PID');
+      } else if (selectedValue === 'PI') {
+        console.log('PI');
+      } else if (selectedValue === 'PD') {
+        console.log('PD');
+      }
+    }
+  }
+
+  calculaStepTwo() {}
 }

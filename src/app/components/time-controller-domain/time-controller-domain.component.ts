@@ -620,10 +620,6 @@ export class TimeControllerDomainComponent implements OnInit {
 
   selectValueChanged(event: any) {
     const selectedValue = event.target.value;
-
-    // Aqui você pode realizar a lógica desejada com o valor selecionado
-
-    // Por exemplo, você pode chamar funções com base no valor selecionado:
     if (selectedValue === 'LQR') {
       this.costMatrixLqr();
     } else if (selectedValue === 'LQR_Integrador') {

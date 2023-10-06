@@ -267,6 +267,12 @@ mat-sidenav[style] {
   background-color: #37446b;
 }
 
+.vlBig {
+  width: 1px;
+  height: 350px;
+  background-color: #37446b;
+}
+
 @media screen and (max-width: 767px) {
   .row-controlabilidade {
     flex-direction: column;
@@ -293,5 +299,3 @@ mat-sidenav[style] {
   flex-wrap: wrap;
   width: 100%;
 }
-
-
