@@ -37,7 +37,10 @@ export class TimeControllerDomainComponent implements OnInit {
   matriz_kalman: Matriz[] = [new Matriz('QN'), new Matriz('RN')];
   initialCond: Matriz[] = [new Matriz('CI')];
   graphData: object[] = [];
-  graph = { data: this.graphData, layout: this.layout() };
+  graph = {
+    data: this.graphData,
+    layout: this.layout_title('Resposta ao degrau unitário'),
+  };
   graphCI = { data: this.graphData, layout: this.layout_CI() };
   control_rank: string = '';
   obsv_rank: string = '';
@@ -161,7 +164,6 @@ export class TimeControllerDomainComponent implements OnInit {
       R: this.matriz_custo[1].values,
       CI: this.initialCond[0].values,
     };
-    //console.log('Matriz_custo_lqr:', matriz_custo_lqr);
 
     this.timeControllerDomainService.calc_lqr(matriz_custo_lqr).then((data) => {
       //console.log(data);
@@ -226,7 +228,6 @@ export class TimeControllerDomainComponent implements OnInit {
         layout: this.layout_CI(),
       };
       this.yLQR.push(this.graphCI.data);
-      //   console.log('yLQR', this.yLQR);
       this.codes.lqr = this.getCodeLQR(matriz_custo_lqr, data);
     });
   }
@@ -244,11 +245,8 @@ export class TimeControllerDomainComponent implements OnInit {
       R: this.matriz_custo[1].values,
       CI: this.initialCond[0].values,
     };
-    // console.log('Matriz_custo_lqi:', matriz_custo_lqi);
 
     this.timeControllerDomainService.calc_lqi(matriz_custo_lqi).then((data) => {
-      //   console.log(data);
-
       // @ts-ignore
       this.Nx = JSON.parse(data['Nx']);
       // @ts-ignore
@@ -267,11 +265,9 @@ export class TimeControllerDomainComponent implements OnInit {
       // @ts-ignore
       this.u_enc = data['Uhat'];
       this.u_lqi = JSON.parse(this.u_enc);
-      //   console.log('u_lqi', this.u_lqi);
       // @ts-ignore
       this.y_enc = data['Yout'];
       this.y_lqi = JSON.parse(this.y_enc);
-      //   console.log('y_lqi:', this.y_lqi);
       // @ts-ignore
       const vTime = data['time'];
       var dataUlqi = [];
@@ -333,8 +329,6 @@ export class TimeControllerDomainComponent implements OnInit {
     };
 
     this.timeControllerDomainService.calc_lqg(matriz_custo_lqg).then((data) => {
-      //   console.log(data);
-
       // @ts-ignore
       this.Nx = JSON.parse(data['Nx']);
       // @ts-ignore
@@ -353,12 +347,10 @@ export class TimeControllerDomainComponent implements OnInit {
       // @ts-ignore
       this.u_enc = data['Uhat'];
       this.u_lqg = JSON.parse(this.u_enc);
-      //   console.log('u_lqg', this.u_lqg);
 
       // @ts-ignore
       this.y_enc = data['Yout'];
       this.y_lqg = JSON.parse(this.y_enc);
-      //   console.log('y_lqg:', this.y_lqg);
       // @ts-ignore
       const vTime = data['time'];
 
@@ -380,8 +372,6 @@ export class TimeControllerDomainComponent implements OnInit {
         layout: this.layout_CI(),
       };
       this.yLQG.push(this.graphCI.data);
-
-      //   console.log('yLQG', this.yLQG);
 
       var dataUlqg = [];
       for (let i = 0; i < this.u_lqg.length; i++) {
@@ -424,8 +414,6 @@ export class TimeControllerDomainComponent implements OnInit {
 
     this.timeControllerDomainService.calc_lqgi(matriz_custo_lqgi).then(
       (data) => {
-        // console.log(data);
-
         // @ts-ignore
         this.Nx = JSON.parse(data['Nx']);
         // @ts-ignore
@@ -493,13 +481,9 @@ export class TimeControllerDomainComponent implements OnInit {
         this.codes.lqgi = this.getCodeLQGI(matriz_custo_lqgi, data);
       },
       (err) => {
-        // console.log(err);
-        // TODO
-        // Swal.fire({
-        //   title: 'Algoritmo não converge',
-        //   text: 'Resintonizar as matrizes Q e/ou R!',
-        //   icon: 'warning',
-        // });
+        this.showMessageError(
+          'Algoritmo não converge. Resintonizar as matrizes Q e/ou R!'
+        );
       }
     );
   }
@@ -576,7 +560,7 @@ export class TimeControllerDomainComponent implements OnInit {
 
         this.graph = {
           data: datas,
-          layout: this.layout(),
+          layout: this.layout_title('Resposta ao degrau unitário'),
         };
         this.stepMA.push(this.graph.data);
       })
@@ -588,10 +572,6 @@ export class TimeControllerDomainComponent implements OnInit {
   getLineName(index: number, outIndex: number) {
     return `De u${index - this.lineNameIndex - outIndex} para y${++this
       .lineNameIndex}`;
-  }
-
-  layout() {
-    return this.layout_title('Resposta ao degrau unitário');
   }
 
   layoutInt() {
@@ -899,20 +879,11 @@ export class TimeControllerDomainComponent implements OnInit {
           myKalman.values[i][j] = 0;
         }
       }
-      //   console.log('matriz_kalman:', this.matriz_kalman);
-      //   console.log('myLQG:', myKalman);
     }
   }
 
   codeCopied() {
-    // TODO
-    // Swal.fire({
-    //   position: 'center',
-    //   icon: 'success',
-    //   text: 'Seu código foi copiado!',
-    //   showConfirmButton: false,
-    //   timer: 1500,
-    // });
+    this.showMessageSuccess('Código copiado para a área de transferência');
   }
 
   handleEnterKey(event: KeyboardEvent, i: number, j: number) {
