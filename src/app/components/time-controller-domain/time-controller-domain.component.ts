@@ -504,7 +504,7 @@ export class TimeControllerDomainComponent implements OnInit {
     );
   }
 
-  calc() {
+  calcularDinamicaDaPlanta() {
     this.panelMA = true;
     this.panelCalc_lqr = false;
     this.panelCalc_lqi = false;
@@ -525,31 +525,19 @@ export class TimeControllerDomainComponent implements OnInit {
     this.timeControllerDomainService
       .calcStep(input)
       .then((data) => {
-        //   console.log(`data: ${data} ${JSON.stringify(data)}`);
         // @ts-ignore
         this.control_rank = data['control_rank'];
 
         if (!this.isControlable()) {
-          this.snackBar.open(
-            'O sistema não é controlaver, Favor alterar matriz de entradas (B)',
-            'Fechar',
-            {
-              duration: 5000, // Duração em milissegundos (5 segundos)
-              panelClass: ['red-snackbar'], // Classe CSS personalizada para o estilo vermelho
-            }
+          this.showMessageError(
+            'O sistema não é controlaver, Favor alterar matriz de entradas (B)'
           );
         }
         // @ts-ignore
         this.obsv_rank = data['obsv_rank'];
         if (!this.isOberservable()) {
-          this.snackBar.open(
-            'O sistema não é observavel, Favor alterar matriz de saída (C)',
-            'Fechar',
-            {
-              duration: 5000,
-              panelClass: ['red-snackbar'],
-              politeness: 'assertive',
-            }
+          this.showMessageError(
+            'O sistema não é observavel, Favor alterar matriz de entradas (C)'
           );
         } else {
           this.costMatrixLqr();
@@ -593,15 +581,7 @@ export class TimeControllerDomainComponent implements OnInit {
         this.stepMA.push(this.graph.data);
       })
       .catch((err) => {
-        this.snackBar.open(
-          'Ocorreu um erro, sistema não calculavel',
-          'Fechar',
-          {
-            duration: 5000,
-            panelClass: ['red-snackbar'],
-            politeness: 'assertive',
-          }
-        );
+        this.showMessageError('Ocorreu um erro, sistema não calculavel');
       });
   }
 
@@ -1393,5 +1373,21 @@ void loop() {
     for (k = 0; k < Nu; k++) {
       analogWrite(PWM_pins(k),u_pwm(k));
     };`;
+  }
+
+  showMessageError(message: string) {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 5000,
+      panelClass: ['red-snackbar'],
+      politeness: 'assertive',
+    });
+  }
+
+  showMessageSuccess(message: string) {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 5000,
+      panelClass: ['green-snackbar'],
+      politeness: 'assertive',
+    });
   }
 }
