@@ -158,7 +158,7 @@
                   <mat-label>Periodo do amostragem (seg)</mat-label>
                   <input
                     [(ngModel)]="inputAmostragem"
-                    pattern="[0-9]*"
+                    pattern="^\d*(\.\d{0,2})?$"
                     matInput
                     placeholder="Periodo do amostragem (seg)"
                     value=""
@@ -181,7 +181,7 @@
                   <mat-label>Valor de saturação</mat-label>
                   <input
                     [(ngModel)]="inputSaturacao"
-                    pattern="[0-9]*"
+                    pattern="^\d*(\.\d{0,2})?$"
                     matInput
                     placeholder="Valor de saturação"
                     value=""
@@ -198,7 +198,7 @@
                   <mat-label>Valor de referência</mat-label>
                   <input
                     [(ngModel)]="inputReferencia"
-                    pattern="[0-9]*"
+                    pattern="^\d*(\.\d{0,2})?$"
                     matInput
                     placeholder="Valor de referência"
                     value=""
@@ -214,56 +214,67 @@
             <!---COLUNA DA DIREITA-->
             <div class="columnExterna">
               <mat-card-title>Escolha o controlador</mat-card-title>
-              <div class="column">
-                <mat-form-field style="margin-top: 25px">
-                  <select
-                    matNativeControl
-                    (change)="selectValueChanged($event)"
-                  >
-                    <option value="PID">PID</option>
-                    <option value="PI">PI</option>
-                    <option value="PD">PD</option>
-                    <option value="Inserir valores">Inserir valores</option>
-                  </select>
-                </mat-form-field>
-              </div>
-              <!-- Kp-->
-              <mat-form-field *ngIf="hasPID" appearance="fill">
-                <mat-label>Kp</mat-label>
-                <input
-                  [(ngModel)]="inputP"
-                  matInput
-                  placeholder="Kp"
-                  value=""
-                  (keyup.enter)="focusNext('input8')"
-                  id="input7"
-                />
-              </mat-form-field>
-              <!-- Ki-->
-              <mat-form-field *ngIf="hasPID" appearance="fill">
-                <mat-label>Ki</mat-label>
-                <input
-                  [(ngModel)]="inputI"
-                  matInput
-                  placeholder="Ki"
-                  value=""
-                  (keyup.enter)="focusNext('input9')"
-                  id="input8"
-                />
+
+              <mat-form-field style="margin-top: 25px">
+                <select matNativeControl (change)="selectMetodo($event)">
+                  <option value="ZN1">Zigler-Nichols primeiro método</option>
+                  <option value="ZN2">Zigler-Nichols segundo método</option>
+                  <option value="MANUAL-INSERT">
+                    Não calcular parâmetros automáticos
+                  </option>
+                </select>
               </mat-form-field>
 
-              <!-- Kd-->
-              <mat-form-field *ngIf="hasPID" appearance="fill">
-                <mat-label>Kd</mat-label>
-                <input
-                  [(ngModel)]="inputD"
-                  matInput
-                  placeholder="Kd"
-                  value=""
-                  (keyup.enter)="focusNext('input10')"
-                  id="input9"
-                />
+              <mat-form-field style="margin-top: 25px">
+                <select matNativeControl (change)="selectPID($event)">
+                  <option value="PID">PID</option>
+                  <option value="PI">PI</option>
+                  <option value="PD">PD</option>
+                  <option value="P">P</option>
+                </select>
               </mat-form-field>
+              <div *ngIf="isManualInsert()">
+                <!-- Kp-->
+                <mat-form-field *ngIf="hasP" appearance="fill">
+                  <mat-label>Kp</mat-label>
+                  <input
+                    [(ngModel)]="inputP"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Kp"
+                    value=""
+                    (keyup.enter)="focusNext('input8')"
+                    id="input7"
+                  />
+                </mat-form-field>
+                <!-- Ki-->
+                <mat-form-field *ngIf="hasI" appearance="fill">
+                  <mat-label>Ki</mat-label>
+                  <input
+                    [(ngModel)]="inputI"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Ki"
+                    value=""
+                    (keyup.enter)="focusNext('input9')"
+                    id="input8"
+                  />
+                </mat-form-field>
+
+                <!-- Kd-->
+                <mat-form-field *ngIf="hasD" appearance="fill">
+                  <mat-label>Kd</mat-label>
+                  <input
+                    [(ngModel)]="inputD"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Kd"
+                    value=""
+                    (keyup.enter)="focusNext('input10')"
+                    id="input9"
+                  />
+                </mat-form-field>
+              </div>
             </div>
           </div>
           <button

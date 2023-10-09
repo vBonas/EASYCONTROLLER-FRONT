@@ -41,17 +41,19 @@ export class LaplaceControllerDomainComponent {
   stepOne: boolean = false;
 
   inputAmostragem: string = '1';
+  hasAmostragem: boolean = true;
   inputSaturacao: string = '2';
+  hasSaturacao: boolean = true;
   inputReferencia: string = '3';
 
-  hasPID: boolean = false;
-
   inputP: string = '';
+  hasP: boolean = true;
   inputI: string = '';
+  hasI: boolean = true;
   inputD: string = '';
+  hasD: boolean = true;
 
-  hasAmostragem: boolean = true;
-  hasSaturacao: boolean = true;
+  selectedMetodo: string = 'ZN1'; // ZN1, ZN2, MANUAL-INSERT
 
   changeAmostragem() {
     if (!this.hasAmostragem) {
@@ -211,23 +213,104 @@ export class LaplaceControllerDomainComponent {
     return this.stepOne;
   }
 
-  selectValueChanged(event: any) {
+  selectPID(event: any) {
     const selectedValue = event.target.value;
 
-    if (selectedValue === 'Inserir valores') {
-      this.hasPID = true;
-    } else {
-      this.hasPID = false;
-
-      if (selectedValue === 'PID') {
-        console.log('PID');
-      } else if (selectedValue === 'PI') {
-        console.log('PI');
-      } else if (selectedValue === 'PD') {
-        console.log('PD');
-      }
+    if (selectedValue === 'PID') {
+      this.hasP = true;
+      this.hasI = true;
+      this.hasD = true;
+    } else if (selectedValue === 'PI') {
+      this.hasP = true;
+      this.hasI = true;
+      this.hasD = false;
+    } else if (selectedValue === 'PD') {
+      this.hasP = true;
+      this.hasI = false;
+      this.hasD = true;
+    } else if (selectedValue === 'P') {
+      this.hasP = true;
+      this.hasI = false;
+      this.hasD = false;
     }
   }
 
-  calculaStepTwo() {}
+  selectMetodo(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'ZN1') {
+      this.selectedMetodo = 'ZN1';
+    } else if (selectedValue === 'ZN2') {
+      this.selectedMetodo = 'ZN2';
+    } else if (selectedValue === 'MANUAL-INSERT') {
+      this.selectedMetodo = 'MANUAL-INSERT';
+    }
+  }
+
+  isManualInsert(): boolean {
+    console.log(this.selectedMetodo === 'MANUAL-INSERT');
+    return this.selectedMetodo === 'MANUAL-INSERT';
+  }
+
+  validacaoStepTwo(): boolean {
+    const fields = [
+      {
+        field: this.hasAmostragem,
+        input: this.inputAmostragem,
+        fieldName: 'Período de amostragem',
+      },
+      {
+        field: this.hasSaturacao,
+        input: this.inputSaturacao,
+        fieldName: 'Valor de saturação',
+      },
+      {
+        field: true,
+        input: this.inputReferencia,
+        fieldName: 'Valor de referência',
+      },
+    ];
+
+    if (this.isManualInsert()) {
+      fields.push({
+        field: this.hasP,
+        input: this.inputP,
+        fieldName: 'Kp',
+      });
+      fields.push({
+        field: this.hasI,
+        input: this.inputI,
+        fieldName: 'Ki',
+      });
+      fields.push({
+        field: this.hasD,
+        input: this.inputD,
+        fieldName: 'Kd',
+      });
+    }
+
+    const regex = /^[0-9]+(\.[0-9]+)?$/;
+
+    for (const { field, input, fieldName } of fields) {
+      if (field && input === '') {
+        this.showMessageError(`Informe o ${fieldName}`);
+        return false;
+      }
+
+      if (field && !regex.test(input)) {
+        this.showMessageError(
+          `${fieldName} inválido. Digite apenas números decimais. Exemplo: 2.5`
+        );
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  calculaStepTwo() {
+    if (!this.validacaoStepTwo()) {
+      return;
+    }
+    this.showMessageSuccess('SUCESSO');
+  }
 }
