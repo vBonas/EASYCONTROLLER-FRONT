@@ -13,7 +13,7 @@ export class TimeControllerDomainService {
   };
   async calcStep(data: any) {
     return await firstValueFrom(
-      this.http.post(this.url, data, { headers: this.headers })
+      this.http.post(`${this.url}/`, data, { headers: this.headers })
     );
   }
 

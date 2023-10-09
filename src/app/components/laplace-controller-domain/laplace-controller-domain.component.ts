@@ -40,20 +40,21 @@ export class LaplaceControllerDomainComponent {
   graphData: object[] = [];
   stepOne: boolean = false;
 
-  inputAmostragem: string = '1';
+  inputAmostragem: string = '0.01';
   hasAmostragem: boolean = true;
-  inputSaturacao: string = '2';
+  inputSaturacao: string = '100';
   hasSaturacao: boolean = true;
-  inputReferencia: string = '3';
+  inputReferencia: string = '10';
 
   inputP: string = '';
-  hasP: boolean = true;
+  hasP: boolean = false;
   inputI: string = '';
-  hasI: boolean = true;
+  hasI: boolean = false;
   inputD: string = '';
-  hasD: boolean = true;
+  hasD: boolean = false;
 
   selectedMetodo: string = 'ZN1'; // ZN1, ZN2, MANUAL-INSERT
+  selectedOptionPID: string = 'PID'; // PID, PI, PD, P
 
   changeAmostragem() {
     if (!this.hasAmostragem) {
@@ -142,7 +143,7 @@ export class LaplaceControllerDomainComponent {
     }
     this.stepOne = true;
     this.laplaceControllerDomainService
-      .calcula({
+      .calculaStepOne({
         numerador: this.numeradorPs,
         denominador: this.denominadorPs,
       })
@@ -217,18 +218,22 @@ export class LaplaceControllerDomainComponent {
     const selectedValue = event.target.value;
 
     if (selectedValue === 'PID') {
+      this.selectedOptionPID = 'PID';
       this.hasP = true;
       this.hasI = true;
       this.hasD = true;
     } else if (selectedValue === 'PI') {
+      this.selectedOptionPID = 'PI';
       this.hasP = true;
       this.hasI = true;
       this.hasD = false;
     } else if (selectedValue === 'PD') {
+      this.selectedOptionPID = 'PD';
       this.hasP = true;
       this.hasI = false;
       this.hasD = true;
     } else if (selectedValue === 'P') {
+      this.selectedOptionPID = 'P';
       this.hasP = true;
       this.hasI = false;
       this.hasD = false;
@@ -311,6 +316,67 @@ export class LaplaceControllerDomainComponent {
     if (!this.validacaoStepTwo()) {
       return;
     }
-    this.showMessageSuccess('SUCESSO');
+    const body = {
+      saturacao1: this.hasSaturacao ? 1 : 0,
+      amostragem1: this.hasAmostragem ? 1 : 0,
+      controladores: this.getOptionPID(),
+      amostragem: this.inputAmostragem,
+      referencia: this.inputReferencia,
+      saturacao: this.inputSaturacao,
+      kp: this.isManualInsert() && this.hasP ? this.inputP : 0,
+      ti: this.isManualInsert() && this.hasI ? this.inputI : 0,
+      td: this.isManualInsert() && this.hasD ? this.inputD : 0,
+      numerador: this.numeradorPs,
+      controladorescalc: this.getOptionControlador(),
+      denominador: this.denominadorPs,
+    };
+    this.laplaceControllerDomainService
+      .calculaStepTwo(body)
+      .then((res: any) => {
+        this.showMessageSuccess(`Calculado com sucesso`);
+      })
+      .catch((err: any) => {
+        //TODO ALTERAR MENSAGEM
+        this.showMessageError(`Erro ao calcular - ${err.message}`);
+      });
+  }
+
+  getOptionPID(): string {
+    // <option value="4">PID</option>
+    // <option value="2">PI</option>
+    // <option value="3">PD</option>
+    // <option value="1">P</option>
+    if (this.selectedOptionPID === 'PID') {
+      return '4';
+    } else if (this.selectedOptionPID === 'PI') {
+      return '2';
+    } else if (this.selectedOptionPID === 'PD') {
+      return '3';
+    } else if (this.selectedOptionPID === 'P') {
+      return '1';
+    } else {
+      return '4';
+    }
+  }
+
+  getOptionControlador(): string {
+    // <option value="1">
+    //   Não calcular parâmetros automáticos
+    // </option>
+    // <option value="2">
+    //   Zigler-Nichols primeiro método
+    // </option>
+    // <option value="3">
+    //   Zigler-Nichols Segundo método
+    // </option>
+
+    if (this.selectedMetodo === 'MANUAL-INSERT') {
+      return '1';
+    } else if (this.selectedMetodo === 'ZN1') {
+      return '2';
+    } else {
+      // Zigler-Nichols Segundo método
+      return '3';
+    }
   }
 }
