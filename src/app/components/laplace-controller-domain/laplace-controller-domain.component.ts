@@ -78,15 +78,14 @@ export class LaplaceControllerDomainComponent {
   inputReferencia: string = '10';
 
   inputP: string = '';
-  hasP: boolean = false;
+  hasP: boolean = true;
   inputI: string = '';
-  hasI: boolean = false;
+  hasI: boolean = true;
   inputD: string = '';
-  hasD: boolean = false;
+  hasD: boolean = true;
 
-  //TODO VOLTAR PARA ZN1 E PID
-  selectedMetodo: string = 'ZN2'; // ZN1, ZN2, MANUAL-INSERT
-  selectedOptionPID: string = 'PI'; // PID, PI, PD, P
+  selectedMetodo: string = 'ZN1'; // ZN1, ZN2, MANUAL-INSERT
+  selectedOptionPID: string = 'PID'; // PID, PI, PD, P
 
   changeAmostragem() {
     if (!this.hasAmostragem) {
@@ -156,7 +155,7 @@ export class LaplaceControllerDomainComponent {
     }
   }
 
-  calc() {
+  calculaStepOne() {
     this.graficoDegrauUnitario = [];
     if (
       this.numeradorPs === '' ||
@@ -206,9 +205,10 @@ export class LaplaceControllerDomainComponent {
         this.showMessageSuccess(`Calculado com sucesso`);
       })
       .catch((err: any) => {
-        //TODO ALTERAR MENSAGEM
         this.limparInput();
-        this.showMessageError(`Erro ao calcular - ${err.message}`);
+        this.showMessageError(
+          `Não é possivel calcular o controlador, verifique os parâmetros informados`
+        );
       });
   }
 
@@ -369,9 +369,9 @@ export class LaplaceControllerDomainComponent {
         const barraAux = newEquacao[2];
         const denominadorAux = newEquacao[3];
 
-        this.numerador2Element.nativeElement.textContent = newEquacao[1];
-        this.barra2Element.nativeElement.textContent = newEquacao[2];
-        this.denominador2Element.nativeElement.textContent = newEquacao[3];
+        this.numerador2Element.nativeElement.textContent = numeradorAux;
+        this.barra2Element.nativeElement.textContent = barraAux;
+        this.denominador2Element.nativeElement.textContent = denominadorAux;
 
         let kp2 = response.newkp;
         let ti2 = response.newti;
@@ -409,17 +409,20 @@ export class LaplaceControllerDomainComponent {
           data: [sinalsaida],
           layout: this.layout_title('Sinal de saída'),
         };
+        this.graficoSinalDeSaida = [];
         this.graficoSinalDeSaida.push(this.graphSinalDeSaida.data);
 
         this.graphSinalDeControle = {
           data: [sinalcontrole],
           layout: this.layout_title('Sinal de controle'),
         };
+        this.graficoSinalDeControle = [];
         this.graficoSinalDeControle.push(this.graphSinalDeControle.data);
       })
       .catch((err: any) => {
-        //TODO ALTERAR MENSAGEM
-        this.showMessageError(`Erro ao calcular STEP 2 - ${err.message}`);
+        this.showMessageError(
+          `Não é possivel calcular o controlador com os parâmetros informados`
+        );
         this.stepTwo = false;
       });
   }

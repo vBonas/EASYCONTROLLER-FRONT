@@ -78,7 +78,7 @@
                   matInput
                   placeholder="1,2,3"
                   value=""
-                  (keyup.enter)="calc()"
+                  (keyup.enter)="calculaStepOne()"
                   id="input3"
                 />
               </mat-form-field>
@@ -90,7 +90,7 @@
             <button
               mat-raised-button
               color="primary"
-              (click)="calc()"
+              (click)="calculaStepOne()"
               style="margin-left: 25px"
             >
               Calcular dinâmica da planta
@@ -341,6 +341,22 @@
                     <br />
                   </mat-form-field>
                 </td>
+                <td style="padding-left: 24px">Valor de saturação:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Saturação</mat-label>
+                    <input
+                      [(ngModel)]="outputSaturation"
+                      type="text"
+                      matInput
+                      id="outputSaturation"
+                      name="saturacaoo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
               </tr>
 
               <tr>
@@ -354,6 +370,25 @@
                       matInput
                       id="outputKi"
                       name="ti1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+                <td style="padding-left: 24px">Valor de amostragem:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Amostragem</mat-label>
+                    <input
+                      ng-style="{
+                        'background-color': disabled ? 'red' : 'green'
+                      }"
+                      [(ngModel)]="outputAmostragem"
+                      type="text"
+                      matInput
+                      id="outputAmostragem"
+                      name="amostragemo"
                       size="40"
                       disabled
                     />
@@ -379,9 +414,25 @@
                     <br />
                   </mat-form-field>
                 </td>
+                <td style="padding-left: 24px">Valor de referência:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Referência</mat-label>
+                    <input
+                      [(ngModel)]="outputReferencia"
+                      type="text"
+                      matInput
+                      id="outputReferencia"
+                      name="referencia1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
               </tr>
 
-              <tr>
+              <tr *ngIf="!isLargeScreen">
                 <td>Valor de saturação:</td>
                 <td>
                   <mat-form-field appearance="fill">
@@ -400,7 +451,7 @@
                 </td>
               </tr>
 
-              <tr>
+              <tr *ngIf="!isLargeScreen">
                 <td>Valor de amostragem:</td>
                 <td>
                   <mat-form-field appearance="fill">
@@ -419,7 +470,7 @@
                 </td>
               </tr>
 
-              <tr>
+              <tr *ngIf="!isLargeScreen">
                 <td>Valor de referência:</td>
                 <td>
                   <mat-form-field appearance="fill">
