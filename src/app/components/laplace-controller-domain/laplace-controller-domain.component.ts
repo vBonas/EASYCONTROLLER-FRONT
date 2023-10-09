@@ -363,7 +363,6 @@ export class LaplaceControllerDomainComponent {
     this.laplaceControllerDomainService
       .calculaStepTwo(this.getBody())
       .then((response: any) => {
-        console.log(response);
         const newEquacao = response.newG;
         const numeradorAux = newEquacao[1];
         const barraAux = newEquacao[2];
@@ -446,22 +445,15 @@ export class LaplaceControllerDomainComponent {
   }
 
   getOptionControlador(): string {
-    // <option value="1">
-    //   Não calcular parâmetros automáticos
-    // </option>
-    // <option value="2">
-    //   Zigler-Nichols primeiro método
-    // </option>
-    // <option value="3">
-    //   Zigler-Nichols Segundo método
-    // </option>
-
+    // <option value="1">  Não calcular parâmetros automáticos
+    // <option value="2"> Zigler-Nichols primeiro método
+    // <option value="3"> Zigler-Nichols Segundo método
     if (this.selectedMetodo === 'MANUAL-INSERT') {
       return '1';
     } else if (this.selectedMetodo === 'ZN1') {
       return '2';
     } else {
-      // Zigler-Nichols Segundo método
+      // Zigler Segundo método
       return '3';
     }
   }
