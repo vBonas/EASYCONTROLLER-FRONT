@@ -36,9 +36,33 @@ export class LaplaceControllerDomainComponent {
   @ViewChild('numeradorEq1') numeradorElement!: ElementRef;
   @ViewChild('barraEq1') barraElement!: ElementRef;
   @ViewChild('denominadorEq1') denominadorElement!: ElementRef;
+
+  @ViewChild('numeradorEq2') numerador2Element!: ElementRef;
+  @ViewChild('barraEq2') barra2Element!: ElementRef;
+  @ViewChild('denominadorEq2') denominador2Element!: ElementRef;
+  // DEGRAU UNITARIO
   graficoDegrauUnitario: any = [];
   graphData: object[] = [];
+  graphDegrauUnitario = {
+    data: this.graphData,
+    layout: this.layout_title('Resposta ao degrau unitário'),
+  };
+
+  //SINAL DE SAIDA
+  graficoSinalDeSaida: any = [];
+  graphSinalDeSaida = {
+    data: this.graphData,
+    layout: this.layout_title('Sinal de saída'),
+  };
+
+  //SINAL DE CONTROLE
+  graficoSinalDeControle: any = [];
+  graphSinalDeControle = {
+    data: this.graphData,
+    layout: this.layout_title('Sinal de controle'),
+  };
   stepOne: boolean = false;
+  stepTwo: boolean = false;
 
   inputAmostragem: string = '0.01';
   hasAmostragem: boolean = true;
@@ -53,8 +77,9 @@ export class LaplaceControllerDomainComponent {
   inputD: string = '';
   hasD: boolean = false;
 
-  selectedMetodo: string = 'ZN1'; // ZN1, ZN2, MANUAL-INSERT
-  selectedOptionPID: string = 'PID'; // PID, PI, PD, P
+  //TODO VOLTAR PARA ZN1 E PID
+  selectedMetodo: string = 'ZN2'; // ZN1, ZN2, MANUAL-INSERT
+  selectedOptionPID: string = 'PI'; // PID, PI, PD, P
 
   changeAmostragem() {
     if (!this.hasAmostragem) {
@@ -70,12 +95,6 @@ export class LaplaceControllerDomainComponent {
     } else {
       this.inputSaturacao = '1';
     }
-  }
-
-  graph = { data: this.graphData, layout: this.layout() };
-
-  layout() {
-    return this.layout_title('Resposta ao degrau unitário');
   }
 
   layout_title(title: string) {
@@ -171,11 +190,11 @@ export class LaplaceControllerDomainComponent {
           },
         ];
 
-        this.graph = {
+        this.graphDegrauUnitario = {
           data: datas,
-          layout: this.layout(),
+          layout: this.layout_title('Resposta ao degrau unitário'),
         };
-        this.graficoDegrauUnitario.push(this.graph.data);
+        this.graficoDegrauUnitario.push(this.graphDegrauUnitario.data);
 
         this.showMessageSuccess(`Calculado com sucesso`);
       })
@@ -252,7 +271,6 @@ export class LaplaceControllerDomainComponent {
   }
 
   isManualInsert(): boolean {
-    console.log(this.selectedMetodo === 'MANUAL-INSERT');
     return this.selectedMetodo === 'MANUAL-INSERT';
   }
 
@@ -312,11 +330,8 @@ export class LaplaceControllerDomainComponent {
     return true;
   }
 
-  calculaStepTwo() {
-    if (!this.validacaoStepTwo()) {
-      return;
-    }
-    const body = {
+  getBody(): any {
+    return {
       saturacao1: this.hasSaturacao ? 1 : 0,
       amostragem1: this.hasAmostragem ? 1 : 0,
       controladores: this.getOptionPID(),
@@ -330,14 +345,68 @@ export class LaplaceControllerDomainComponent {
       controladorescalc: this.getOptionControlador(),
       denominador: this.denominadorPs,
     };
+  }
+
+  calculaStepTwo() {
+    this.stepTwo = true;
+    if (!this.validacaoStepTwo()) {
+      return;
+    }
+
     this.laplaceControllerDomainService
-      .calculaStepTwo(body)
-      .then((res: any) => {
+      .calculaStepTwo(this.getBody())
+      .then((response: any) => {
+        console.log(response);
+        const newEquacao = response.newG;
+        const numeradorAux = newEquacao[1];
+        const barraAux = newEquacao[2];
+        const denominadorAux = newEquacao[3];
+
+        this.numerador2Element.nativeElement.textContent = newEquacao[1];
+        this.barra2Element.nativeElement.textContent = newEquacao[2];
+        this.denominador2Element.nativeElement.textContent = newEquacao[3];
+
+        let kp2 = response.newkp;
+        let ti2 = response.newti;
+        let td2 = response.newtd;
+        let referencia2 = response.newreferencia;
+        let amostragem5 = response.newamostragem;
+        let saturacao5 = response.newsaturacao;
+        let eixo_x = response.newtempo;
+        let eixo_yy = response.newsaida;
+        let eixo_yu = response.newcontrole;
+
+        let sinalsaida = {
+          x: eixo_x,
+          y: eixo_yy,
+          mode: 'line',
+          type: 'scatter',
+        };
+        let sinalcontrole = {
+          x: eixo_x,
+          y: eixo_yu,
+          mode: 'line',
+          type: 'scatter',
+        };
+
         this.showMessageSuccess(`Calculado com sucesso`);
+
+        this.graphSinalDeSaida = {
+          data: [sinalsaida],
+          layout: this.layout_title('Sinal de saída'),
+        };
+        this.graficoSinalDeSaida.push(this.graphSinalDeSaida.data);
+
+        this.graphSinalDeControle = {
+          data: [sinalcontrole],
+          layout: this.layout_title('Sinal de controle'),
+        };
+        this.graficoSinalDeControle.push(this.graphSinalDeControle.data);
       })
       .catch((err: any) => {
         //TODO ALTERAR MENSAGEM
-        this.showMessageError(`Erro ao calcular - ${err.message}`);
+        this.showMessageError(`Erro ao calcular STEP 2 - ${err.message}`);
+        this.stepTwo = false;
       });
   }
 

@@ -109,7 +109,7 @@
     <div class="elemento-com-svg-de-fundo">
       <div class="navbar-container" style="padding: 25px">
         <div *ngIf="hasStepOne()" class="card-box">
-          <div class="card-body">
+          <div>
             <h5 class="title-card">
               Sua resposta ao degrau unitário em malha aberta é:
             </h5>
@@ -129,13 +129,13 @@
 
             <plotly-plot
               [data]="this.graficoDegrauUnitario[0]"
-              [layout]="graph.layout"
+              [layout]="graphDegrauUnitario.layout"
             ></plotly-plot>
           </div>
         </div>
 
         <div
-          *ngIf="!hasStepOne()"
+          *ngIf="hasStepOne()"
           class="card-box"
           style="margin-top: 25px; padding-top: 35px"
         >
@@ -285,6 +285,39 @@
           >
             Calcular controlador com Laplace
           </button>
+        </div>
+
+        <div
+          *ngIf="stepTwo"
+          class="card-box"
+          style="margin-top: 25px; padding-top: 35px"
+        >
+          <div>
+            <h5 class="title-card">TITULO A DEFINIR</h5>
+            <div
+              class="al"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="text-card" #numeradorEq2></div>
+              <div class="text-card" #barraEq2></div>
+              <div class="text-card" #denominadorEq2></div>
+            </div>
+
+            <plotly-plot
+              [data]="this.graficoSinalDeSaida[0]"
+              [layout]="graphSinalDeSaida.layout"
+            ></plotly-plot>
+
+            <plotly-plot
+              [data]="this.graficoSinalDeControle[0]"
+              [layout]="graphSinalDeControle.layout"
+            ></plotly-plot>
+          </div>
         </div>
       </div>
     </div>
