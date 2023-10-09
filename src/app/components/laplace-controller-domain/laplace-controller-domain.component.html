@@ -287,11 +287,7 @@
           </button>
         </div>
 
-        <div
-          *ngIf="stepTwo"
-          class="card-box"
-          style="margin-top: 25px; padding-top: 35px"
-        >
+        <div *ngIf="stepTwo" class="card-box" style="margin-top: 25px">
           <div>
             <h5 class="title-card">TITULO A DEFINIR</h5>
             <div
@@ -301,6 +297,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                padding-top: 24px;
               "
             >
               <div class="text-card" #numeradorEq2></div>
@@ -308,15 +305,139 @@
               <div class="text-card" #denominadorEq2></div>
             </div>
 
+            <h5 class="title-card" style="font-size: 18px; padding-top: 24px">
+              TITULO A DEFINIR 2
+            </h5>
+
             <plotly-plot
               [data]="this.graficoSinalDeSaida[0]"
               [layout]="graphSinalDeSaida.layout"
             ></plotly-plot>
 
+            <h5 class="title-card" style="font-size: 18px; padding-top: 24px">
+              TITULO A DEFINIR 3
+            </h5>
+
             <plotly-plot
               [data]="this.graficoSinalDeControle[0]"
               [layout]="graphSinalDeControle.layout"
             ></plotly-plot>
+
+            <table>
+              <tr>
+                <td>Valor de Kp:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Kp</mat-label>
+                    <input
+                      [(ngModel)]="outputKp"
+                      type="text"
+                      matInput
+                      id="outputKp"
+                      name="kp1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de Ti:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Ti</mat-label>
+                    <input
+                      [(ngModel)]="outputKi"
+                      type="text"
+                      matInput
+                      id="outputKi"
+                      name="ti1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de Td:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Td</mat-label>
+                    <input
+                      [(ngModel)]="outputKd"
+                      type="text"
+                      matInput
+                      id="outputKd"
+                      name="td1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de saturação:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Saturação</mat-label>
+                    <input
+                      [(ngModel)]="outputSaturation"
+                      type="text"
+                      matInput
+                      id="outputSaturation"
+                      name="saturacaoo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de amostragem:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Amostragem</mat-label>
+                    <input
+                      [(ngModel)]="outputAmostragem"
+                      type="text"
+                      matInput
+                      id="outputAmostragem"
+                      name="amostragemo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de referência:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Referência</mat-label>
+                    <input
+                      [(ngModel)]="outputReferencia"
+                      type="text"
+                      matInput
+                      id="outputReferencia"
+                      name="referencia1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

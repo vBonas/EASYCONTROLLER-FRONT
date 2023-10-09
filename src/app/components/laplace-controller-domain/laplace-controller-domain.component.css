@@ -25,3 +25,10 @@
   max-width: 300px;
   padding-right: 30px;
 }
+
+td {
+  color: #080f25;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+  font-size: 18px;
+}

@@ -40,6 +40,13 @@ export class LaplaceControllerDomainComponent {
   @ViewChild('numeradorEq2') numerador2Element!: ElementRef;
   @ViewChild('barraEq2') barra2Element!: ElementRef;
   @ViewChild('denominadorEq2') denominador2Element!: ElementRef;
+
+  outputKp: string = '0';
+  outputKi: string = '0';
+  outputKd: string = '0';
+  outputSaturation: string = '0';
+  outputAmostragem: string = '0';
+  outputReferencia: string = '0';
   // DEGRAU UNITARIO
   graficoDegrauUnitario: any = [];
   graphData: object[] = [];
@@ -372,6 +379,13 @@ export class LaplaceControllerDomainComponent {
         let referencia2 = response.newreferencia;
         let amostragem5 = response.newamostragem;
         let saturacao5 = response.newsaturacao;
+
+        this.outputKp = kp2;
+        this.outputKi = ti2;
+        this.outputKd = td2;
+        this.outputSaturation = saturacao5;
+        this.outputAmostragem = amostragem5;
+        this.outputReferencia = referencia2;
         let eixo_x = response.newtempo;
         let eixo_yy = response.newsaida;
         let eixo_yu = response.newcontrole;
