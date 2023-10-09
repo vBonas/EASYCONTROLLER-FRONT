@@ -205,7 +205,7 @@ export class LaplaceControllerDomainComponent {
         this.showMessageSuccess(`Calculado com sucesso`);
       })
       .catch((err: any) => {
-        this.limparInput();
+        //this.limparInput();
         this.showMessageError(
           `Não é possivel calcular o controlador, verifique os parâmetros informados`
         );
@@ -213,6 +213,7 @@ export class LaplaceControllerDomainComponent {
   }
 
   limparInput() {
+    this.stepOne = false;
     this.numeradorPs = '';
     this.denominadorPs = '';
     this.numeradorDs = '';

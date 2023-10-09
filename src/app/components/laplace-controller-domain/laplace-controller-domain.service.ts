@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class LaplaceControllerDomainService {
   constructor(private http: HttpClient) {}
-  url = 'http://127.0.0.1:8000/';
+  url = 'https://easycontroller.onrender.com/';
   headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET',
@@ -19,7 +19,9 @@ export class LaplaceControllerDomainService {
       .join('&');
 
     return await firstValueFrom(
-      this.http.get(`${this.url}modelo/chamadas/dadosgrafico?${queryString}`)
+      this.http.get(`${this.url}laplace/stepOne?${queryString}`, {
+        headers: this.headers,
+      })
     );
   }
 
@@ -31,7 +33,9 @@ export class LaplaceControllerDomainService {
       .join('&');
 
     return await firstValueFrom(
-      this.http.get(`${this.url}modelo/chamadas2/dadosgrafico2?${queryString}`)
+      this.http.get(`${this.url}laplace/stepTwo?${queryString}`, {
+        headers: this.headers,
+      })
     );
   }
 }

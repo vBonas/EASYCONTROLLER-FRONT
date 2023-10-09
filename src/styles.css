@@ -267,6 +267,10 @@ mat-sidenav[style] {
   background-color: #37446b;
 }
 
+.vlMobile {
+  padding: 25px;
+}
+
 .vlBig {
   width: 1px;
   height: 350px;

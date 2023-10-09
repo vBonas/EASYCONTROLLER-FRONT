@@ -5,7 +5,8 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class TimeControllerDomainService {
   constructor(private http: HttpClient) {}
-  url = 'https://almir.pythonanywhere.com/appview/easy-controller';
+  //url = 'https://almir.pythonanywhere.com/appview/easy-controller';
+  url = 'https://easycontroller.onrender.com/easy-controller';
   headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',

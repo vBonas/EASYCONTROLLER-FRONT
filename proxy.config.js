@@ -1,7 +1,7 @@
 const proxy = [
   {
     context: "/api",
-    target: "http://localhost:8000",
+    target: "https://easycontroller.onrender.com",
     pathRewrite: { "^/api": "" },
   },
 ];

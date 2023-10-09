@@ -271,7 +271,8 @@
                   </p>
                   <p class="text-card">{{ obsv_rank }}</p>
                 </div>
-                <div *ngIf="isControlable()" class="vl"></div>
+                <div *ngIf="isControlable() && isLargeScreen" class="vl"></div>
+                <div *ngIf="!isLargeScreen" class="vlMobile"></div>
                 <!-- divisor na vertical -->
                 <div *ngIf="isControlable()" style="col">
                   <mat-card-title class="title-card"
