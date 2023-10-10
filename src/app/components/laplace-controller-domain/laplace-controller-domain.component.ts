@@ -201,8 +201,6 @@ export class LaplaceControllerDomainComponent {
           layout: this.layout_title('Resposta ao degrau unitário'),
         };
         this.graficoDegrauUnitario.push(this.graphDegrauUnitario.data);
-
-        this.showMessageSuccess(`Calculado com sucesso`);
       })
       .catch((err: any) => {
         //this.limparInput();
@@ -243,24 +241,20 @@ export class LaplaceControllerDomainComponent {
 
   selectPID(event: any) {
     const selectedValue = event.target.value;
-
+    this.selectedOptionPID = selectedValue;
     if (selectedValue === 'PID') {
-      this.selectedOptionPID = 'PID';
       this.hasP = true;
       this.hasI = true;
       this.hasD = true;
     } else if (selectedValue === 'PI') {
-      this.selectedOptionPID = 'PI';
       this.hasP = true;
       this.hasI = true;
       this.hasD = false;
     } else if (selectedValue === 'PD') {
-      this.selectedOptionPID = 'PD';
       this.hasP = true;
       this.hasI = false;
       this.hasD = true;
     } else if (selectedValue === 'P') {
-      this.selectedOptionPID = 'P';
       this.hasP = true;
       this.hasI = false;
       this.hasD = false;
@@ -269,13 +263,7 @@ export class LaplaceControllerDomainComponent {
 
   selectMetodo(event: any) {
     const selectedValue = event.target.value;
-    if (selectedValue === 'ZN1') {
-      this.selectedMetodo = 'ZN1';
-    } else if (selectedValue === 'ZN2') {
-      this.selectedMetodo = 'ZN2';
-    } else if (selectedValue === 'MANUAL-INSERT') {
-      this.selectedMetodo = 'MANUAL-INSERT';
-    }
+    this.selectedMetodo = selectedValue;
   }
 
   isManualInsert(): boolean {
@@ -402,8 +390,6 @@ export class LaplaceControllerDomainComponent {
           mode: 'line',
           type: 'scatter',
         };
-
-        this.showMessageSuccess(`Calculado com sucesso`);
 
         this.graphSinalDeSaida = {
           data: [sinalsaida],
