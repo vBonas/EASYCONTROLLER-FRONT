@@ -2,9 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
-
-import { Layout } from 'plotly.js-dist-min';
-
 @Component({
   selector: 'app-laplace-controller-domain',
   templateUrl: './laplace-controller-domain.component.html',

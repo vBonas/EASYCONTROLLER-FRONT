@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'ariel',
+    path: '**',
     loadChildren: () =>
       import('./components/landing-page/landing-page.module').then(
         (m) => m.LandingPageModule

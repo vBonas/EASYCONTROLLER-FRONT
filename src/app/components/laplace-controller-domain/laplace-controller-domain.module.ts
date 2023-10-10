@@ -17,7 +17,6 @@ import { LaplaceControllerDomainComponent } from './laplace-controller-domain.co
 import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
 import { LaplaceControllerDomainRoutingModule } from './laplace-controller-domain-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SpinnerComponent } from '../spinner/spinner.component';
 import { LoadingComponent } from '../loading/loading.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;

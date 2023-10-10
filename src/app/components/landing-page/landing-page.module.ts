@@ -5,7 +5,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { PlotlyModule } from 'angular-plotly.js';
 import { HttpClientModule } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatCardModule } from '@angular/material/card';
@@ -25,7 +24,6 @@ import { LandingPageRoutingModule } from './landing-page-routing.module';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    PlotlyModule,
     HttpClientModule,
     ClipboardModule,
     MatCardModule,
