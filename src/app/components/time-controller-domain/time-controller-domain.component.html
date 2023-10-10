@@ -1,0 +1,775 @@
+<app-spinner></app-spinner>
+<mat-sidenav-container autosize>
+  <mat-sidenav
+    *ngIf="isLargeScreen"
+    #sidenav
+    fixedInViewport="true"
+    mode="side"
+    opened="{{ true }}"
+  >
+    <section [class.sidenav]="isExpanded">
+      <div class="title">
+        <p *ngIf="isExpanded">EaseController</p>
+        <div class="toggle">
+          <mat-icon (click)="toggleMenu()">
+            {{ isExpanded ? "first_page" : "dehaze" }}
+          </mat-icon>
+        </div>
+      </div>
+      <div *ngIf="isExpanded">
+        <div>
+          <h2 class="parametrosDoSistema">
+            Controle em Espaço de Estados em Tempo Contínuo
+          </h2>
+
+          <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">Parâmetros do sistema</p>
+
+            <div class="input-increase">
+              <div class="inputRow">
+                <h5 class="inputText">Ordem do Sistema</h5>
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  [style.width.px]="80"
+                >
+                  <mat-label></mat-label>
+                  <input
+                    type="number"
+                    [(ngModel)]="quadN"
+                    matInput
+                    placeholder="Estado da Matriz"
+                    (change)="createTables()"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="inputRow">
+                <h5 class="inputText">Número de Entradas</h5>
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  [style.width.px]="80"
+                >
+                  <mat-label></mat-label>
+                  <input
+                    type="number"
+                    [(ngModel)]="inL"
+                    matInput
+                    placeholder="Número de Entradas"
+                    (change)="createTables()"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="inputRow">
+                <h5 class="inputText">Número de Saídas</h5>
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  [style.width.px]="80"
+                >
+                  <mat-label></mat-label>
+                  <input
+                    type="number"
+                    [(ngModel)]="outM"
+                    matInput
+                    placeholder="Número de Saídas"
+                    (change)="createTables()"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- MATRIZES -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">Preenchimento das matrizes</p>
+
+            <div *ngFor="let matriz of matrizes; index as c">
+              <h5>Matriz {{ matriz.label }}</h5>
+
+              <table>
+                <tr *ngFor="let vx of matriz.values; let i = index">
+                  <td
+                    *ngFor="let vy of vx; let j = index; trackBy: trackByFilter"
+                  >
+                    <input
+                      class="inputMatriz"
+                      type="text"
+                      id="cell_{{ i }}_{{ j }}"
+                      appDecimalNumber
+                      value=""
+                      matInput
+                      (blur)="matrizValueChange(matriz, i, j, $event)"
+                      placeholder="0"
+                      defaultValue=""
+                      (keydown)="handleEnterKey($event, i, j)"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="calcularDinamicaDaPlanta()"
+              style="margin-left: 25px"
+            >
+              Calcular dinâmica da planta
+            </button>
+            <button class="iconDelete" (click)="limparInput()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </mat-sidenav>
+  <mat-sidenav-content
+    [style.margin-left.px]="isLargeScreen ? (isExpanded ? 350 : 75) : 0"
+  >
+    <div class="elemento-com-svg-de-fundo">
+      <div class="navbar-container" style="padding: 25px">
+        <div>
+          <div class="card-box-nav" *ngIf="!isLargeScreen">
+            <section [class.sidenav]="isExpanded">
+              <div class="title">
+                <p *ngIf="isExpanded">EaseController</p>
+              </div>
+              <div *ngIf="isExpanded">
+                <div>
+                  <h2 class="parametrosDoSistema">
+                    Controle em Espaço de Estados em Tempo Contínuo
+                  </h2>
+
+                  <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
+                  <div class="matrizes-input">
+                    <p class="titles-navBar">Parâmetros do sistema</p>
+
+                    <div class="input-increase">
+                      <div class="inputRow">
+                        <h5 class="inputText">Ordem do Sistema</h5>
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                          [style.width.px]="60"
+                        >
+                          <mat-label></mat-label>
+                          <input
+                            type="number"
+                            [(ngModel)]="quadN"
+                            matInput
+                            placeholder="Estado da Matriz"
+                            (change)="createTables()"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="inputRow">
+                        <h5 class="inputText">Número de Entradas</h5>
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                          [style.width.px]="60"
+                        >
+                          <mat-label></mat-label>
+                          <input
+                            type="number"
+                            [(ngModel)]="inL"
+                            matInput
+                            placeholder="Número de Entradas"
+                            (change)="createTables()"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <div class="inputRow">
+                        <h5 class="inputText">Número de Saídas</h5>
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                          [style.width.px]="60"
+                        >
+                          <mat-label></mat-label>
+                          <input
+                            type="number"
+                            [(ngModel)]="outM"
+                            matInput
+                            placeholder="Número de Saídas"
+                            (change)="createTables()"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- MATRIZES -->
+                  <div class="matrizes-input">
+                    <p class="titles-navBar">Preenchimento das matrizes</p>
+
+                    <div *ngFor="let matriz of matrizes; index as c">
+                      <h5>Matriz {{ matriz.label }}</h5>
+
+                      <table>
+                        <tr *ngFor="let vx of matriz.values; let i = index">
+                          <td
+                            *ngFor="
+                              let vy of vx;
+                              let j = index;
+                              trackBy: trackByFilter
+                            "
+                          >
+                            <input
+                              class="inputMatriz"
+                              type="text"
+                              id="cell_{{ i }}_{{ j }}"
+                              appDecimalNumber
+                              value=""
+                              matInput
+                              (blur)="matrizValueChange(matriz, i, j, $event)"
+                              placeholder="0"
+                              defaultValue=""
+                              (keydown)="handleEnterKey($event, i, j)"
+                            />
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      (click)="calcularDinamicaDaPlanta()"
+                      style="margin-left: 25px"
+                    >
+                      Calcular dinâmica da planta
+                    </button>
+                    <button class="iconDelete" (click)="limparInput()">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div *ngIf="panelMA">
+            <!-- Controlabilidade -->
+            <div class="card-box">
+              <div class="row-controlabilidade">
+                <div>
+                  <mat-card-title class="title-card"
+                    >Controlabilidade e<br />Observabilidade</mat-card-title
+                  >
+                  <p class="text-card" style="margin-top: 10px">
+                    {{ control_rank }}
+                  </p>
+                  <p class="text-card">{{ obsv_rank }}</p>
+                </div>
+                <div *ngIf="isControlable() && isLargeScreen" class="vl"></div>
+                <div *ngIf="!isLargeScreen" class="vlMobile"></div>
+                <!-- divisor na vertical -->
+                <div *ngIf="isControlable()" style="col">
+                  <mat-card-title class="title-card"
+                    >Escolha o controlador<br
+                  /></mat-card-title>
+                  <mat-form-field style="margin-top: 25px">
+                    <select
+                      matNativeControl
+                      (change)="selectValueChanged($event)"
+                    >
+                      <option value="LQR">LQR</option>
+                      <option value="LQR_Integrador">LQR + Integrador</option>
+                      <option *ngIf="isOberservable()" value="LQG">LQG</option>
+                      <option *ngIf="isOberservable()" value="LQG_Integrador">
+                        LQG + Integrador
+                      </option>
+                    </select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-box" style="margin-top: 10px">
+              <mat-card-title class="title-card">
+                Dinâmica da planta</mat-card-title
+              >
+              <plotly-plot
+                [data]="this.stepMA[0]"
+                [layout]="graph.layout"
+              ></plotly-plot>
+            </div>
+          </div>
+
+          <div *ngIf="panelCostMatrixLQR">
+            <div class="card-box" style="margin-top: 10px">
+              <mat-card-title class="title-card"
+                >Definir Matrizes de Custo e Condições Iniciais para
+                LQR</mat-card-title
+              >
+              <div *ngFor="let CI of initialCond">
+                <h4 class="text-card" style="margin-top: 24px">
+                  Condições Iniciais
+                </h4>
+                <table>
+                  <tr *ngFor="let vx of CI.values; let i = index">
+                    <td
+                      *ngFor="
+                        let vy of vx;
+                        let j = index;
+                        trackBy: trackByFilter
+                      "
+                    >
+                      <input
+                        class="inputMatriz"
+                        type="text"
+                        id="cell_{{ i }}_{{ j }}"
+                        appDecimalNumber
+                        value=""
+                        matInput
+                        (blur)="matrizValueChange(CI, i, j, $event)"
+                        placeholder="0"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div *ngFor="let myLQR of matriz_custo">
+                <h4 class="text-card">Matriz {{ myLQR.label }}</h4>
+                <table>
+                  <tr *ngFor="let vx of myLQR.values; let i = index">
+                    <td
+                      *ngFor="
+                        let vy of vx;
+                        let j = index;
+                        trackBy: trackByFilter
+                      "
+                    >
+                      <input
+                        class="inputMatriz"
+                        type="text"
+                        id="cell_{{ i }}_{{ j }}"
+                        appDecimalNumber
+                        value=""
+                        matInput
+                        (blur)="matrizValueChange(myLQR, i, j, $event)"
+                        placeholder="0"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calc_lqr()"
+                style="margin: 10px"
+              >
+                Calcular controlador LQR
+              </button>
+            </div>
+
+            <div *ngIf="panelCalc_lqr">
+              <div class="card-box" style="margin-top: 24px">
+                <mat-card-title class="title-card"
+                  >Resposta para controlador LQR</mat-card-title
+                >
+                <plotly-plot
+                  [data]="this.yLQR[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </div>
+              <mat-card style="margin-top: 10px">
+                <mat-card-title class="title-card"
+                  >Sinal de Controle</mat-card-title
+                >
+                <plotly-plot
+                  [data]="this.uLQR[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+              <button
+                *ngIf="!this.panelState"
+                mat-raised-button
+                color="primary"
+                style="margin: 10px"
+                (click)="showCode()"
+              >
+                Exibir Código
+              </button>
+              <div *ngIf="this.panelState">
+                <mat-card style="margin-top: 10px">
+                  <code style="display: block; white-space: pre-wrap">{{
+                    codes.lqr
+                  }}</code>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    style="margin: 10px"
+                    [cdkCopyToClipboard]="codes.lqr"
+                    (click)="codeCopied()"
+                  >
+                    Copiar código
+                  </button>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="panelCostMatrixLQI">
+            <div class="card-box" style="margin-top: 10px">
+              <mat-card-title class="title-card">
+                Definir Matrizes de Custo para LQR + Integrador</mat-card-title
+              >
+              <div *ngFor="let myLQI of matriz_custo">
+                <h4 class="text-card">Matriz {{ myLQI.label }}</h4>
+                <table>
+                  <tr *ngFor="let vx of myLQI.values; let i = index">
+                    <td
+                      *ngFor="
+                        let vy of vx;
+                        let j = index;
+                        trackBy: trackByFilter
+                      "
+                    >
+                      <input
+                        class="inputMatriz"
+                        type="text"
+                        id="cell_{{ i }}_{{ j }}"
+                        appDecimalNumber
+                        value=""
+                        matInput
+                        (blur)="matrizValueChange(myLQI, i, j, $event)"
+                        placeholder="0"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calc_lqi()"
+                style="margin: 10px"
+              >
+                Calcular
+              </button>
+            </div>
+
+            <div *ngIf="panelCalc_lqi">
+              <mat-card style="margin-top: 10px">
+                <mat-card-title>Resposta para controlador LQI</mat-card-title>
+                <plotly-plot
+                  [data]="this.yLQI[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+              <mat-card style="margin-top: 10px">
+                <mat-card-title>Sinal de Controle</mat-card-title>
+                <plotly-plot
+                  [data]="this.uLQI[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+              <button
+                *ngIf="!this.panelState"
+                mat-raised-button
+                color="primary"
+                style="margin: 10px"
+                (click)="showCode()"
+              >
+                Exibir Código
+              </button>
+              <div *ngIf="this.panelState">
+                <mat-card style="margin-top: 10px">
+                  <code style="display: block; white-space: pre-wrap">{{
+                    codes.lqi
+                  }}</code>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    style="margin: 10px"
+                    [cdkCopyToClipboard]="codes.lqi"
+                    (click)="codeCopied()"
+                  >
+                    Copiar código
+                  </button>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="panelCostMatrixLQG" style="margin-top: 24px">
+            <mat-card style="margin-top: 24px">
+              <!-- TITLE -->
+              <mat-card-title
+                >Definir Matrizes de Custo e Condições Iniciais para
+                LQG</mat-card-title
+              >
+
+              <div class="rowMatrixLQG">
+                <div style="margin-top: 24px">
+                  <!-- CONDICAO INICIAL -->
+                  <div *ngFor="let CI of initialCond">
+                    <h4 class="text-card">Condições Iniciais</h4>
+                    <table>
+                      <tr *ngFor="let vx of CI.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(CI, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div *ngFor="let myLQG of matriz_custo">
+                    <h4 class="text-card">Matriz {{ myLQG.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myLQG.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myLQG, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <!-- MATRIZ QN & RN -->
+                <div style="margin-top: 24px">
+                  <div *ngFor="let myKalman of matriz_kalman">
+                    <h4 class="text-card">{{ myKalman.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myKalman.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myKalman, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calc_lqg()"
+                style="margin: 10px"
+              >
+                Calcular controlador LQG
+              </button>
+            </mat-card>
+
+            <div *ngIf="panelCalc_lqg" style="margin-top: 24px">
+              <mat-card style="margin-top: 10px">
+                <mat-card-title>Resposta para controlador LQG</mat-card-title>
+
+                <plotly-plot
+                  [data]="this.yLQG[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+              <mat-card style="padding-top: 24px">
+                <h4 class="title-card">Sinal de Controle</h4>
+                <plotly-plot
+                  [data]="this.uLQG[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+              <button
+                *ngIf="!this.panelState"
+                mat-raised-button
+                color="primary"
+                style="margin: 10px"
+                (click)="showCode()"
+              >
+                Exibir Código
+              </button>
+              <div *ngIf="this.panelState">
+                <mat-card style="margin-top: 10px">
+                  <code style="display: block; white-space: pre-wrap">{{
+                    codes.lqg
+                  }}</code>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    style="margin: 10px"
+                    [cdkCopyToClipboard]="codes.lqg"
+                    (click)="codeCopied()"
+                  >
+                    Copiar código
+                  </button>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="panelCostMatrixLQGI">
+            <mat-card style="margin-top: 10px">
+              <mat-card-title
+                >Definir Matrizes de Custo para LQG + Integrador</mat-card-title
+              >
+              <div class="rowMatrixLQG">
+                <div style="margin-top: 24px">
+                  <div *ngFor="let myLQGI of matriz_custo">
+                    <h4 class="text-card">Matriz {{ myLQGI.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myLQGI.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myLQGI, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div style="margin-top: 24px">
+                  <div *ngFor="let myKalman of matriz_kalman">
+                    <h4 class="text-card">{{ myKalman.label }}</h4>
+                    <table>
+                      <tr *ngFor="let vx of myKalman.values; let i = index">
+                        <td
+                          *ngFor="
+                            let vy of vx;
+                            let j = index;
+                            trackBy: trackByFilter
+                          "
+                        >
+                          <input
+                            class="inputMatriz"
+                            type="text"
+                            id="cell_{{ i }}_{{ j }}"
+                            appDecimalNumber
+                            value=""
+                            matInput
+                            (blur)="matrizValueChange(myKalman, i, j, $event)"
+                            placeholder="0"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                mat-raised-button
+                color="primary"
+                style="margin: 10px"
+                (click)="calc_lqgi()"
+                style="margin: 10px"
+              >
+                Calcular controlador LQG com integrador
+              </button>
+            </mat-card>
+
+            <div *ngIf="panelCalc_lqgi">
+              <mat-card style="margin-top: 10px">
+                <mat-card-title
+                  >Resposta para controlador LQG com integrador</mat-card-title
+                >
+                <plotly-plot
+                  [data]="this.yLQGI[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+              <mat-card style="margin-top: 10px">
+                <h4 class="title-card">Sinal de Controle</h4>
+                <plotly-plot
+                  [data]="this.uLQGI[0]"
+                  [layout]="graphCI.layout"
+                ></plotly-plot>
+              </mat-card>
+
+              <button
+                *ngIf="!this.panelState"
+                mat-raised-button
+                color="primary"
+                style="margin: 10px"
+                (click)="showCode()"
+              >
+                Exibir Código
+              </button>
+              <div *ngIf="this.panelState">
+                <mat-card style="margin-top: 10px">
+                  <code style="display: block; white-space: pre-wrap">{{
+                    codes.lqgi
+                  }}</code>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    style="margin: 10px"
+                    [cdkCopyToClipboard]="codes.lqgi"
+                    (click)="codeCopied()"
+                  >
+                    Copiar código
+                  </button>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

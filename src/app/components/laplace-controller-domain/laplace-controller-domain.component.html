@@ -1,0 +1,603 @@
+<app-loading></app-loading>
+<mat-sidenav-container autosize>
+  <mat-sidenav
+    *ngIf="isLargeScreen"
+    #sidenav
+    fixedInViewport="true"
+    mode="side"
+    opened="{{ true }}"
+  >
+    <section [class.sidenav]="isExpanded">
+      <div class="title">
+        <p *ngIf="isExpanded">EaseController</p>
+        <div class="toggle">
+          <mat-icon (click)="toggleMenu()">
+            {{ isExpanded ? "first_page" : "dehaze" }}
+          </mat-icon>
+        </div>
+      </div>
+      <div *ngIf="isExpanded">
+        <div>
+          <h2 class="parametrosDoSistema">
+            Controle em Espaço de Estados em Tempo Contínuo
+          </h2>
+
+          <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S) -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">
+              INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S)
+            </p>
+
+            <div>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Numerador para P(s):</mat-label>
+                <input
+                  [(ngModel)]="numeradorPs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="focusNext('input1')"
+                  id="input0"
+                />
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Denomidador para P(s):</mat-label>
+                <input
+                  [(ngModel)]="denominadorPs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="focusNext('input2')"
+                  id="input1"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA D(S) -->
+          <div class="matrizes-input">
+            <p class="titles-navBar">
+              INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA D(S)
+            </p>
+
+            <div>
+              <mat-form-field appearance="fill">
+                <mat-label>Numerador para D(s):</mat-label>
+                <input
+                  [(ngModel)]="numeradorDs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="focusNext('input3')"
+                  id="input2"
+                />
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field appearance="fill">
+                <mat-label>Denomidador para D(s):</mat-label>
+                <input
+                  [(ngModel)]="denominadorDs"
+                  matInput
+                  placeholder="1,2,3"
+                  value=""
+                  (keyup.enter)="calculaStepOne()"
+                  id="input3"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!--BOTOES-->
+          <div class="row">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="calculaStepOne()"
+              style="margin-left: 25px"
+            >
+              Calcular dinâmica da planta
+            </button>
+            <button class="iconDelete" (click)="limparInput()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </mat-sidenav>
+  <mat-sidenav-content
+    [style.margin-left.px]="isLargeScreen ? (isExpanded ? 350 : 75) : 0"
+  >
+    <div class="elemento-com-svg-de-fundo">
+      <div class="navbar-container" style="padding: 25px">
+        <div *ngIf="!isLargeScreen" class="card-box-nav">
+          <div>
+            <h2 class="parametrosDoSistema">
+              Controle em Espaço de Estados em Tempo Contínuo
+            </h2>
+
+            <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S) -->
+            <div class="matrizes-input">
+              <p class="titles-navBar">
+                INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S)
+              </p>
+
+              <div>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Numerador para P(s):</mat-label>
+                  <input
+                    [(ngModel)]="numeradorPs"
+                    matInput
+                    placeholder="1,2,3"
+                    value=""
+                    (keyup.enter)="focusNext('input1')"
+                    id="input0"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Denomidador para P(s):</mat-label>
+                  <input
+                    [(ngModel)]="denominadorPs"
+                    matInput
+                    placeholder="1,2,3"
+                    value=""
+                    (keyup.enter)="focusNext('input2')"
+                    id="input1"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA D(S) -->
+            <div class="matrizes-input">
+              <p class="titles-navBar">
+                INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA D(S)
+              </p>
+
+              <div>
+                <mat-form-field appearance="fill">
+                  <mat-label>Numerador para D(s):</mat-label>
+                  <input
+                    [(ngModel)]="numeradorDs"
+                    matInput
+                    placeholder="1,2,3"
+                    value=""
+                    (keyup.enter)="focusNext('input3')"
+                    id="input2"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field appearance="fill">
+                  <mat-label>Denomidador para D(s):</mat-label>
+                  <input
+                    [(ngModel)]="denominadorDs"
+                    matInput
+                    placeholder="1,2,3"
+                    value=""
+                    (keyup.enter)="calculaStepOne()"
+                    id="input3"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!--BOTOES-->
+            <div class="row">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="calculaStepOne()"
+                style="margin-left: 25px"
+              >
+                Calcular dinâmica da planta
+              </button>
+              <button class="iconDelete" (click)="limparInput()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="hasStepOne()" class="card-box">
+          <div>
+            <h5 class="title-card">
+              Sua resposta ao degrau unitário em malha aberta é:
+            </h5>
+            <div
+              class="al"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="text-card" #numeradorEq1></div>
+              <div class="text-card" #barraEq1></div>
+              <div class="text-card" #denominadorEq1></div>
+            </div>
+
+            <plotly-plot
+              [data]="this.graficoDegrauUnitario[0]"
+              [layout]="graphDegrauUnitario.layout"
+            ></plotly-plot>
+          </div>
+        </div>
+
+        <div
+          *ngIf="hasStepOne()"
+          class="card-box"
+          style="margin-top: 25px; padding-top: 35px"
+        >
+          <div class="row-controlabilidade">
+            <!---COLUNA DA ESQUERDA-->
+            <div style="max-width: 360px">
+              <mat-card-title>
+                Insira os parâmetros do sistema de controle
+              </mat-card-title>
+              <!-- AMOSTRAGEM-->
+              <div class="rowInputStepTwo" style="padding-top: 15px">
+                <mat-checkbox
+                  [(ngModel)]="hasAmostragem"
+                  (ngModelChange)="changeAmostragem()"
+                  class="checkboxEnable"
+                  color="primary"
+                ></mat-checkbox>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Periodo do amostragem (seg)</mat-label>
+                  <input
+                    [(ngModel)]="inputAmostragem"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Periodo do amostragem (seg)"
+                    value=""
+                    (keyup.enter)="focusNext('input5')"
+                    id="input4"
+                    [disabled]="!hasAmostragem"
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- SATURACAO -->
+              <div class="rowInputStepTwo">
+                <mat-checkbox
+                  [(ngModel)]="hasSaturacao"
+                  (ngModelChange)="changeSaturacao()"
+                  class="checkboxEnable"
+                  color="primary"
+                ></mat-checkbox>
+                <mat-form-field appearance="fill">
+                  <mat-label>Valor de saturação</mat-label>
+                  <input
+                    [(ngModel)]="inputSaturacao"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Valor de saturação"
+                    value=""
+                    (keyup.enter)="focusNext('input6')"
+                    id="input5"
+                    [disabled]="!hasSaturacao"
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- REFERENCIA -->
+              <div style="margin-left: 40px">
+                <mat-form-field appearance="fill">
+                  <mat-label>Valor de referência</mat-label>
+                  <input
+                    [(ngModel)]="inputReferencia"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Valor de referência"
+                    value=""
+                    (keyup.enter)="focusNext('input7')"
+                    id="input6"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div *ngIf="isLargeScreen" class="vlBig"></div>
+
+            <!---COLUNA DA DIREITA-->
+            <div class="columnExterna">
+              <mat-card-title>Escolha o controlador</mat-card-title>
+
+              <mat-form-field style="margin-top: 25px">
+                <select matNativeControl (change)="selectMetodo($event)">
+                  <option value="ZN1">Zigler-Nichols primeiro método</option>
+                  <option value="ZN2">Zigler-Nichols segundo método</option>
+                  <option value="MANUAL-INSERT">
+                    Não calcular parâmetros automáticos
+                  </option>
+                </select>
+              </mat-form-field>
+
+              <mat-form-field style="margin-top: 25px">
+                <select matNativeControl (change)="selectPID($event)">
+                  <option value="PID">PID</option>
+                  <option value="PI">PI</option>
+                  <option value="PD">PD</option>
+                  <option value="P">P</option>
+                </select>
+              </mat-form-field>
+              <div *ngIf="isManualInsert()">
+                <!-- Kp-->
+                <mat-form-field *ngIf="hasP" appearance="fill">
+                  <mat-label>Kp</mat-label>
+                  <input
+                    [(ngModel)]="inputP"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Kp"
+                    value=""
+                    (keyup.enter)="focusNext('input8')"
+                    id="input7"
+                  />
+                </mat-form-field>
+                <!-- Ki-->
+                <mat-form-field *ngIf="hasI" appearance="fill">
+                  <mat-label>Ki</mat-label>
+                  <input
+                    [(ngModel)]="inputI"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Ki"
+                    value=""
+                    (keyup.enter)="focusNext('input9')"
+                    id="input8"
+                  />
+                </mat-form-field>
+
+                <!-- Kd-->
+                <mat-form-field *ngIf="hasD" appearance="fill">
+                  <mat-label>Kd</mat-label>
+                  <input
+                    [(ngModel)]="inputD"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    matInput
+                    placeholder="Kd"
+                    value=""
+                    (keyup.enter)="focusNext('input10')"
+                    id="input9"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="calculaStepTwo()"
+            style="margin: 10px"
+          >
+            Calcular controlador com Laplace
+          </button>
+        </div>
+
+        <div *ngIf="stepTwo" class="card-box" style="margin-top: 25px">
+          <div>
+            <h5 class="title-card">TITULO A DEFINIR</h5>
+            <div
+              class="al"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding-top: 24px;
+              "
+            >
+              <div class="text-card" #numeradorEq2></div>
+              <div class="text-card" #barraEq2></div>
+              <div class="text-card" #denominadorEq2></div>
+            </div>
+
+            <h5 class="title-card" style="font-size: 18px; padding-top: 24px">
+              TITULO A DEFINIR 2
+            </h5>
+
+            <plotly-plot
+              [data]="this.graficoSinalDeSaida[0]"
+              [layout]="graphSinalDeSaida.layout"
+            ></plotly-plot>
+
+            <h5 class="title-card" style="font-size: 18px; padding-top: 24px">
+              TITULO A DEFINIR 3
+            </h5>
+
+            <plotly-plot
+              [data]="this.graficoSinalDeControle[0]"
+              [layout]="graphSinalDeControle.layout"
+            ></plotly-plot>
+
+            <table>
+              <tr>
+                <td>Valor de Kp:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Kp</mat-label>
+                    <input
+                      [(ngModel)]="outputKp"
+                      type="text"
+                      matInput
+                      id="outputKp"
+                      name="kp1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+                <td *ngIf="isLargeScreen" style="padding-left: 24px">
+                  Valor de saturação:
+                </td>
+                <td *ngIf="isLargeScreen">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Saturação</mat-label>
+                    <input
+                      [(ngModel)]="outputSaturation"
+                      type="text"
+                      matInput
+                      id="outputSaturation"
+                      name="saturacaoo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de Ti:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Ti</mat-label>
+                    <input
+                      [(ngModel)]="outputKi"
+                      type="text"
+                      matInput
+                      id="outputKi"
+                      name="ti1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+                <td *ngIf="isLargeScreen" style="padding-left: 24px">
+                  Valor de amostragem:
+                </td>
+                <td *ngIf="isLargeScreen">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Amostragem</mat-label>
+                    <input
+                      ng-style="{
+                        'background-color': disabled ? 'red' : 'green'
+                      }"
+                      [(ngModel)]="outputAmostragem"
+                      type="text"
+                      matInput
+                      id="outputAmostragem"
+                      name="amostragemo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Valor de Td:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Td</mat-label>
+                    <input
+                      [(ngModel)]="outputKd"
+                      type="text"
+                      matInput
+                      id="outputKd"
+                      name="td1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+                <td *ngIf="isLargeScreen" style="padding-left: 24px">
+                  Valor de referência:
+                </td>
+                <td *ngIf="isLargeScreen">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Referência</mat-label>
+                    <input
+                      [(ngModel)]="outputReferencia"
+                      type="text"
+                      matInput
+                      id="outputReferencia"
+                      name="referencia1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr *ngIf="!isLargeScreen">
+                <td>Valor de saturação:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Saturação</mat-label>
+                    <input
+                      [(ngModel)]="outputSaturation"
+                      type="text"
+                      matInput
+                      id="outputSaturation"
+                      name="saturacaoo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr *ngIf="!isLargeScreen">
+                <td>Valor de amostragem:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Amostragem</mat-label>
+                    <input
+                      [(ngModel)]="outputAmostragem"
+                      type="text"
+                      matInput
+                      id="outputAmostragem"
+                      name="amostragemo"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr *ngIf="!isLargeScreen">
+                <td>Valor de referência:</td>
+                <td>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Referência</mat-label>
+                    <input
+                      [(ngModel)]="outputReferencia"
+                      type="text"
+                      matInput
+                      id="outputReferencia"
+                      name="referencia1"
+                      size="40"
+                      disabled
+                    />
+                    <br />
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

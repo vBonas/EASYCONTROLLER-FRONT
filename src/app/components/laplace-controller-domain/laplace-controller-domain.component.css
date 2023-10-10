@@ -1,0 +1,34 @@
+.disabledInput {
+  background-color: red; /* Cor de fundo cinza */
+  pointer-events: none; /* Impede a interação com o campo */
+}
+
+.rowInputStepTwo {
+  display: flex;
+}
+
+.checkboxEnable {
+  color: green;
+  margin-top: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  max-width: 100px;
+}
+
+.columnExterna {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  padding-right: 30px;
+}
+
+td {
+  color: #080f25;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+  font-size: 18px;
+}
