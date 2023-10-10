@@ -17,7 +17,7 @@ export class LaplaceControllerDomainComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  isLargeScreen = window.innerWidth >= 768; // Defina o valor inicial com base na largura atual
+  isLargeScreen = window.innerWidth >= 768;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {

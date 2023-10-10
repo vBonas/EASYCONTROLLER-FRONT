@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   encapsulation: ViewEncapsulation.None,
 })
 export class TimeControllerDomainComponent implements OnInit {
-  isLargeScreen = window.innerWidth >= 768; // Defina o valor inicial com base na largura atual
+  isLargeScreen = window.innerWidth >= 768; 
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {

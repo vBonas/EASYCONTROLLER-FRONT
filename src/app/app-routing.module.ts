@@ -1,24 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LaplaceControllerDomainComponent } from './components/laplace-controller-domain/laplace-controller-domain.component';
-import { TimeControllerDomainComponent } from './components/time-controller-domain/time-controller-domain.component';
 
 const routes: Routes = [
   {
+    path: 'ariel',
+    loadChildren: () =>
+      import('./components/landing-page/landing-page.module').then(
+        (m) => m.LandingPageModule
+      ),
+  },
+  {
     path: 'laplace',
-    //    component: LaplaceControllerDomainComponent,
     loadChildren: () =>
       import(
         './components/laplace-controller-domain/laplace-controller-domain.module'
       ).then((m) => m.LaplaceControllerDomainModule),
   },
   {
-    path: '**',
+    path: 'tempo',
     loadChildren: () =>
       import(
         './components/time-controller-domain/time-controller-domain.module'
       ).then((m) => m.TimeControllerDomainModule),
-    pathMatch: 'full',
   },
 ];
 

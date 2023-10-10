@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TimeControllerDomainComponent } from './time-controller-domain.component';
 import { AppComponent } from '../../app.component';
+import { LandingPageComponent } from './landing-page.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AppComponent,
-    children: [{ path: '', component: TimeControllerDomainComponent }],
+    children: [{ path: '', component: LandingPageComponent }],
   },
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TimeControllerDomainRoutingModule {}
+export class LandingPageRoutingModule {}

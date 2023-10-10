@@ -6,24 +6,17 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PlotlyModule } from 'angular-plotly.js';
-import * as PlotlyJS from 'plotly.js-dist-min';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { LoadingInterceptor } from 'src/app/loading.interceptor';
-import { LaplaceControllerDomainComponent } from './laplace-controller-domain.component';
-import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
-import { LaplaceControllerDomainRoutingModule } from './laplace-controller-domain-routing.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SpinnerComponent } from '../spinner/spinner.component';
-import { LoadingComponent } from '../loading/loading.component';
-
-PlotlyModule.plotlyjs = PlotlyJS;
+import { LandingPageComponent } from './landing-page.component';
+import { LandingPageRoutingModule } from './landing-page-routing.module';
 
 @NgModule({
-  declarations: [LoadingComponent, LaplaceControllerDomainComponent],
+  declarations: [LandingPageComponent],
   imports: [
     FormsModule,
     MatExpansionModule,
@@ -38,16 +31,9 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatCardModule,
     MatSidenavModule,
     MatSnackBarModule,
-    LaplaceControllerDomainRoutingModule,
+    LandingPageRoutingModule,
   ],
 
-  providers: [
-    LaplaceControllerDomainService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [],
 })
-export class LaplaceControllerDomainModule {}
+export class LandingPageModule {}
