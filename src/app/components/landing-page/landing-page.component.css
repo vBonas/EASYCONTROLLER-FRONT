@@ -1,4 +1,33 @@
-.angular-logo{
-  width: 24px;
-  height: 24px;
+.button{
+  margin-left: 48px;
+
 }
+
+
+.angular-logo {
+  width: 48px;
+  padding-top: 8px;
+}
+
+.appBar {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.easyController {
+  padding-left: 24px;
+  font-size: x-large;
+  font-weight: 800;
+  font-family: 42px !important;
+  /* background: -webkit-linear-gradient(#985bc0, #080f25);
+  background-clip: text;
+  -webkit-text-fill-color: transparent; */
+  background-color: #f3ec78;
+  background-image: linear-gradient(90deg, #852fbe,  #985bc0, #080f25);
+  background-size: 100%;
+  background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+  /* {% comment %} <button mat-button routerLink="laplace">Laplace</button>
+  <button mat-button routerLink="tempo">Tempo</button> {% endcomment %} */
