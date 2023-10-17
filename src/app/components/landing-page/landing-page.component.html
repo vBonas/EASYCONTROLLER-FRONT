@@ -4,11 +4,14 @@
   </span>
   <a class="easyController">EasyController</a>
   <span class="fill-remaining-space"></span>
-  <button class="button" mat-button routerLink="tempo">SOBRE A FERRAMENTA</button>
+  <button class="button" mat-button routerLink="tempo">
+    SOBRE A FERRAMENTA
+  </button>
   <button class="button" mat-button routerLink="tempo">CONTATO</button>
 
-  <button mat-button>Login</button>
-  <button mat-button>Logout</button>
+  <button mat-button (click)="loginWithGoogle()">Login</button>
+  <button mat-button (click)="createAccount()">Create Account</button>
+
 </mat-toolbar>
 <mat-sidenav-container autosize>
   <mat-sidenav-content>
