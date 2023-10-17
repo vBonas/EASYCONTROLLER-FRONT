@@ -17,3 +17,5 @@ Projeto com o professor Rodrio Trentini, com base no TCC do Almir e Wesley
 
 - npm run build
 - firebase deploy
+- firebase deploy --only hosting:easycontroller
+- npm install firebase firebaseui @angular/fire firebaseui-angular --save --force
