@@ -9,9 +9,13 @@
   </button>
   <button class="button" mat-button routerLink="tempo">CONTATO</button>
 
-  <button mat-button (click)="loginWithGoogle()">Login</button>
-  <button mat-button (click)="createAccount()">Create Account</button>
+  <button *ngIf="!hasValidUser()" class="button" mat-button routerLink="login">
+    LOGIN
+  </button>
 
+  <button *ngIf="hasValidUser()" mat-button (click)="logout()">
+    Sair da conta
+  </button>
 </mat-toolbar>
 <mat-sidenav-container autosize>
   <mat-sidenav-content>

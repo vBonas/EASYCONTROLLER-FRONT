@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../service/authService';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-landing-page',
@@ -7,28 +8,19 @@ import { AuthService } from '../../service/authService';
   styleUrls: ['./landing-page.component.css'],
 })
 export class LandingPageComponent {
-  // constructor(private authService: AuthService) {}
-  async loginWithGoogle() {
-    try {
-      const authService = new AuthService();
-      alert('CLICK');
-      await authService.loginGoogle();
-    } catch (error) {
-      alert(error);
-    }
+  authService = new AuthService();
+  userLogged: User | null = null;
 
-    //authService.loginGoogle();
+  constructor() {
+    this.userLogged = this.authService.currentUser();
   }
 
-  async createAccount() {
-    try {
-      const authService = new AuthService();
-      alert('CLICK');
-      await authService.createAccount('teste@gmail.com', '123123');
-    } catch (error) {
-      alert(error);
-    }
+  hasValidUser(): boolean {
+    return this.authService.hasUserLoggedIn();
+  }
 
-    //authService.loginGoogle();
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -5,11 +5,22 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  User,
 } from 'firebase/auth';
 
 export class AuthService {
   auth = getAuth(appFirebase);
   provider = new GoogleAuthProvider();
+
+  currentUser(): User | null {
+    const user = this.auth.currentUser;
+    return user;
+  }
+
+  hasUserLoggedIn(): boolean {
+    const user = this.auth.currentUser;
+    return user !== null;
+  }
 
   async loginWithEmail(email: string, password: string) {
     const auth = getAuth();

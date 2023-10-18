@@ -10,6 +10,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'login',
+    loadChildren: () =>
+      import('./components/login-page/login-page.module').then(
+        (m) => m.LoginPageModule
+      ),
+  },
+  {
     path: 'laplace',
     loadChildren: () =>
       import(

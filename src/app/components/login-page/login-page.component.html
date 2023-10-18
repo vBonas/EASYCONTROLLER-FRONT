@@ -1,0 +1,75 @@
+<mat-toolbar class="appBar">
+  <span>
+    <img src="assets/png/logo1bg.png" class="angular-logo" />
+  </span>
+  <a class="easyController">EasyController</a>
+</mat-toolbar>
+<mat-sidenav-container autosize>
+  <mat-sidenav-content>
+    <div class="elemento-com-svg-de-fundo">
+      <div style="padding-top: 100px">
+        <div class="center">
+          <div class="card-boxB">
+            <div class="row">
+              <img
+                *ngIf="isLargeScreen"
+                src="assets/png/login2.png"
+                class="loginIcon"
+              />
+              <div class="columnInput">
+                <h1 class="title">Entrar na minha conta</h1>
+                <mat-form-field appearance="fill" [style.width.px]="240">
+                  <mat-label>E-mail</mat-label>
+                  <input
+                    [(ngModel)]="email"
+                    matInput
+                    placeholder="E-mail"
+                    value=""
+                    (keyup.enter)="focusNext('input1')"
+                    id="input0"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="fill" [style.width.px]="240">
+                  <mat-label>Senha</mat-label>
+                  <input
+                    [(ngModel)]="senha"
+                    matInput
+                    placeholder="Senha"
+                    value=""
+                    (keyup.enter)="loginWithEmail()"
+                    id="input1"
+                  />
+                </mat-form-field>
+
+                <a class="link" routerLink="/cadastro">Criar conta</a>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="loginWithEmail()"
+                  style="width: 240px"
+                >
+                  <p>Entrar</p>
+                </button>
+
+                <div class="ou">OU</div>
+                <div class="divider"></div>
+
+                <button
+                  mat-raised-button
+                  class="googleButton"
+                  (click)="loginWithGoogle()"
+                >
+                  <div class="row">
+                    <img src="assets/png/google.png" class="googleIcon" />
+
+                    <p style="font-size: 16px">Login com Google</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
