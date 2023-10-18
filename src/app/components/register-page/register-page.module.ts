@@ -9,14 +9,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { LandingPageComponent } from './landing-page.component';
-import { LandingPageRoutingModule } from './landing-page-routing.module';
-//MatMenuModule
-import { MatMenuModule } from '@angular/material/menu';
+import { RegisterPageComponent } from './register-page.component';
+import { RegisterPageRoutingModule } from './register-page-routing.module';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-  declarations: [LandingPageComponent],
+  declarations: [RegisterPageComponent],
   imports: [
     FormsModule,
     MatExpansionModule,
@@ -28,11 +27,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatCardModule,
     MatSidenavModule,
     MatSnackBarModule,
-    LandingPageRoutingModule,
+    RegisterPageRoutingModule,
     MatToolbarModule,
-    MatMenuModule,
   ],
 
   providers: [],
 })
-export class LandingPageModule {}
+export class RegisterPageModule {}

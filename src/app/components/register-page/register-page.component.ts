@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'],
+  templateUrl: './register-page.component.html',
+  styleUrls: ['./register-page.component.css'],
 })
-export class LoginPageComponent {
+export class RegisterPageComponent {
   isLargeScreen = window.innerWidth >= 768;
   loading = true;
 
@@ -19,6 +19,7 @@ export class LoginPageComponent {
   }
   email: string = 'teste@gmail.com';
   senha: string = '123123';
+  confirmSenha: string = '123123';
 
   authService: AuthService = new AuthService();
   userLogged: User | null = null;
@@ -39,36 +40,28 @@ export class LoginPageComponent {
     }
   }
 
-  async loginWithGoogle() {
-    try {
-      await this.authService.loginGoogle();
-    } catch (error) {
-      alert(error);
-    }
-  }
-
   async createAccount() {
     try {
-      await this.authService.createAccount('teste@gmail.com', '123123');
+      if (this.email === '' || this.senha === '' || this.confirmSenha === '') {
+        this.showMessageError('Preencha todos os campos');
+        return;
+      }
+      if (this.senha !== this.confirmSenha) {
+        this.showMessageError('Senhas não conferem');
+        return;
+      }
+      const status = await this.authService.createAccount(
+        this.email,
+        this.senha
+      );
+      if (status) {
+        this.showMessageSuccess('Usuário criado com sucesso!');
+        this.router.navigate(['']);
+      } else {
+        this.showMessageError('Erro ao criar usuário, tente outro email!');
+      }
     } catch (error) {
       alert(error);
-    }
-  }
-
-  async loginWithEmail() {
-    if (this.email === '' || this.senha === '') {
-      this.showMessageError('Preencha todos os campos');
-      return;
-    }
-    const status = await this.authService.loginWithEmail(
-      this.email,
-      this.senha
-    );
-    if (status) {
-      this.showMessageSuccess('Usuário logado com sucesso!');
-      this.router.navigate(['']);
-    } else {
-      this.showMessageError('Usuário ou senha inválidos');
     }
   }
 

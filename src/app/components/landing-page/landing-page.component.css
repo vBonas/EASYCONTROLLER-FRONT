@@ -1,8 +1,6 @@
-.button{
+.button {
   margin-left: 48px;
-
 }
-
 
 .angular-logo {
   width: 48px;
@@ -22,12 +20,17 @@
   background-clip: text;
   -webkit-text-fill-color: transparent; */
   background-color: #f3ec78;
-  background-image: linear-gradient(90deg, #852fbe,  #985bc0, #080f25);
+  background-image: linear-gradient(90deg, #852fbe, #985bc0, #080f25);
   background-size: 100%;
   background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
-  /* {% comment %} <button mat-button routerLink="laplace">Laplace</button>
+
+.button-right {
+  position: absolute;
+  right: 16px;
+}
+/* {% comment %} <button mat-button routerLink="laplace">Laplace</button>
   <button mat-button routerLink="tempo">Tempo</button> {% endcomment %} */

@@ -17,7 +17,7 @@
                 class="loginIcon"
               />
               <div class="columnInput">
-                <h1 class="title">Entrar na minha conta</h1>
+                <h1 class="title">Criar uma nova conta</h1>
                 <mat-form-field appearance="fill" [style.width.px]="240">
                   <mat-label>E-mail</mat-label>
                   <input
@@ -36,34 +36,30 @@
                     matInput
                     placeholder="Senha"
                     value=""
-                    (keyup.enter)="loginWithEmail()"
+                    (keyup.enter)="focusNext('input2')"
                     id="input1"
                   />
                 </mat-form-field>
 
-                <a class="link" routerLink="/register">Criar conta</a>
+                <mat-form-field appearance="fill" [style.width.px]="240">
+                  <mat-label>Confirmar senha</mat-label>
+                  <input
+                    [(ngModel)]="confirmSenha"
+                    matInput
+                    placeholder="Confirmar senha"
+                    value=""
+                    (keyup.enter)="createAccount()"
+                    id="input2"
+                  />
+                </mat-form-field>
+
                 <button
                   mat-raised-button
                   color="primary"
-                  (click)="loginWithEmail()"
+                  (click)="createAccount()"
                   style="width: 240px"
                 >
-                  <p>Entrar</p>
-                </button>
-
-                <div class="ou">OU</div>
-                <div class="divider"></div>
-
-                <button
-                  mat-raised-button
-                  class="googleButton"
-                  (click)="loginWithGoogle()"
-                >
-                  <div class="row">
-                    <img src="assets/png/google.png" class="googleIcon" />
-
-                    <p style="font-size: 16px">Login com Google</p>
-                  </div>
+                  <p>Criar</p>
                 </button>
               </div>
             </div>

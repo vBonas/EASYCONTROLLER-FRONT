@@ -17,6 +17,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'register',
+    loadChildren: () =>
+      import('./components/register-page/register-page.module').then(
+        (m) => m.RegisterPageModule
+      ),
+  },
+  {
     path: 'laplace',
     loadChildren: () =>
       import(

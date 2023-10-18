@@ -10,17 +10,23 @@ import { User } from 'firebase/auth';
 export class LandingPageComponent {
   authService = new AuthService();
   userLogged: User | null = null;
+  loading = true;
 
-  constructor() {
-    this.userLogged = this.authService.currentUser();
+  constructor() {}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.userLogged = this.authService.currentUser();
+      this.loading = false;
+    }, 500);
   }
 
   hasValidUser(): boolean {
-    return this.authService.hasUserLoggedIn();
+    return this.userLogged !== null;
   }
 
-
   logout() {
+    this.userLogged = null;
     this.authService.logout();
   }
 }

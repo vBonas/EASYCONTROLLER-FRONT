@@ -22,20 +22,20 @@ export class AuthService {
     return user !== null;
   }
 
-  async loginWithEmail(email: string, password: string) {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+  async loginWithEmail(email: string, password: string): Promise<boolean> {
+    let status = false;
+    await signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        alert('Usuário logado com sucesso!');
-        // ...
+        // const user = userCredential.user;
+        status = true;
       })
       .catch((error) => {
         alert(
           `Erro ao criar usuário: ${error} - ${error.code} - ${error.message}`
         );
+        status = false;
       });
+    return status;
   }
 
   //login com google
@@ -74,19 +74,21 @@ export class AuthService {
     await this.auth.signOut();
   }
 
-  async createAccount(email: string, password: string) {
+  async createAccount(email: string, password: string): Promise<boolean> {
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
+    let status = false;
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         alert('Usuário criado com sucesso!');
-        // ...
+        status = true;
       })
       .catch((error) => {
         alert(
           `Erro ao criar usuário: ${error} - ${error.code} - ${error.message}`
         );
       });
+    return status;
   }
 }
