@@ -17,8 +17,8 @@ export class LoginPageComponent {
   onResize(event: any): void {
     this.isLargeScreen = window.innerWidth >= 768;
   }
-  email: string = 'teste@gmail.com';
-  senha: string = '123123';
+  email: string = '';
+  senha: string = '';
 
   authService: AuthService = new AuthService();
   userLogged: User | null = null;
@@ -47,13 +47,6 @@ export class LoginPageComponent {
     }
   }
 
-  async createAccount() {
-    try {
-      await this.authService.createAccount('teste@gmail.com', '123123');
-    } catch (error) {
-      alert(error);
-    }
-  }
 
   async loginWithEmail() {
     if (this.email === '' || this.senha === '') {
@@ -65,7 +58,7 @@ export class LoginPageComponent {
       this.senha
     );
     if (status) {
-      this.showMessageSuccess('Usuário logado com sucesso!');
+      this.showMessageSuccess('Parabéns, você está logado!');
       this.router.navigate(['']);
     } else {
       this.showMessageError('Usuário ou senha inválidos');

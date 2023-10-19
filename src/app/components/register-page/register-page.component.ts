@@ -17,9 +17,9 @@ export class RegisterPageComponent {
   onResize(event: any): void {
     this.isLargeScreen = window.innerWidth >= 768;
   }
-  email: string = 'teste@gmail.com';
-  senha: string = '123123';
-  confirmSenha: string = '123123';
+  email: string = '';
+  senha: string = '';
+  confirmSenha: string = '';
 
   authService: AuthService = new AuthService();
   userLogged: User | null = null;
@@ -42,6 +42,10 @@ export class RegisterPageComponent {
 
   async createAccount() {
     try {
+      if (this.senha.length < 6) {
+        this.showMessageError('A senha deve ter no mínimo 6 caracteres');
+        return;
+      }
       if (this.email === '' || this.senha === '' || this.confirmSenha === '') {
         this.showMessageError('Preencha todos os campos');
         return;
@@ -55,7 +59,7 @@ export class RegisterPageComponent {
         this.senha
       );
       if (status) {
-        this.showMessageSuccess('Usuário criado com sucesso!');
+        this.showMessageSuccess('Parabéns, sua conta foi criada com sucesso!');
         this.router.navigate(['']);
       } else {
         this.showMessageError('Erro ao criar usuário, tente outro email!');
