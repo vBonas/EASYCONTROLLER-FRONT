@@ -24,7 +24,7 @@ export class LandingPageComponent {
     setTimeout(() => {
       this.userLogged = this.authService.currentUser();
       this.loading = false;
-    }, 500);
+    }, 1000);
   }
 
   hasValidUser(): boolean {

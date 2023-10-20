@@ -4,11 +4,8 @@
   </span>
   <a class="easyController">EasyController</a>
   <span class="fill-remaining-space"></span>
-  <button *ngIf="isLargeScreen" class="button" mat-button routerLink="tempo">
+  <button *ngIf="isLargeScreen" class="button" mat-button>
     SOBRE A FERRAMENTA
-  </button>
-  <button *ngIf="isLargeScreen" class="button" mat-button routerLink="laplace">
-    CONTATO
   </button>
 
   <button
@@ -30,12 +27,13 @@
   </button>
 
   <button
-    *ngIf="hasValidUser()"
+    *ngIf="hasValidUser() && isLargeScreen"
     mat-button
     [matMenuTriggerFor]="menu"
     class="button-right"
   >
-    Olá, {{ userLogged!.email }}
+    Olá,
+    {{ userLogged!.email }}
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">Sair</button>
@@ -45,7 +43,37 @@
   <mat-sidenav-content>
     <div class="elemento-com-svg-de-fundo">
       <div class="navbar-container" style="padding: 25px">
-        <div class="card-box">Ariel sam</div>
+        <!-- Conteúdo da Página -->
+        <div class="landing-page">
+          <h1 class="light-text">Bem-vindo ao EasyController</h1>
+          <p class="light-text">
+            Uma ferramenta poderosa para controle de sistemas em tempo e
+            frequência.
+          </p>
+
+          <!-- Opções para escolher entre Laplace e Tempo -->
+          <div class="options">
+            <div class="option">
+              <h2>Controlador em Laplace</h2>
+              <p>
+                Crie controladores no domínio de Laplace para sua aplicação.
+              </p>
+              <div class="light-button" mat-button routerLink="laplace">
+                Começar
+              </div>
+            </div>
+
+            <div style="width: 48px"></div>
+
+            <div class="option">
+              <h2>Controlador no Tempo</h2>
+              <p>Crie controladores no domínio do tempo para sua aplicação.</p>
+              <div class="light-button" mat-button routerLink="laplace">
+                Começar
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </mat-sidenav-content>

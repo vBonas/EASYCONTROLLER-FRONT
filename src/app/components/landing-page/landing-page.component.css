@@ -16,9 +16,6 @@
   font-size: x-large;
   font-weight: 800;
   font-family: 42px !important;
-  /* background: -webkit-linear-gradient(#985bc0, #080f25);
-  background-clip: text;
-  -webkit-text-fill-color: transparent; */
   background-color: #f3ec78;
   background-image: linear-gradient(90deg, #852fbe, #985bc0, #080f25);
   background-size: 100%;
@@ -32,5 +29,73 @@
   position: absolute;
   right: 16px;
 }
-/* {% comment %} <button mat-button routerLink="laplace">Laplace</button>
-  <button mat-button routerLink="tempo">Tempo</button> {% endcomment %} */
+
+.landing-page {
+  text-align: center;
+  padding: 50px;
+  color: #fff;
+}
+
+.landing-page .light-text {
+  font-size: 36px;
+  margin-bottom: 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.landing-page .light-text p {
+  font-size: 18px;
+  color: #ccc; /* Cor do texto de descrição um pouco mais clara */
+  margin-bottom: 40px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.option {
+  width: 45%;
+  border: 1px solid #777; /* Cor da borda um pouco mais clara */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff; /* Cor de fundo mais escura para opções */
+}
+
+.option h2 {
+  font-size: 24px;
+  color: #080f25;
+  margin-bottom: 10px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.option p {
+  font-size: 16px;
+  color: #727171;
+  margin-bottom: 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.light-button {
+  background-color: #985bc0;
+  color: #fff;
+
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  transition: background-color 0.3s;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.light-button:hover {
+  background-color: #852fbe;
+  scale: 1.07;
+}
