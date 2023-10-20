@@ -4,18 +4,29 @@
   </span>
   <a class="easyController">EasyController</a>
   <span class="fill-remaining-space"></span>
-  <button class="button" mat-button routerLink="tempo">
+  <button *ngIf="isLargeScreen" class="button" mat-button routerLink="tempo">
     SOBRE A FERRAMENTA
   </button>
-  <button class="button" mat-button routerLink="laplace">CONTATO</button>
+  <button *ngIf="isLargeScreen" class="button" mat-button routerLink="laplace">
+    CONTATO
+  </button>
 
   <button
-    *ngIf="!hasValidUser() && !loading"
+    *ngIf="!hasValidUser() && !loading && isLargeScreen"
     class="button-right"
     mat-button
     routerLink="login"
   >
     ACESSAR SUA CONTA
+  </button>
+
+  <button
+    *ngIf="!hasValidUser() && !loading && !isLargeScreen"
+    class="button-right"
+    mat-button
+    routerLink="login"
+  >
+    LOGIN
   </button>
 
   <button

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../service/authService';
 import { User } from 'firebase/auth';
 
@@ -10,7 +10,13 @@ import { User } from 'firebase/auth';
 export class LandingPageComponent {
   authService = new AuthService();
   userLogged: User | null = null;
+  isLargeScreen = window.innerWidth >= 700;
   loading = true;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.isLargeScreen = window.innerWidth >= 700;
+  }
 
   constructor() {}
 
