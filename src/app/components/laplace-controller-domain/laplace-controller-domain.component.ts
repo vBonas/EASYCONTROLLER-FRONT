@@ -328,9 +328,9 @@ export class LaplaceControllerDomainComponent {
       saturacao1: this.hasSaturacao ? 1 : 0,
       amostragem1: this.hasAmostragem ? 1 : 0,
       controladores: this.getOptionPID(),
-      amostragem: this.inputAmostragem,
+      amostragem: this.inputAmostragem === 'N/A' ? 0.01 : this.inputAmostragem,
       referencia: this.inputReferencia,
-      saturacao: this.inputSaturacao,
+      saturacao: this.inputSaturacao === 'N/A' ? 999999 : this.inputSaturacao,
       kp: this.isManualInsert() && this.hasP ? this.inputP : 0,
       ti: this.isManualInsert() && this.hasI ? this.inputI : 0,
       td: this.isManualInsert() && this.hasD ? this.inputD : 0,
@@ -404,7 +404,7 @@ export class LaplaceControllerDomainComponent {
       })
       .catch((err: any) => {
         this.showMessageError(
-          `Não é possivel calcular o controlador com os parâmetros informados`
+          `Não é possivel calcular o controlador com os parâmetros informados, tente mudar o controlador`
         );
         this.stepTwo = false;
       });
