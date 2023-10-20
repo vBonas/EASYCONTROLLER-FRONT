@@ -27,10 +27,15 @@ export class AuthService {
     await signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // const user = userCredential.user;
+
+        if (userCredential === null) {
+          status = false;
+          return;
+        }
         status = true;
       })
       .catch((error) => {
-        alert(
+        console.log(
           `Erro ao criar usuário: ${error} - ${error.code} - ${error.message}`
         );
         status = false;
@@ -38,28 +43,29 @@ export class AuthService {
     return status;
   }
 
-  //login com google
-  async loginGoogle() {
+  async loginGoogle(): Promise<boolean> {
     const auth = getAuth();
+    let status = false;
+
     GoogleAuthProvider.credential(
       '331210894297-89shkt024jihddfc3dkhmdtqk0adp4i3.apps.googleusercontent.com',
       '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'
     );
-    signInWithPopup(auth, this.provider)
+    await signInWithPopup(auth, this.provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
 
         if (credential === null) {
-          alert('Erro ao logar com Google');
+          status = false;
           return;
         }
 
         const token = credential.accessToken;
         const user = result.user;
-        alert('Usuário logado com sucesso!');
+        status = true;
       })
       .catch((error) => {
-        alert(`Erro ao logar com Google: ${error}`);
+        console.log(`Erro ao logar com Google: ${error}`);
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
@@ -68,6 +74,7 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
+    return status;
   }
 
   async logout() {
@@ -80,12 +87,11 @@ export class AuthService {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        alert('Usuário criado com sucesso!');
+        //const user = userCredential.user;
         status = true;
       })
       .catch((error) => {
-        alert(
+        console.log(
           `Erro ao criar usuário: ${error} - ${error.code} - ${error.message}`
         );
       });

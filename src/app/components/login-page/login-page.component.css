@@ -2,6 +2,11 @@
   margin-left: 48px;
 }
 
+.iconButton {
+  position: absolute;
+  left: 0px;
+}
+
 .angular-logo {
   width: 48px;
   padding-top: 8px;
@@ -9,6 +14,9 @@
 
 .appBar {
   background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .easyController {
@@ -29,7 +37,6 @@
   height: 500px;
   width: 600px;
   margin: auto;
-  width: 50%;
 }
 
 .title {

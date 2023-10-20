@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent {
-  isLargeScreen = window.innerWidth >= 768;
+  isLargeScreen = window.innerWidth >= 700;
   loading = true;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
-    this.isLargeScreen = window.innerWidth >= 768;
+    this.isLargeScreen = window.innerWidth >= 700;
   }
   email: string = '';
   senha: string = '';
@@ -41,12 +41,21 @@ export class LoginPageComponent {
 
   async loginWithGoogle() {
     try {
-      await this.authService.loginGoogle();
+      const status = await this.authService.loginGoogle();
+      this.checkStatusLogin(status);
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   }
 
+  checkStatusLogin(status: boolean) {
+    if (status) {
+      this.showMessageSuccess('Parabéns, você está logado!');
+      this.router.navigate(['']);
+    } else {
+      this.showMessageError('Usuário ou senha inválidos');
+    }
+  }
 
   async loginWithEmail() {
     if (this.email === '' || this.senha === '') {
@@ -57,12 +66,7 @@ export class LoginPageComponent {
       this.email,
       this.senha
     );
-    if (status) {
-      this.showMessageSuccess('Parabéns, você está logado!');
-      this.router.navigate(['']);
-    } else {
-      this.showMessageError('Usuário ou senha inválidos');
-    }
+    this.checkStatusLogin(status);
   }
 
   focusNext(nextElementId: string) {
