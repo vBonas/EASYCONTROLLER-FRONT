@@ -1,80 +1,169 @@
-<mat-toolbar class="appBar">
-  <span>
-    <img src="assets/png/logo1bg.png" class="angular-logo" />
-  </span>
-  <a class="easyController">EasyController</a>
-  <span class="fill-remaining-space"></span>
-  <button *ngIf="isLargeScreen" class="button" mat-button>
-    SOBRE A FERRAMENTA
-  </button>
+<div style="overflow-y: hidden">
+  <mat-toolbar class="appBar">
+    <span>
+      <img src="assets/png/logo1bg.png" class="angular-logo" />
+    </span>
+    <a class="easyController">EasyController</a>
+    <span class="fill-remaining-space"></span>
+    <button *ngIf="isLargeScreen" class="button" mat-button>
+      SOBRE A FERRAMENTA
+    </button>
 
-  <button
-    *ngIf="!hasValidUser() && !loading && isLargeScreen"
-    class="button-right"
-    mat-button
-    routerLink="login"
-  >
-    ACESSAR SUA CONTA
-  </button>
+    <button
+      *ngIf="!hasValidUser() && !loading && isLargeScreen"
+      class="button-right"
+      mat-button
+      routerLink="login"
+    >
+      ACESSAR SUA CONTA
+    </button>
 
-  <button
-    *ngIf="!hasValidUser() && !loading && !isLargeScreen"
-    class="button-right"
-    mat-button
-    routerLink="login"
-  >
-    LOGIN
-  </button>
+    <button
+      *ngIf="!hasValidUser() && !loading && !isLargeScreen"
+      class="button-right"
+      mat-button
+      routerLink="login"
+    >
+      LOGIN
+    </button>
 
-  <button
-    *ngIf="hasValidUser() && isLargeScreen"
-    mat-button
-    [matMenuTriggerFor]="menu"
-    class="button-right"
-  >
-    Olá,
-    {{ userLogged!.email }}
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">Sair</button>
-  </mat-menu>
-</mat-toolbar>
-<mat-sidenav-container autosize>
-  <mat-sidenav-content>
-    <div class="elemento-com-svg-de-fundo">
-      <div class="navbar-container" style="padding: 25px">
-        <!-- Conteúdo da Página -->
-        <div class="landing-page">
-          <h1 class="light-text">Bem-vindo ao EasyController</h1>
-          <p class="light-text">
-            Uma ferramenta poderosa para controle de sistemas em tempo e
-            frequência.
-          </p>
+    <button
+      *ngIf="hasValidUser() && isLargeScreen"
+      mat-button
+      [matMenuTriggerFor]="menu"
+      class="button-right"
+    >
+      Olá,
+      {{ userLogged!.email }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Sair</button>
+    </mat-menu>
+  </mat-toolbar>
+  <mat-sidenav-container>
+    <mat-sidenav-content style="overflow-y: hidden">
+      <div class="elemento-com-svg-de-fundo">
+        <div class="navbar-container" style="padding: 25px">
+          <!-- Conteúdo da Página -->
+          <div class="landing-page">
+            <h1 class="light-text">Bem-vindo ao EasyController</h1>
+            <p class="light-text">
+              Uma ferramenta poderosa para controle de sistemas em tempo e
+              frequência.
+            </p>
 
-          <!-- Opções para escolher entre Laplace e Tempo -->
-          <div class="options">
-            <div class="option">
-              <h2>Controlador em Laplace</h2>
-              <p>
-                Crie controladores no domínio de Laplace para sua aplicação.
-              </p>
-              <div class="light-button" mat-button routerLink="laplace">
-                Começar
+            <!-- Opções para escolher entre Laplace e Tempo -->
+            <div class="options">
+              <div class="option">
+                <h2>Controlador em Laplace</h2>
+                <p>
+                  Crie controladores no domínio de Laplace para sua aplicação.
+                </p>
+
+                <div
+                  *ngIf="!hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="login"
+                >
+                  Faça o login para começar
+                </div>
+                <div
+                  *ngIf="hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="laplace"
+                >
+                  Começar
+                </div>
+              </div>
+
+              <div style="width: 48px"></div>
+
+              <div class="option">
+                <h2>Controlador no Tempo</h2>
+                <p>
+                  Crie controladores no domínio do tempo para sua aplicação.
+                </p>
+                <div
+                  *ngIf="!hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="login"
+                >
+                  Faça o login para começar
+                </div>
+                <div
+                  *ngIf="hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="tempo"
+                >
+                  Começar
+                </div>
               </div>
             </div>
+          </div>
 
-            <div style="width: 48px"></div>
+          <div class="about-tool">
+            <p>
+              EasyController é uma ferramenta desenvolvida por Ariel Sam dos
+              Santos Ribeiro como parte de um projeto de pesquisa em colaboração
+              com o Professor Rodrigo Trentini Preuss e o Professor Alexandre. A
+              ferramenta foi inspirada nos TCCs de Almir e Wesley Gabriel
+              Briccius.
+            </p>
+            <p>Conheça mais sobre o desenvolvedor:</p>
+            <div class="row">
+              <img src="assets/png/ariel2.jpeg" class="ariel-img" />
+              <div>
+                <p>Ariel Sam dos Santos Ribeiro</p>
+                <div>
+                  <div
+                    class="row1"
+                    onclick="
+                    window.open(
+                      'https://github.com/arielsam567'
+                    )
+                  "
+                  >
+                    <img src="assets/png/git.png" class="git-img" />
 
-            <div class="option">
-              <h2>Controlador no Tempo</h2>
-              <p>Crie controladores no domínio do tempo para sua aplicação.</p>
-              <div class="light-button" mat-button routerLink="laplace">
-                Começar
+                    <a href="https://github.com/arielsam567" target="_blank"
+                      >GitHub</a
+                    >
+                  </div>
+                </div>
+                <div
+                  class="row1"
+                  onclick="
+                    window.open(
+                      'https://www.linkedin.com/in/ariel-sam-0b7586155/'
+                    )
+                  "
+                >
+                  <img src="assets/png/link.png" class="link-img" />
+
+                  <a
+                    href="https://www.linkedin.com/in/ariel-sam-0b7586155/"
+                    target="_blank"
+                    >LinkedIn</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row" style="padding-bottom: 100px">
+              <img src="assets/png/if3.png" class="if-img" />
+              <div>
+                <p>
+                  Instituto Federal de Santa Catarina - IFSC, Campus Rau - 2023
+                </p>
+                <p>Curso de Engenharia Elétrica</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

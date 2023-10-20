@@ -35,4 +35,6 @@ export class LandingPageComponent {
     this.userLogged = null;
     this.authService.logout();
   }
+
+
 }
