@@ -36,8 +36,8 @@
       Olá,
       {{ userLogged!.email }}
     </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()">Sair</button>
+    <mat-menu #menu="matMenu"  >
+      <button mat-menu-item class="popHover" (click)="logout()">Sair</button>
     </mat-menu>
   </mat-toolbar>
   <mat-sidenav-container>

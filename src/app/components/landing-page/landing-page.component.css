@@ -136,8 +136,6 @@
   text-decoration: none;
 }
 
-
-
 .about-tool a:hover {
   text-decoration: underline;
 }
@@ -145,6 +143,11 @@
 .row {
   display: flex;
   margin-bottom: 12px;
+}
+
+.popHover:hover {
+  background-color: #9a70b6 !important;
+  border-radius: 8px;
 }
 
 .row1 {
