@@ -101,6 +101,7 @@
 .light-button:hover {
   background-color: #852fbe;
   scale: 1.07;
+  cursor: pointer;
 }
 
 .about-tool {

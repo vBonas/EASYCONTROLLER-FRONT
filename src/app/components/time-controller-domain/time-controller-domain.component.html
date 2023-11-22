@@ -87,7 +87,7 @@
                       type="text"
                       id="cell_{{ i }}_{{ j }}"
                       appDecimalNumber
-                      value=""
+                      value="0"
                       matInput
                       (blur)="matrizValueChange(matriz, i, j, $event)"
                       placeholder="0"
@@ -203,7 +203,7 @@
                               type="text"
                               id="cell_{{ i }}_{{ j }}"
                               appDecimalNumber
-                              value=""
+                              value="0"
                               matInput
                               (blur)="matrizValueChange(matriz, i, j, $event)"
                               placeholder="0"
@@ -235,6 +235,18 @@
           </div>
 
           <div *ngIf="panelMA">
+            <!--Dinâmica da planta  -->
+            <div class="card-box" style="margin-bottom: 15px">
+              <mat-card-title class="title-card">
+                Dinâmica da planta</mat-card-title
+              >
+              <plotly-plot
+                [data]="this.stepMA[0]"
+                [layout]="graph.layout"
+              ></plotly-plot>
+            </div>
+
+
             <!-- Controlabilidade -->
             <div class="card-box">
               <div class="row-controlabilidade">
@@ -250,11 +262,11 @@
                 <div *ngIf="isControlable() && isLargeScreen" class="vl"></div>
                 <div *ngIf="!isLargeScreen" class="vlMobile"></div>
                 <!-- divisor na vertical -->
-                <div *ngIf="isControlable()" style="col">
+                <div *ngIf="isControlable()" class="col">
                   <mat-card-title class="title-card"
                     >Escolha o controlador<br
                   /></mat-card-title>
-                  <mat-form-field style="margin-top: 25px">
+                  <mat-form-field style="margin-top: 25px;">
                     <select
                       matNativeControl
                       (change)="selectValueChanged($event)"
@@ -271,15 +283,6 @@
               </div>
             </div>
 
-            <div class="card-box" style="margin-top: 10px">
-              <mat-card-title class="title-card">
-                Dinâmica da planta</mat-card-title
-              >
-              <plotly-plot
-                [data]="this.stepMA[0]"
-                [layout]="graph.layout"
-              ></plotly-plot>
-            </div>
           </div>
 
           <div *ngIf="panelCostMatrixLQR">
@@ -306,7 +309,7 @@
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value=""
+                        value="0"
                         matInput
                         (blur)="matrizValueChange(CI, i, j, $event)"
                         placeholder="0"
@@ -331,7 +334,7 @@
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value=""
+                        value="0"
                         matInput
                         (blur)="matrizValueChange(myLQR, i, j, $event)"
                         placeholder="0"
@@ -418,7 +421,7 @@
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value=""
+                        value="0"
                         matInput
                         (blur)="matrizValueChange(myLQI, i, j, $event)"
                         placeholder="0"
@@ -507,7 +510,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(CI, i, j, $event)"
                             placeholder="0"
@@ -533,7 +536,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myLQG, i, j, $event)"
                             placeholder="0"
@@ -561,7 +564,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myKalman, i, j, $event)"
                             placeholder="0"
@@ -649,7 +652,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myLQGI, i, j, $event)"
                             placeholder="0"
@@ -676,7 +679,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myKalman, i, j, $event)"
                             placeholder="0"
