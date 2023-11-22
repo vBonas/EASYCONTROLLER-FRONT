@@ -72,7 +72,7 @@ export class LaplaceControllerDomainComponent {
 
   inputAmostragem: string = '0.01';
   hasAmostragem: boolean = true;
-  inputSaturacao: string = '100';
+  inputSaturacao: string = '1';
   hasSaturacao: boolean = true;
   inputReferencia: string = '10';
 
