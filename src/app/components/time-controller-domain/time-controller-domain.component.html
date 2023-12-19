@@ -239,7 +239,8 @@
             <!--Dinâmica da planta  -->
             <div class="card-box" style="margin-bottom: 15px">
               <mat-card-title class="title-card">
-                Dinâmica da planta</mat-card-title
+                A resposta da saída da planta ao degrau unitário
+                é:</mat-card-title
               >
               <plotly-plot
                 [data]="this.stepMA[0]"
@@ -251,13 +252,15 @@
             <div class="card-box">
               <div class="row-controlabilidade">
                 <div>
-                  <mat-card-title class="title-card"
-                    >Controlabilidade e<br />Observabilidade</mat-card-title
+                  <p
+                    class="text-card"
+                    style="margin-top: 10px; font-size: 26px"
                   >
-                  <p class="text-card" style="margin-top: 10px">
-                    {{ control_rank }}
+                    {{ control_rankShow }}
                   </p>
-                  <p class="text-card">{{ obsv_rank }}</p>
+                  <p style="margin-top: 6px; font-size: 26px" class="text-card">
+                    {{ obsv_rankShow }}
+                  </p>
                 </div>
                 <div *ngIf="isControlable() && isLargeScreen" class="vl"></div>
                 <div *ngIf="!isLargeScreen" class="vlMobile"></div>

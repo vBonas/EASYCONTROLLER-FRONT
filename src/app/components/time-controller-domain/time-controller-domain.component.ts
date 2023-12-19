@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   encapsulation: ViewEncapsulation.None,
 })
 export class TimeControllerDomainComponent implements OnInit {
-  isLargeScreen = window.innerWidth >= 768; 
+  isLargeScreen = window.innerWidth >= 768;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
@@ -39,11 +39,14 @@ export class TimeControllerDomainComponent implements OnInit {
   graphData: object[] = [];
   graph = {
     data: this.graphData,
-    layout: this.layout_title('Resposta ao degrau unitário'),
+    layout: this.layout_title(''),
   };
   graphCI = { data: this.graphData, layout: this.layout_CI() };
   control_rank: string = '';
   obsv_rank: string = '';
+
+  control_rankShow: string = '';
+  obsv_rankShow: string = '';
   vY: any = [];
   yLQR: any = [];
   yLQI: any = [];
@@ -914,11 +917,24 @@ export class TimeControllerDomainComponent implements OnInit {
   }
 
   isOberservable() {
-    return this.obsv_rank === 'O sistema é observável';
+    const value = this.obsv_rank === 'O sistema é observável';
+    if (value) {
+      this.obsv_rankShow = 'Teste de Observabilidade ✅';
+    } else {
+      this.obsv_rankShow = 'Teste de Observabilidade ❌';
+    }
+    return value;
   }
 
   isControlable() {
-    return this.control_rank === 'O sistema é controlável';
+    const value = this.control_rank === 'O sistema é controlável';
+    if (value) {
+      this.control_rankShow = 'Teste de Controlabilidade ✅';
+    } else {
+      this.control_rankShow = 'Teste de Controlabilidade ❌';
+    }
+
+    return value;
   }
 
   getCodeLQR(matriz_custo_lqr: any, data: Object) {
