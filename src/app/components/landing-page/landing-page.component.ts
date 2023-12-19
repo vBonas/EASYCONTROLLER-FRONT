@@ -1,6 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../service/authService';
 import { User } from 'firebase/auth';
+import { LandingService } from './landing.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-landing-page',
@@ -18,12 +20,18 @@ export class LandingPageComponent {
     this.isLargeScreen = window.innerWidth >= 700;
   }
 
-  constructor() {}
+  constructor(
+    private landingService: LandingService,
+    private http: HttpClient
+  ) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.userLogged = this.authService.currentUser();
       this.loading = false;
+    }, 1000);
+    setTimeout(() => {
+      this.landingService.iniciaBackend();
     }, 1000);
   }
 
@@ -35,6 +43,4 @@ export class LandingPageComponent {
     this.userLogged = null;
     this.authService.logout();
   }
-
-
 }

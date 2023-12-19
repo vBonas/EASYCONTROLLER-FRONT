@@ -5,7 +5,6 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class TimeControllerDomainService {
   constructor(private http: HttpClient) {}
-  //url = 'https://almir.pythonanywhere.com/appview/easy-controller';
   url = 'https://easycontroller.onrender.com/easy-controller';
   headers = {
     'Access-Control-Allow-Origin': '*',
@@ -34,7 +33,7 @@ export class TimeControllerDomainService {
     return await firstValueFrom(
       this.http.post(
         `${this.url}/lqg`,
-        //'http://almir.pythonanywhere.com/appview/easy-controller/lqg',
+
         data,
         { headers: this.headers }
       )
@@ -45,7 +44,7 @@ export class TimeControllerDomainService {
     return await firstValueFrom(
       this.http.post(
         `${this.url}/lqgi`,
-        //'http://almir.pythonanywhere.com/appview/easy-controller/lqgi',
+
         data,
         { headers: this.headers }
       )

@@ -11,9 +11,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LandingPageComponent } from './landing-page.component';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
-//MatMenuModule
+
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { LandingService } from './landing.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from 'src/app/loading.interceptor';
 
 @NgModule({
   declarations: [LandingPageComponent],
@@ -33,6 +36,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatMenuModule,
   ],
 
-  providers: [],
+  providers: [
+    LandingService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class LandingPageModule {}
