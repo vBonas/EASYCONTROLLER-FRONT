@@ -9,7 +9,7 @@
   >
     <section [class.sidenav]="isExpanded">
       <div class="title">
-        <p *ngIf="isExpanded">EaseController</p>
+        <p *ngIf="isExpanded">EasyController</p>
         <div class="toggle">
           <mat-icon (click)="toggleMenu()">
             {{ isExpanded ? "first_page" : "dehaze" }}
@@ -22,42 +22,42 @@
             class="titles-navBar"
             style="margin-right: 15px; margin-left: 25px"
           >
-            Controle em Espaço de Estados em Tempo Contínuo
+            Controle Clássico
           </p>
 
           <!-- INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S) -->
           <div class="matrizes-input">
             <p class="titles-navBar">
-              INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S)
+              Insira aqui a Função de Transferência da planta a ser controlada
             </p>
 
-            <div>
-              <mat-form-field appearance="fill">
-                <mat-label>Numerador para P(s):</mat-label>
-                <input
-                  [(ngModel)]="numeradorPs"
-                  matInput
-                  placeholder="1,2,3"
-                  value=""
-                  (keyup.enter)="focusNext('input1')"
-                  id="input0"
-                />
-              </mat-form-field>
-            </div>
+            <mat-form-field appearance="fill" [style.width.px]="300">
+              <mat-label
+                >Numerador (índices de 's' separados por vírgula)</mat-label
+              >
+              <input
+                [(ngModel)]="numeradorPs"
+                matInput
+                placeholder="1,2,3"
+                value=""
+                (keyup.enter)="focusNext('input1')"
+                id="input0"
+              />
+            </mat-form-field>
 
-            <div>
-              <mat-form-field appearance="fill">
-                <mat-label>Denomidador para P(s):</mat-label>
-                <input
-                  [(ngModel)]="denominadorPs"
-                  matInput
-                  placeholder="1,2,3"
-                  value=""
-                  (keyup.enter)="focusNext('input2')"
-                  id="input1"
-                />
-              </mat-form-field>
-            </div>
+            <mat-form-field appearance="fill" [style.width.px]="300">
+              <mat-label
+                >Denominador (índices de 's' separados por vírgula)</mat-label
+              >
+              <input
+                [(ngModel)]="denominadorPs"
+                matInput
+                placeholder="1,2,3"
+                value=""
+                (keyup.enter)="focusNext('input2')"
+                id="input1"
+              />
+            </mat-form-field>
           </div>
 
           <!--BOTOES-->
@@ -68,7 +68,7 @@
               (click)="calculaStepOne()"
               style="margin-left: 25px"
             >
-              Calcular dinâmica da planta
+              Mostrar dinâmica da planta
             </button>
             <button class="iconDelete" (click)="limparInput()">
               <mat-icon>delete</mat-icon>
@@ -91,12 +91,14 @@
 
             <div class="matrizes-input">
               <p class="titles-navBar">
-                INSIRA UMA FUNÇÃO TRANSFERÊNCIA PARA P(S)
+                Insira aqui a Função de Transferência da planta a ser controlada
               </p>
 
               <div>
-                <mat-form-field appearance="fill">
-                  <mat-label>Numerador para P(s):</mat-label>
+                <mat-form-field appearance="fill" [style.width.px]="300">
+                  <mat-label
+                    >Numerador (índices de 's' separados por vírgula)</mat-label
+                  >
                   <input
                     [(ngModel)]="numeradorPs"
                     matInput
@@ -109,8 +111,11 @@
               </div>
 
               <div>
-                <mat-form-field appearance="fill">
-                  <mat-label>Denomidador para P(s):</mat-label>
+                <mat-form-field appearance="fill" [style.width.px]="300">
+                  <mat-label
+                    >Denominador (índices de 's' separados por
+                    vírgula)</mat-label
+                  >
                   <input
                     [(ngModel)]="denominadorPs"
                     matInput
@@ -131,7 +136,7 @@
                 (click)="calculaStepOne()"
                 style="margin-left: 25px"
               >
-                Calcular dinâmica da planta
+                Mostrar dinâmica da planta
               </button>
               <button class="iconDelete" (click)="limparInput()">
                 <mat-icon>delete</mat-icon>
@@ -142,9 +147,7 @@
 
         <div *ngIf="hasStepOne()" class="card-box">
           <div>
-            <h5 class="title-card">
-              Sua resposta ao degrau unitário em malha aberta é:
-            </h5>
+            <h4 class="title-card">A Função de Transferência da planta é:</h4>
             <div
               class="al"
               style="
@@ -159,6 +162,10 @@
               <div class="text-card" #denominadorEq1></div>
             </div>
 
+            <h5 class="title-card">
+              A resposta da saída da planta ao degrau unitário é:
+            </h5>
+
             <plotly-plot
               [data]="this.graficoDegrauUnitario[0]"
               [layout]="graphDegrauUnitario.layout"
@@ -171,11 +178,18 @@
           class="card-box"
           style="margin-top: 25px; padding-top: 35px"
         >
+          <mat-card-title> Estrutura do controlador PID </mat-card-title>
+          <!-- Insetir image -->
+          <img
+            src="assets/png/pid1.png"
+            style="width: 100%; max-width: 500px; margin-bottom: 48px"
+          />
+
           <div class="row-controlabilidade">
             <!---COLUNA DA ESQUERDA-->
             <div style="max-width: 360px">
-              <mat-card-title>
-                Insira os parâmetros do sistema de controle
+              <mat-card-title style="font-size: 18px">
+                Deseja inserir o Período de Amostragem (s)?
               </mat-card-title>
               <!-- AMOSTRAGEM-->
               <div class="rowInputStepTwo" style="padding-top: 15px">
@@ -201,6 +215,9 @@
                 </mat-form-field>
               </div>
 
+              <mat-card-title style="font-size: 18px">
+                Deseja inserir os valores de saturação do sinal de controle?
+              </mat-card-title>
               <!-- SATURACAO -->
               <div class="rowInputStepTwo">
                 <mat-checkbox
@@ -225,7 +242,11 @@
               </div>
 
               <!-- REFERENCIA -->
-              <div style="margin-left: 40px">
+              <mat-card-title style="font-size: 18px"
+                >Qual é o valor da referência/set-point?</mat-card-title
+              >
+
+              <div style="margin-left: 40px; margin-top: 28px">
                 <mat-form-field appearance="fill">
                   <mat-label>Valor de referência</mat-label>
                   <input
@@ -245,17 +266,23 @@
 
             <!---COLUNA DA DIREITA-->
             <div class="columnExterna">
-              <mat-card-title>Escolha o controlador</mat-card-title>
+              <mat-card-title style="font-size: 18px"
+                >Escolha o método de sintonia desejado</mat-card-title
+              >
 
               <mat-form-field style="margin-top: 25px">
                 <select matNativeControl (change)="selectMetodo($event)">
                   <option value="ZN1">Zigler-Nichols primeiro método</option>
                   <option value="ZN2">Zigler-Nichols segundo método</option>
                   <option value="MANUAL-INSERT">
-                    Não calcular parâmetros automáticos
+                    Inserir ganhos manualmente
                   </option>
                 </select>
               </mat-form-field>
+
+              <mat-card-title style="font-size: 18px"
+                >Escolha a estrutura de controle</mat-card-title
+              >
 
               <mat-form-field style="margin-top: 25px">
                 <select matNativeControl (change)="selectPID($event)">
@@ -281,7 +308,7 @@
                 </mat-form-field>
                 <!-- Ki-->
                 <mat-form-field *ngIf="hasI" appearance="fill">
-                  <mat-label>Ki</mat-label>
+                  <mat-label>Ti</mat-label>
                   <input
                     [(ngModel)]="inputI"
                     pattern="^\d*(\.\d{0,2})?$"
@@ -295,7 +322,7 @@
 
                 <!-- Kd-->
                 <mat-form-field *ngIf="hasD" appearance="fill">
-                  <mat-label>Kd</mat-label>
+                  <mat-label>Td</mat-label>
                   <input
                     [(ngModel)]="inputD"
                     pattern="^\d*(\.\d{0,2})?$"
@@ -315,13 +342,15 @@
             (click)="calculaStepTwo()"
             style="margin: 10px"
           >
-            Calcular controlador com Laplace
+            Fechar a malha
           </button>
         </div>
 
         <div *ngIf="stepTwo" class="card-box" style="margin-top: 25px">
           <div>
-            <h5 class="title-card">TITULO A DEFINIR</h5>
+            <h5 class="title-card">
+              A Função de Transferência de malha fechada é:
+            </h5>
             <div
               class="al"
               style="
@@ -338,17 +367,13 @@
             </div>
 
             <h5 class="title-card" style="font-size: 18px; padding-top: 24px">
-              TITULO A DEFINIR 2
+              A resposta de malha fechada ao degrau de referência dado é:
             </h5>
 
             <plotly-plot
               [data]="this.graficoSinalDeSaida[0]"
               [layout]="graphSinalDeSaida.layout"
             ></plotly-plot>
-
-            <h5 class="title-card" style="font-size: 18px; padding-top: 24px">
-              TITULO A DEFINIR 3
-            </h5>
 
             <plotly-plot
               [data]="this.graficoSinalDeControle[0]"

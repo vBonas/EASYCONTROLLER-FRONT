@@ -5,9 +5,9 @@
     </span>
     <a class="easyController">EasyController</a>
     <span class="fill-remaining-space"></span>
-    <button *ngIf="isLargeScreen" class="button" mat-button>
+    <!-- <button *ngIf="isLargeScreen" class="button" mat-button>
       SOBRE A FERRAMENTA
-    </button>
+    </button> -->
 
     <button
       *ngIf="!hasValidUser() && !loading && isLargeScreen"
@@ -36,7 +36,7 @@
       Olá,
       {{ userLogged!.email }}
     </button>
-    <mat-menu #menu="matMenu"  >
+    <mat-menu #menu="matMenu">
       <button mat-menu-item class="popHover" (click)="logout()">Sair</button>
     </mat-menu>
   </mat-toolbar>
@@ -48,16 +48,17 @@
           <div class="landing-page">
             <h1 class="light-text">Bem-vindo ao EasyController</h1>
             <p class="light-text">
-              Uma ferramenta poderosa para controle de sistemas em tempo e
-              frequência.
+              Uma ferramenta poderosa para o projeto e implementação de
+              controladores em plataformas microcontroladas.
             </p>
 
             <!-- Opções para escolher entre Laplace e Tempo -->
             <div class="options">
               <div class="option">
-                <h2>Controlador em Laplace</h2>
+                <h2>Controle Clássico</h2>
                 <p>
-                  Crie controladores no domínio de Laplace para sua aplicação.
+                  Projete e implemente controladores PID no domínio de Laplace
+                  para sua aplicação.
                 </p>
 
                 <div
@@ -81,9 +82,10 @@
               <div style="width: 48px"></div>
 
               <div class="option">
-                <h2>Controlador no Tempo</h2>
+                <h2>Controle Moderno</h2>
                 <p>
-                  Crie controladores no domínio do tempo para sua aplicação.
+                  Projete e implemente controladores LQR/LQG no domínio do tempo
+                  para sua aplicação.
                 </p>
                 <div
                   *ngIf="!hasValidUser()"
@@ -103,56 +105,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="about-tool">
-            <p>
-              EasyController é uma ferramenta desenvolvida por Ariel Sam dos
-              Santos Ribeiro como parte de um projeto de pesquisa em colaboração
-              com o Professor Rodrigo Trentini Preuss e o Professor Alexandre. A
-              ferramenta foi inspirada nos TCCs de Almir e Wesley Gabriel
-              Briccius.
-            </p>
-            <!-- <p>Conheça mais sobre o desenvolvedor:</p>
-            <div class="row">
-              <img src="assets/png/ariel2.jpeg" class="ariel-img" />
-              <div>
-                <p>Ariel Sam dos Santos Ribeiro</p>
-                <div>
-                  <div
-                    class="row1"
-                    onclick="
-                    window.open(
-                      'https://github.com/arielsam567'
-                    )
-                  "
-                  >
-                    <img src="assets/png/git.png" class="git-img" />
-
-                    <a href="https://github.com/arielsam567" target="_blank"
-                      >GitHub</a
-                    >
-                  </div>
-                </div>
-                <div
-                  class="row1"
-                  onclick="
-                    window.open(
-                      'https://www.linkedin.com/in/ariel-sam-0b7586155/'
-                    )
-                  "
-                >
-                  <img src="assets/png/link.png" class="link-img" />
-
-                  <a
-                    href="https://www.linkedin.com/in/ariel-sam-0b7586155/"
-                    target="_blank"
-                    >LinkedIn</a
-                  >
-                </div>
-              </div>
-            </div> -->
-
           </div>
         </div>
       </div>

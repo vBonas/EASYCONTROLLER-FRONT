@@ -9,7 +9,7 @@
   >
     <section [class.sidenav]="isExpanded">
       <div class="title">
-        <p *ngIf="isExpanded">EaseController</p>
+        <p *ngIf="isExpanded">EasyController</p>
         <div class="toggle">
           <mat-icon (click)="toggleMenu()">
             {{ isExpanded ? "first_page" : "dehaze" }}
@@ -18,13 +18,11 @@
       </div>
       <div *ngIf="isExpanded">
         <div>
-          <h2 class="parametrosDoSistema">
-            Controle em Espaço de Estados em Tempo Contínuo
-          </h2>
+          <h2 class="parametrosDoSistema">Controle Moderno</h2>
 
           <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
           <div class="matrizes-input">
-            <p class="titles-navBar">Parâmetros do sistema</p>
+            <!-- <p class="titles-navBar">Parâmetros do sistema</p> -->
 
             <div class="input-increase">
               <div class="inputRow">
@@ -72,7 +70,9 @@
 
           <!-- MATRIZES -->
           <div class="matrizes-input">
-            <p class="titles-navBar">Preenchimento das matrizes</p>
+            <p class="titles-navBar">
+              Insira aqui os parâmetros das matrizes da planta a ser controlada
+            </p>
 
             <div *ngFor="let matriz of matrizes; index as c">
               <h5>Matriz {{ matriz.label }}</h5>
@@ -107,7 +107,7 @@
               (click)="calcularDinamicaDaPlanta()"
               style="margin-left: 25px"
             >
-              Calcular dinâmica da planta
+              Mostrar dinâmica da planta
             </button>
             <button class="iconDelete" (click)="limparInput()">
               <mat-icon>delete</mat-icon>
@@ -126,17 +126,15 @@
           <div class="card-box-nav" *ngIf="!isLargeScreen">
             <section [class.sidenav]="isExpanded">
               <div class="title">
-                <p *ngIf="isExpanded">EaseController</p>
+                <p *ngIf="isExpanded">EasyController</p>
               </div>
               <div *ngIf="isExpanded">
                 <div>
-                  <h2 class="parametrosDoSistema">
-                    Controle em Espaço de Estados em Tempo Contínuo
-                  </h2>
+                  <h2 class="parametrosDoSistema">Controle Moderno</h2>
 
                   <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
                   <div class="matrizes-input">
-                    <p class="titles-navBar">Parâmetros do sistema</p>
+                    <!-- <p class="titles-navBar">Parâmetros do sistema</p> -->
 
                     <div class="input-increase">
                       <div class="inputRow">
@@ -184,7 +182,10 @@
 
                   <!-- MATRIZES -->
                   <div class="matrizes-input">
-                    <p class="titles-navBar">Preenchimento das matrizes</p>
+                    <p class="titles-navBar">
+                      Insira aqui os parâmetros das matrizes da planta a ser
+                      controlada
+                    </p>
 
                     <div *ngFor="let matriz of matrizes; index as c">
                       <h5>Matriz {{ matriz.label }}</h5>
@@ -223,7 +224,7 @@
                       (click)="calcularDinamicaDaPlanta()"
                       style="margin-left: 25px"
                     >
-                      Calcular dinâmica da planta
+                      Mostrar dinâmica da planta
                     </button>
                     <button class="iconDelete" (click)="limparInput()">
                       <mat-icon>delete</mat-icon>
@@ -246,7 +247,6 @@
               ></plotly-plot>
             </div>
 
-
             <!-- Controlabilidade -->
             <div class="card-box">
               <div class="row-controlabilidade">
@@ -266,7 +266,7 @@
                   <mat-card-title class="title-card"
                     >Escolha o controlador<br
                   /></mat-card-title>
-                  <mat-form-field style="margin-top: 25px;">
+                  <mat-form-field style="margin-top: 25px">
                     <select
                       matNativeControl
                       (change)="selectValueChanged($event)"
@@ -282,7 +282,6 @@
                 </div>
               </div>
             </div>
-
           </div>
 
           <div *ngIf="panelCostMatrixLQR">
@@ -349,14 +348,14 @@
                 (click)="calc_lqr()"
                 style="margin: 10px"
               >
-                Calcular controlador LQR
+                Fechar a malha!
               </button>
             </div>
 
             <div *ngIf="panelCalc_lqr">
               <div class="card-box" style="margin-top: 24px">
                 <mat-card-title class="title-card"
-                  >Resposta para controlador LQR</mat-card-title
+                  >Resposta da(s) saída(s) para o LQR</mat-card-title
                 >
                 <plotly-plot
                   [data]="this.yLQR[0]"
@@ -442,7 +441,9 @@
 
             <div *ngIf="panelCalc_lqi">
               <mat-card style="margin-top: 10px">
-                <mat-card-title>Resposta para controlador LQI</mat-card-title>
+                <mat-card-title
+                  >Resposta da(s) saída(s) para o LQI</mat-card-title
+                >
                 <plotly-plot
                   [data]="this.yLQI[0]"
                   [layout]="graphCI.layout"
@@ -587,7 +588,9 @@
 
             <div *ngIf="panelCalc_lqg" style="margin-top: 24px">
               <mat-card style="margin-top: 10px">
-                <mat-card-title>Resposta para controlador LQG</mat-card-title>
+                <mat-card-title
+                  >Resposta da(s) saída(s) para o LQG</mat-card-title
+                >
 
                 <plotly-plot
                   [data]="this.yLQG[0]"
@@ -705,7 +708,8 @@
             <div *ngIf="panelCalc_lqgi">
               <mat-card style="margin-top: 10px">
                 <mat-card-title
-                  >Resposta para controlador LQG com integrador</mat-card-title
+                  >Resposta da(s) saída(s) para o LQG com
+                  integrador</mat-card-title
                 >
                 <plotly-plot
                   [data]="this.yLQGI[0]"

@@ -58,7 +58,7 @@ export class LaplaceControllerDomainComponent {
   graficoSinalDeSaida: any = [];
   graphSinalDeSaida = {
     data: this.graphData,
-    layout: this.layout_title('Sinal de saída'),
+    layout: this.layout_title('Saída controlada'),
   };
 
   //SINAL DE CONTROLE
@@ -392,7 +392,7 @@ export class LaplaceControllerDomainComponent {
 
         this.graphSinalDeSaida = {
           data: [sinalsaida],
-          layout: this.layout_title('Sinal de saída'),
+          layout: this.layout_title('Saída controlada'),
         };
         this.graficoSinalDeSaida = [];
         this.graficoSinalDeSaida.push(this.graphSinalDeSaida.data);
