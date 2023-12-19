@@ -380,7 +380,7 @@
               [layout]="graphSinalDeControle.layout"
             ></plotly-plot>
 
-            <table>
+            <!-- <table>
               <tr>
                 <td>Valor de Kp:</td>
                 <td>
@@ -542,11 +542,34 @@
                   </mat-form-field>
                 </td>
               </tr>
-            </table>
+            </table> -->
           </div>
         </div>
 
-        <div *ngIf="stepTwo" style="margin-top: 25px">
+        <div *ngIf="!showCodeValue && stepTwo" style="margin-top: 25px">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="showCode()"
+            style="margin: 10px"
+          >
+            Mostrar código
+          </button>
+        </div>
+
+        <div *ngIf="showCodeValue" style="margin-top: 25px">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="copyCode()"
+            style="margin: 10px"
+            [cdkCopyToClipboard]="codes"
+          >
+            Copiar código
+          </button>
+        </div>
+
+        <div *ngIf="showCodeValue" style="margin-top: 25px">
           <div>
             <mat-card style="margin-top: 10px">
               <code style="display: block; white-space: pre-wrap">{{

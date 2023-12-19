@@ -436,6 +436,15 @@ export class LaplaceControllerDomainComponent {
     }
   }
 
+  showCodeValue = false;
+  showCode() {
+    this.showCodeValue = true;
+  }
+
+  copyCode() {
+    this.showMessageSuccess('Código copiado com sucesso');
+  }
+
   getOptionControlador(): string {
     // <option value="1">  Não calcular parâmetros automáticos
     // <option value="2"> Zigler-Nichols primeiro método
