@@ -46,12 +46,37 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
 }
 
+.light_text_small {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: 500;
+  text-align: justify;
+
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
 .landing-page .light-text p {
   font-size: 18px;
   color: #ccc; /* Cor do texto de descrição um pouco mais clara */
   margin-bottom: 40px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+@media only screen and (min-width: 600px) {
+  .about {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+/* Remover flexbox se a largura da tela for menor que 600px */
+@media only screen and (max-width: 599px) {
+  .about {
+    display: block; /* Ou qualquer outra propriedade que deseje aplicar */
+  }
 }
 
 .options {
@@ -143,6 +168,10 @@
 
 .row {
   display: flex;
+  margin-bottom: 12px;
+}
+
+.column {
   margin-bottom: 12px;
 }
 

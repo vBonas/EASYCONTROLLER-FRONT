@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TimeControllerDomainComponent implements OnInit {
   isLargeScreen = window.innerWidth >= 768;
+  imageControl: string = 'assets/png/LQG.png';
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
@@ -584,12 +585,16 @@ export class TimeControllerDomainComponent implements OnInit {
   selectValueChanged(event: any) {
     const selectedValue = event.target.value;
     if (selectedValue === 'LQR') {
+      this.imageControl = 'assets/png/LQR.png';
       this.costMatrixLqr();
     } else if (selectedValue === 'LQR_Integrador') {
+      this.imageControl = 'assets/png/LQRI.png';
       this.costMatrixLqi();
     } else if (selectedValue === 'LQG' && this.isOberservable()) {
+      this.imageControl = 'assets/png/LQG.png';
       this.costMatrixLqg();
     } else if (selectedValue === 'LQG_Integrador' && this.isOberservable()) {
+      this.imageControl = 'assets/png/LQGI.png';
       this.costMatrixLqgi();
     }
   }
