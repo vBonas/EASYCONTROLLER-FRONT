@@ -52,11 +52,13 @@ export class LaplaceControllerDomainComponent {
     layout: this.layout_title('Resposta ao degrau unitário'),
   };
 
+  codes = 'CODIGO';
+
   //SINAL DE SAIDA
   graficoSinalDeSaida: any = [];
   graphSinalDeSaida = {
     data: this.graphData,
-    layout: this.layout_title('Sinal de saída'),
+    layout: this.layout_title('Saída controlada'),
   };
 
   //SINAL DE CONTROLE
@@ -70,7 +72,7 @@ export class LaplaceControllerDomainComponent {
 
   inputAmostragem: string = '0.01';
   hasAmostragem: boolean = true;
-  inputSaturacao: string = '100';
+  inputSaturacao: string = '1';
   hasSaturacao: boolean = true;
   inputReferencia: string = '10';
 
@@ -328,9 +330,9 @@ export class LaplaceControllerDomainComponent {
       saturacao1: this.hasSaturacao ? 1 : 0,
       amostragem1: this.hasAmostragem ? 1 : 0,
       controladores: this.getOptionPID(),
-      amostragem: this.inputAmostragem,
+      amostragem: this.inputAmostragem === 'N/A' ? 0.01 : this.inputAmostragem,
       referencia: this.inputReferencia,
-      saturacao: this.inputSaturacao,
+      saturacao: this.inputSaturacao === 'N/A' ? 999999 : this.inputSaturacao,
       kp: this.isManualInsert() && this.hasP ? this.inputP : 0,
       ti: this.isManualInsert() && this.hasI ? this.inputI : 0,
       td: this.isManualInsert() && this.hasD ? this.inputD : 0,
@@ -390,7 +392,7 @@ export class LaplaceControllerDomainComponent {
 
         this.graphSinalDeSaida = {
           data: [sinalsaida],
-          layout: this.layout_title('Sinal de saída'),
+          layout: this.layout_title('Saída controlada'),
         };
         this.graficoSinalDeSaida = [];
         this.graficoSinalDeSaida.push(this.graphSinalDeSaida.data);
@@ -401,10 +403,11 @@ export class LaplaceControllerDomainComponent {
         };
         this.graficoSinalDeControle = [];
         this.graficoSinalDeControle.push(this.graphSinalDeControle.data);
+        this.getOptionPID();
       })
       .catch((err: any) => {
         this.showMessageError(
-          `Não é possivel calcular o controlador com os parâmetros informados`
+          `Não é possivel calcular o controlador com os parâmetros informados, tente mudar o controlador`
         );
         this.stepTwo = false;
       });
@@ -416,16 +419,30 @@ export class LaplaceControllerDomainComponent {
     // <option value="3">PD</option>
     // <option value="1">P</option>
     if (this.selectedOptionPID === 'PID') {
+      this.codes = this.stringPID();
       return '4';
     } else if (this.selectedOptionPID === 'PI') {
+      this.codes = this.stringPI();
       return '2';
     } else if (this.selectedOptionPID === 'PD') {
+      this.codes = this.stringPD();
       return '3';
     } else if (this.selectedOptionPID === 'P') {
+      this.codes = this.stringP();
       return '1';
     } else {
+      this.codes = this.stringPID();
       return '4';
     }
+  }
+
+  showCodeValue = false;
+  showCode() {
+    this.showCodeValue = true;
+  }
+
+  copyCode() {
+    this.showMessageSuccess('Código copiado com sucesso');
   }
 
   getOptionControlador(): string {
@@ -440,5 +457,261 @@ export class LaplaceControllerDomainComponent {
       // Zigler Segundo método
       return '3';
     }
+  }
+
+  stringP() {
+    return `// Código gerado por EasyController - O Seu projetista de controlador\
+                                \n//\n Válido para família Arduino modelos Nano, Uno e Mega.\
+                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
+                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+                                \n\
+                                \n#include <TimerThree.h> \
+                                \n\
+                                \ndouble kp=${this.outputKp};				//  kp-Inserir valor gerado\
+                                \ndouble T=${this.outputAmostragem};				// Período de amostragem-Inserir valor gerado\
+                                \ndouble lim_sup=${this.outputSaturation};			// Saturação - Inserir valor gerado\
+                                \ndouble ref=${this.outputReferencia};				// Define referência - Inserir valor gerado\
+                                \
+                                \ndouble erro;				// Vetor de erro\
+                                \ndouble u;				// Vetor de controle\
+                                \ndouble du;				// Variação do sinal de controle\
+                                \ndouble y;				// Saída medida do sist\
+                                \n\
+                                \n// Para saída PWM\
+                                \ndouble minPWM=;				// Define valor mínimo do PWM\
+                                \ndouble maxPWM=;				// Define valor máximo do PWM\
+                                \ndouble mapf(double val,double in_min,double in_max,double out_min,double out_max) {\
+                                  \nreturn (val-in_min)*(out_max-out_min)/(in_max-in_min)+out_min;\
+                                \n}\
+                                \n\
+                                \n// Setup\
+                                \nvoid setup() {\
+                                  \nTimer3.initialize(T*1000);		// Inicializa Timer3 com período de amostragem (em us)\
+                                  \nTimer3.attachInterrupt(controlePID);	// Define a interrupção de tempo\
+                                \n}\
+                                \
+                                \n// Interrupção de tempo\
+                                \nvoid controlePID() {\
+                                  \nerro[0] = ref -y;\
+                                \
+                                  \ndu = r0*erro[0] ;\
+                                  \nu[0] = du ;			// Sinal de controle (sem saturação)\
+                                  \
+                                  \n// Calcula sinal de controle saturado\
+                                  \nif (u[0] > lim_sup){\
+                                    \nu[0] = lim_sup;\
+                                  \n} else if (u[0] < 0) {\
+                                    \nu[0] = lim_inf;\
+                                  \n}\
+                                \
+                                  \n// Mapeamento (float) do sinal de controle para a saída PWM\
+                                  \nu_pwm = mapf(u[0],lim_inf,lim_sup,minPWM,maxPWM);\
+                                \
+                                  \nanalogWrite(Pino,u_pwm);		// Indicar o número do Pino da saída PWM\
+                                \n}\
+                                \
+                                \n// Loop principal\
+                                \nvoid loop() {\
+                                  \n// Escrever aqui as leituras, conversões de sinal, etc.\
+                                  \ny = ...\
+                                \n}`;
+  }
+
+  stringPI() {
+    return `// Código gerado por EasyController - O Seu projetista de controlador\
+                                \n// Válido para família Arduino modelos Nano, Uno e Mega.\
+                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
+                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+                                \
+                                \n#include <TimerThree.h>\
+                                \
+                                \ndouble kp=${this.outputKp};				// kp-Inserir valor gerado\
+                                \ndouble Ti=${this.outputKi};				// Ti- Inserir valor gerado\
+                                \ndouble T=${this.outputAmostragem};				// Período de amostragem- Inserir valor gerado\
+                                \ndouble lim_sup=${this.outputSaturation};			// Saturação superior- Inserir valor gerado\
+                                \ndouble ref=${this.outputReferencia};				// Define referência- Inserir valor gerado\
+                                \
+                                \ndouble erro;				// Vetor de erro\
+                                \ndouble u;				// Vetor de controle\
+                                \ndouble du;				// Variação do sinal de controle\
+                                \ndouble y;				// Saída medida do sistema\
+                                \
+                                \
+                                \n// Constantes para controle\
+                                \nr0 = float(kp*(Ti +T)/Ti)\
+                                \nr1 = float(-kp)\
+                                \
+                                \n// Para saída PWM\
+                                \ndouble minPWM=;				// Define valor mínimo do PWM\
+                                \ndouble maxPWM=;				// Define valor máximo do PWM\
+                                \ndouble mapf(double val,double in_min,double in_max,double out_min,double out_max) {\
+                                  \nreturn (val-in_min)*(out_max-out_min)/(in_max-in_min)+out_min;\
+                                \n}\
+                                \
+                                \n// Setup\
+                                \nvoid setup() {\
+                                  \nTimer3.initialize(T*1000);		// Inicializa Timer3 com período de amostragem (em us)\
+                                  \nTimer3.attachInterrupt(controlePID);	// Define a interrupção de tempo\
+                                \n}\
+                                \
+                                \n// Interrupção de tempo\
+                                \nvoid controlePID() {\
+                                  \nerro[0] = ref -y;\
+                                \
+                                  \
+                                  \nu[0] = u[1] + (r0*erro[0]) + (r1*erro[1]);			// Sinal de controle (sem saturação)\
+                                  \
+                                  \n// Calcula sinal de controle saturado\
+                                  \nif (u[0] > lim_sup){\
+                                    \nu[0] = lim_sup;\
+                                  \n} else if (u[0] < 0) {\
+                                    \nu[0] = lim_inf;\
+                                  \n}\
+                                \
+                                  \n// Mapeamento (float) do sinal de controle para a saída PWM\
+                                  \nu_pwm = mapf(u[0],lim_inf,lim_sup,minPWM,maxPWM);\
+                                \
+                                  \nanalogWrite(Pino,u_pwm);		// Indicar o número do Pino da saída PWM\
+                                }\
+                                \
+                                \n// Loop principal\
+                                \nvoid loop() {\
+                                  \n// Escrever aqui as leituras, conversões de sinal, etc.\
+                                  \ny = ...\
+                                \n}`;
+  }
+
+  stringPD() {
+    return ` // Código gerado por EasyController - O Seu projetista de controlador\
+                                \n// Válido para família Arduino modelos Nano, Uno e Mega.\
+                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
+                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+                                \
+                                \n#include <TimerThree.h>\
+                                \
+                                \ndouble kp=${this.outputKd};				// kp-Inserir valor gerado\
+                                \ndouble Ti=${this.outputKi};				// td- Inserir valor gerado\
+                                \ndouble T=${this.outputAmostragem};				// Período de amostragem- Inserir valor gerado\
+                                \ndouble lim_sup=${this.outputSaturation};			// Saturação superior- Inserir valor gerado\
+                                \ndouble ref=${this.outputReferencia};				// Define referência- Inserir valor gerado\
+                                \
+                                \ndouble erro;				// Vetor de erro\
+                                \ndouble u;				// Vetor de controle\
+                                \ndouble du;				// Variação do sinal de controle\
+                                \ndouble y;				// Saída medida do sistema\
+                                \
+                                \
+                                \n// Constantes para controle\
+                                \nr0 = float(kp*(Td +T)/T)\
+                                \nr1 = float(-kp*Td/T)\
+                                \
+                                \n// Para saída PWM\
+                                \ndouble minPWM=;				// Define valor mínimo do PWM\
+                                \ndouble maxPWM=;				// Define valor máximo do PWM\
+                                \ndouble mapf(double val,double in_min,double in_max,double out_min,double out_max) {\
+                                  \nreturn (val-in_min)*(out_max-out_min)/(in_max-in_min)+out_min;\
+                                \n}\
+                                \
+                                \n// Setup\
+                                \nvoid setup() {\
+                                  \nTimer3.initialize(T*1000);		// Inicializa Timer3 com período de amostragem (em us)\
+                                  \nTimer3.attachInterrupt(controlePID);	// Define a interrupção de tempo\
+                                \n}\
+                                \
+                                \n// Interrupção de tempo\
+                                \nvoid controlePID() {\
+                                  \nerro[0] = ref -y;\
+                                \
+                                  \
+                                  \nu[0] =  (r0*erro[0]) + (r1*erro[1])			// Sinal de controle (sem saturação)\
+                                  \
+                                  \n// Calcula sinal de controle saturado\
+                                  \nif (u[0] > lim_sup){\
+                                    \nu[0] = lim_sup;\
+                                  \n} else if (u[0] < 0) {\
+                                    \nu[0] = lim_inf;\
+                                  \n}\
+                                \
+                                  \n// Mapeamento (float) do sinal de controle para a saída PWM\
+                                  \nu_pwm = mapf(u[0],lim_inf,lim_sup,minPWM,maxPWM);\
+                                \
+                                  \nanalogWrite(Pino,u_pwm);		// Indicar o número do Pino da saída PWM\
+                                \n}\
+                                \
+                               \n // Loop principal\
+                                \nvoid loop() {\
+                                  \n// Escrever aqui as leituras, conversões de sinal, etc.\
+                                  \ny = ...\
+                                \n}\
+                                \n     \
+                               \n\
+                            `;
+  }
+
+  stringPID() {
+    return `// Código gerado por EasyController - O Seu projetista de controlador\
+                                \n// Válido para família Arduino modelos Nano, Uno e Mega.\
+                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
+                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+                                \
+                                \n#include <TimerThree.h>\
+                                \
+                                \ndouble kp=${this.outputKp};				// Ganho kp\
+                                \ndouble Ti=${this.outputKi};				// Tempo integral [s]\
+                                \ndouble Td=${this.outputKd};				// Tempo derivativo [s]\
+                                \ndouble T=${this.outputAmostragem};				// Período de amostragem\
+                                \ndouble lim_sup=${this.outputSaturation};			// Saturação superior\
+                                \ndouble lim_inf=;			// Saturação inferior\
+                                \ndouble ref=${this.outputReferencia};				// Define referência\
+                                \
+                                \ndouble erro;				// Vetor de erro\
+                                \ndouble u;				// Vetor de controle\
+                                \ndouble du;				// Variação do sinal de controle\
+                                \ndouble y;				// Saída medida do sistema\
+                                \
+                                \
+                                \n// Constantes para controle\
+                                \ndouble r0 = kp +kp*Td/T;\
+                                \ndouble r1 = -kp +kp*T/Ti;\
+                                \ndouble r2 = kp*Td/T;\
+                                \
+                                \n// Para saída PWM\
+                                \ndouble minPWM=;				// Define valor mínimo do PWM\
+                                \ndouble maxPWM=;				// Define valor máximo do PWM\
+                                \ndouble mapf(double val,double in_min,double in_max,double out_min,double out_max) {\
+                                  \nreturn (val-in_min)*(out_max-out_min)/(in_max-in_min)+out_min;\
+                                \n}\
+                                \
+                                \n// Setup\
+                                \nvoid setup() {\
+                                  \nTimer3.initialize(T*1000);		// Inicializa Timer3 com período de amostragem (em us)\
+                                  \nTimer3.attachInterrupt(controlePID);	// Define a interrupção de tempo\
+                                \n}\
+                                \
+                                \n// Interrupção de tempo\
+                                \nvoid controlePID() {\
+                                  \nerro[0] = ref -y;\
+                                \
+                                  \ndu = r0*erro[0] +r1*erro[1] +r2*erro[2];\
+                                  \nu[0] = du +u[1];			// Sinal de controle (sem saturação)\
+                                  \
+                                  \n// Calcula sinal de controle saturado\
+                                  \nif (u[0] > lim_sup){\
+                                    \nu[0] = lim_sup;\
+                                  \n} else if (u[0] < lim_inf) {\
+                                    \nu[0] = lim_inf;\
+                                  \n}\
+                                \
+                                  \n// Mapeamento (float) do sinal de controle para a saída PWM\
+                                  \nu_pwm = mapf(u[0],lim_inf,lim_sup,minPWM,maxPWM);\
+                                \
+                                  \nanalogWrite(Pino,u_pwm);		// Indicar o número do Pino da saída PWM\
+                                \n}\
+                                \
+                                \n// Loop principal\
+                                \nvoid loop() {\
+                                  \n// Escrever aqui as leituras, conversões de sinal, etc.\
+                                  \ny = ...\
+                                \n}`;
   }
 }

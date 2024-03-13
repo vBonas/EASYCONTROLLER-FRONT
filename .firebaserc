@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "teste-285200"
-  }
+    "default": "easy--controller",
+    "prod": "easy--controller"
+  },
+  "targets": {},
+  "etags": {}
 }

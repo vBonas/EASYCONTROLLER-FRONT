@@ -9,17 +9,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { LandingPageComponent } from './landing-page.component';
-import { LandingPageRoutingModule } from './landing-page-routing.module';
-
-import { MatMenuModule } from '@angular/material/menu';
+import { LoginPageComponent } from './login-page.component';
+import { LoginPageRoutingModule } from './login-page-routing.module';
+//mat-toolbar
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { LandingService } from './landing.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoadingInterceptor } from 'src/app/loading.interceptor';
 
 @NgModule({
-  declarations: [LandingPageComponent],
+  declarations: [LoginPageComponent],
   imports: [
     FormsModule,
     MatExpansionModule,
@@ -31,18 +27,10 @@ import { LoadingInterceptor } from 'src/app/loading.interceptor';
     MatCardModule,
     MatSidenavModule,
     MatSnackBarModule,
-    LandingPageRoutingModule,
+    LoginPageRoutingModule,
     MatToolbarModule,
-    MatMenuModule,
   ],
 
-  providers: [
-    LandingService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [],
 })
-export class LandingPageModule {}
+export class LoginPageModule {}

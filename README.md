@@ -17,3 +17,13 @@ Projeto com o professor Rodrio Trentini, com base no TCC do Almir e Wesley
 
 - npm run build
 - firebase deploy
+
+## Backend
+
+<https://github.com/arielsam567/easycontroller_API>
+<https://easycontroller.onrender.com>
+
+## URL DO PROJETO
+
+<https://easy--controller.firebaseapp.com/>
+<https://github.com/arielsam567/EASYCONTROLLER-FRONT>

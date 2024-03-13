@@ -1,0 +1,221 @@
+.button {
+  margin-left: 48px;
+}
+
+.angular-logo {
+  width: 48px;
+  padding-top: 8px;
+}
+
+.appBar {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.easyController {
+  padding-left: 24px;
+  font-size: x-large;
+  font-weight: 800;
+  font-family: 42px !important;
+  background-color: #f3ec78;
+  background-image: linear-gradient(90deg, #852fbe, #985bc0, #080f25);
+  background-size: 100%;
+  background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+.button-right {
+  position: absolute;
+  right: 16px;
+}
+
+.landing-page {
+  text-align: center;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 50px;
+  color: #fff;
+}
+
+.landing-page .light-text {
+  font-size: 36px;
+  margin-bottom: 60px;
+
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.light_text_small {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: 500;
+  text-align: justify;
+
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.landing-page .light-text p {
+  font-size: 18px;
+  color: #ccc; /* Cor do texto de descrição um pouco mais clara */
+  margin-bottom: 40px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+@media only screen and (min-width: 600px) {
+  .about {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+/* Remover flexbox se a largura da tela for menor que 600px */
+@media only screen and (max-width: 599px) {
+  .about {
+    display: block; /* Ou qualquer outra propriedade que deseje aplicar */
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.option {
+  width: 45%;
+  border: 1px solid #777; /* Cor da borda um pouco mais clara */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff; /* Cor de fundo mais escura para opções */
+}
+
+.option h2 {
+  font-size: 24px;
+  color: #080f25;
+  margin-bottom: 10px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.option p {
+  font-size: 16px;
+  color: #727171;
+  margin-bottom: 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.light-button {
+  background-color: #985bc0;
+  color: #fff;
+
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  transition: background-color 0.3s;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.light-button:hover {
+  background-color: #852fbe;
+  scale: 1.07;
+  cursor: pointer;
+}
+
+.about-tool {
+  margin-top: 40px;
+  padding-right: 70px;
+  padding-left: 70px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #ccc; /* Cor do texto claro */
+}
+
+.about-tool p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.about-tool ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-tool ul li {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.about-tool a {
+  margin-top: 6px;
+  color: #3d4447;
+  font-weight: 700;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+  text-decoration: none;
+}
+
+.about-tool a:hover {
+  text-decoration: underline;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.column {
+  margin-bottom: 12px;
+}
+
+.popHover:hover {
+  background-color: #9a70b6 !important;
+  border-radius: 8px;
+}
+
+.row1 {
+  display: flex;
+  margin-bottom: 12px;
+  background-color: #fff;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 4px;
+}
+
+.row1:hover {
+  scale: 1.07;
+  background-color: #c083df;
+}
+
+.ariel-img {
+  margin-right: 28px;
+  width: 240px;
+  border-radius: 32px;
+  padding-top: 8px;
+}
+
+.if-img {
+  margin-right: 28px;
+  width: 240px;
+  padding-top: 8px;
+}
+
+.link-img {
+  margin-right: 16px;
+  margin-left: 12px;
+  width: 38px;
+  padding-top: 0px;
+}
+
+.git-img {
+  margin-right: 8;
+  height: 38px;
+  padding-top: 0px;
+}

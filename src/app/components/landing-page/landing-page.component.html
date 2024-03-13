@@ -1,20 +1,173 @@
-<mat-toolbar color="primary">
-  <span>
-    <img src="assets/img/angular_whiteTransparent.svg" class="angular-logo" />
-    Angular NavBar + Login Example #01
-  </span>
-  <span class="fill-remaining-space"></span>
-  <button mat-button>Menu Option 01</button>
-  <button mat-button>Menu Option 02</button>
-  <button mat-button routerLink="login">Login</button>
-  <button mat-button>Logout</button>
-</mat-toolbar>
-<mat-sidenav-container autosize>
-  <mat-sidenav-content>
-    <div class="elemento-com-svg-de-fundo">
-      <div class="navbar-container" style="padding: 25px">
-        <div class="card-box">Ariel sam</div>
+<div style="overflow-y: hidden">
+  <mat-toolbar class="appBar">
+    <span>
+      <img src="assets/png/logo1bg.png" class="angular-logo" />
+    </span>
+    <a class="easyController">EasyController</a>
+    <span class="fill-remaining-space"></span>
+    <!-- <button *ngIf="isLargeScreen" class="button" mat-button>
+      SOBRE A FERRAMENTA
+    </button> -->
+
+    <button
+      *ngIf="!hasValidUser() && !loading && isLargeScreen"
+      class="button-right"
+      mat-button
+      routerLink="login"
+    >
+      ACESSAR SUA CONTA
+    </button>
+
+    <button
+      *ngIf="!hasValidUser() && !loading && !isLargeScreen"
+      class="button-right"
+      mat-button
+      routerLink="login"
+    >
+      LOGIN
+    </button>
+
+    <button
+      *ngIf="hasValidUser() && isLargeScreen"
+      mat-button
+      [matMenuTriggerFor]="menu"
+      class="button-right"
+    >
+      Olá,
+      {{ userLogged!.email }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item class="popHover" (click)="logout()">Sair</button>
+    </mat-menu>
+  </mat-toolbar>
+  <mat-sidenav-container>
+    <mat-sidenav-content style="overflow-y: hidden">
+      <div class="elemento-com-svg-de-fundo">
+        <div class="navbar-container" style="padding: 25px">
+          <!-- Conteúdo da Página -->
+          <div class="landing-page">
+            <h1 class="light-text">Bem-vindo ao EasyController</h1>
+            <p class="light-text">
+              Uma ferramenta poderosa para o projeto e implementação de
+              controladores em plataformas microcontroladas.
+            </p>
+
+            <!-- Opções para escolher entre Laplace e Tempo -->
+            <div class="options">
+              <div class="option">
+                <h2>Controle Clássico</h2>
+                <p>
+                  Projete e implemente controladores PID no domínio de Laplace
+                  para sua aplicação.
+                </p>
+
+                <div
+                  *ngIf="!hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="login"
+                >
+                  Faça o login para começar
+                </div>
+                <div
+                  *ngIf="hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="laplace"
+                >
+                  Começar
+                </div>
+              </div>
+
+              <div style="width: 48px"></div>
+
+              <div class="option">
+                <h2>Controle Moderno</h2>
+                <p>
+                  Projete e implemente controladores LQR/LQG no domínio do tempo
+                  para sua aplicação.
+                </p>
+                <div
+                  *ngIf="!hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="login"
+                >
+                  Faça o login para começar
+                </div>
+                <div
+                  *ngIf="hasValidUser()"
+                  class="light-button"
+                  mat-button
+                  routerLink="tempo"
+                >
+                  Começar
+                </div>
+              </div>
+            </div>
+
+            <!-- Sobre a ferramento -->
+
+            <div style="padding-top: 84px; padding-bottom: 104px">
+              <h1 class="light-text">Sobre a ferramenta</h1>
+
+              <!-- row with 2 coluns -->
+              <div class="about">
+                <div class="column">
+                  <p class="light_text_small">
+                    EasyController é uma plataforma online dedicada ao projeto e
+                    implementação de controladores, abrangendo tanto os
+                    clássicos (como PID e derivados) quanto os modernos (como
+                    LQR e derivados).
+                  </p>
+                  <p class="light_text_small">
+                    No processo de projeto, a plataforma capacita o usuário a
+                    inserir informações sobre a planta a ser controlada e a
+                    escolher a estrutura de controle responsável por fechar a
+                    malha, apresentando resultados através de gráficos online
+                    para uma verificação eficiente.
+                  </p>
+                  <p class="light_text_small">
+                    Embora reconheçamos a existência de diversos softwares
+                    comerciais que oferecem funcionalidades semelhantes para o
+                    projeto de sistemas de controle em malha fechada, o
+                    EasyController se destaca ao proporcionar a capacidade
+                    exclusiva de gerar código em linguagem C. Esse código pode
+                    ser implantado diretamente em plataformas microcontroladas
+                    Arduino da família AVR.
+                  </p>
+                </div>
+
+                <div style="width: 24px; height: 8px; padding: 24px"></div>
+
+                <div class="column">
+                  <p class="light_text_small">
+                    Em um cenário atual onde a implementação digital de
+                    controladores em plataformas microcontroladas ainda
+                    representa um desafio, especialmente para aqueles sem
+                    formação técnica em Sistemas de Controle, o EasyController
+                    visa superar essa barreira.
+                  </p>
+                  <p class="light_text_small">
+                    Nosso diferencial é tornar a implementação de controladores
+                    digitais acessível não apenas para especialistas, mas também
+                    para usuários sem familiaridade completa com o tema,
+                    especialmente aqueles familiarizados com o conceito Maker.
+                    Desta forma, buscamos ampliar a aplicação de controladores
+                    digitais simples para além do ambiente acadêmico.
+                  </p>
+                  <p class="light_text_small">
+                    Desejamos uma experiência proveitosa em suas implementações!
+                  </p>
+                  <p class="light_text_small">
+                    Atenciosamente, Equipe EasyController
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

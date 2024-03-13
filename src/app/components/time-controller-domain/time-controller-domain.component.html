@@ -9,7 +9,7 @@
   >
     <section [class.sidenav]="isExpanded">
       <div class="title">
-        <p *ngIf="isExpanded">EaseController</p>
+        <p *ngIf="isExpanded">EasyController</p>
         <div class="toggle">
           <mat-icon (click)="toggleMenu()">
             {{ isExpanded ? "first_page" : "dehaze" }}
@@ -18,22 +18,16 @@
       </div>
       <div *ngIf="isExpanded">
         <div>
-          <h2 class="parametrosDoSistema">
-            Controle em Espaço de Estados em Tempo Contínuo
-          </h2>
+          <h2 class="parametrosDoSistema">Controle Moderno</h2>
 
           <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
           <div class="matrizes-input">
-            <p class="titles-navBar">Parâmetros do sistema</p>
+            <!-- <p class="titles-navBar">Parâmetros do sistema</p> -->
 
             <div class="input-increase">
               <div class="inputRow">
                 <h5 class="inputText">Ordem do Sistema</h5>
-                <mat-form-field
-                  class="example-full-width"
-                  appearance="fill"
-                  [style.width.px]="80"
-                >
+                <mat-form-field appearance="fill" [style.width.px]="80">
                   <mat-label></mat-label>
                   <input
                     type="number"
@@ -47,11 +41,7 @@
 
               <div class="inputRow">
                 <h5 class="inputText">Número de Entradas</h5>
-                <mat-form-field
-                  class="example-full-width"
-                  appearance="fill"
-                  [style.width.px]="80"
-                >
+                <mat-form-field appearance="fill" [style.width.px]="80">
                   <mat-label></mat-label>
                   <input
                     type="number"
@@ -64,11 +54,7 @@
               </div>
               <div class="inputRow">
                 <h5 class="inputText">Número de Saídas</h5>
-                <mat-form-field
-                  class="example-full-width"
-                  appearance="fill"
-                  [style.width.px]="80"
-                >
+                <mat-form-field appearance="fill" [style.width.px]="80">
                   <mat-label></mat-label>
                   <input
                     type="number"
@@ -84,7 +70,9 @@
 
           <!-- MATRIZES -->
           <div class="matrizes-input">
-            <p class="titles-navBar">Preenchimento das matrizes</p>
+            <p class="titles-navBar">
+              Insira aqui os parâmetros das matrizes da planta a ser controlada
+            </p>
 
             <div *ngFor="let matriz of matrizes; index as c">
               <h5>Matriz {{ matriz.label }}</h5>
@@ -99,7 +87,7 @@
                       type="text"
                       id="cell_{{ i }}_{{ j }}"
                       appDecimalNumber
-                      value=""
+                      value="0"
                       matInput
                       (blur)="matrizValueChange(matriz, i, j, $event)"
                       placeholder="0"
@@ -119,7 +107,7 @@
               (click)="calcularDinamicaDaPlanta()"
               style="margin-left: 25px"
             >
-              Calcular dinâmica da planta
+              Mostrar dinâmica da planta
             </button>
             <button class="iconDelete" (click)="limparInput()">
               <mat-icon>delete</mat-icon>
@@ -138,26 +126,20 @@
           <div class="card-box-nav" *ngIf="!isLargeScreen">
             <section [class.sidenav]="isExpanded">
               <div class="title">
-                <p *ngIf="isExpanded">EaseController</p>
+                <p *ngIf="isExpanded">EasyController</p>
               </div>
               <div *ngIf="isExpanded">
                 <div>
-                  <h2 class="parametrosDoSistema">
-                    Controle em Espaço de Estados em Tempo Contínuo
-                  </h2>
+                  <h2 class="parametrosDoSistema">Controle Moderno</h2>
 
                   <!-- PARAMETROS DO SISTEMA - ITENS EM ROW -->
                   <div class="matrizes-input">
-                    <p class="titles-navBar">Parâmetros do sistema</p>
+                    <!-- <p class="titles-navBar">Parâmetros do sistema</p> -->
 
                     <div class="input-increase">
                       <div class="inputRow">
                         <h5 class="inputText">Ordem do Sistema</h5>
-                        <mat-form-field
-                          class="example-full-width"
-                          appearance="fill"
-                          [style.width.px]="60"
-                        >
+                        <mat-form-field appearance="fill" [style.width.px]="60">
                           <mat-label></mat-label>
                           <input
                             type="number"
@@ -171,11 +153,7 @@
 
                       <div class="inputRow">
                         <h5 class="inputText">Número de Entradas</h5>
-                        <mat-form-field
-                          class="example-full-width"
-                          appearance="fill"
-                          [style.width.px]="60"
-                        >
+                        <mat-form-field appearance="fill" [style.width.px]="60">
                           <mat-label></mat-label>
                           <input
                             type="number"
@@ -188,11 +166,7 @@
                       </div>
                       <div class="inputRow">
                         <h5 class="inputText">Número de Saídas</h5>
-                        <mat-form-field
-                          class="example-full-width"
-                          appearance="fill"
-                          [style.width.px]="60"
-                        >
+                        <mat-form-field appearance="fill" [style.width.px]="60">
                           <mat-label></mat-label>
                           <input
                             type="number"
@@ -208,7 +182,10 @@
 
                   <!-- MATRIZES -->
                   <div class="matrizes-input">
-                    <p class="titles-navBar">Preenchimento das matrizes</p>
+                    <p class="titles-navBar">
+                      Insira aqui os parâmetros das matrizes da planta a ser
+                      controlada
+                    </p>
 
                     <div *ngFor="let matriz of matrizes; index as c">
                       <h5>Matriz {{ matriz.label }}</h5>
@@ -227,7 +204,7 @@
                               type="text"
                               id="cell_{{ i }}_{{ j }}"
                               appDecimalNumber
-                              value=""
+                              value="0"
                               matInput
                               (blur)="matrizValueChange(matriz, i, j, $event)"
                               placeholder="0"
@@ -247,7 +224,7 @@
                       (click)="calcularDinamicaDaPlanta()"
                       style="margin-left: 25px"
                     >
-                      Calcular dinâmica da planta
+                      Mostrar dinâmica da planta
                     </button>
                     <button class="iconDelete" (click)="limparInput()">
                       <mat-icon>delete</mat-icon>
@@ -259,22 +236,36 @@
           </div>
 
           <div *ngIf="panelMA">
+            <!--Dinâmica da planta  -->
+            <div class="card-box" style="margin-bottom: 15px">
+              <mat-card-title class="title-card">
+                A resposta da saída da planta ao degrau unitário
+                é:</mat-card-title
+              >
+              <plotly-plot
+                [data]="this.stepMA[0]"
+                [layout]="graph.layout"
+              ></plotly-plot>
+            </div>
+
             <!-- Controlabilidade -->
             <div class="card-box">
               <div class="row-controlabilidade">
                 <div>
-                  <mat-card-title class="title-card"
-                    >Controlabilidade e<br />Observabilidade</mat-card-title
+                  <p
+                    class="text-card"
+                    style="margin-top: 10px; font-size: 26px"
                   >
-                  <p class="text-card" style="margin-top: 10px">
-                    {{ control_rank }}
+                    {{ control_rankShow }}
                   </p>
-                  <p class="text-card">{{ obsv_rank }}</p>
+                  <p style="margin-top: 6px; font-size: 26px" class="text-card">
+                    {{ obsv_rankShow }}
+                  </p>
                 </div>
                 <div *ngIf="isControlable() && isLargeScreen" class="vl"></div>
                 <div *ngIf="!isLargeScreen" class="vlMobile"></div>
                 <!-- divisor na vertical -->
-                <div *ngIf="isControlable()" style="col">
+                <div *ngIf="isControlable()" class="col">
                   <mat-card-title class="title-card"
                     >Escolha o controlador<br
                   /></mat-card-title>
@@ -291,18 +282,16 @@
                       </option>
                     </select>
                   </mat-form-field>
+                  <!-- show image -->
+                  <div>
+                    <img
+                      src="{{ imageControl }}"
+                      alt="Controlador"
+                      style="margin-top: 10px; max-width: 300px"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div class="card-box" style="margin-top: 10px">
-              <mat-card-title class="title-card">
-                Dinâmica da planta</mat-card-title
-              >
-              <plotly-plot
-                [data]="this.stepMA[0]"
-                [layout]="graph.layout"
-              ></plotly-plot>
             </div>
           </div>
 
@@ -330,7 +319,7 @@
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value=""
+                        value="0"
                         matInput
                         (blur)="matrizValueChange(CI, i, j, $event)"
                         placeholder="0"
@@ -355,7 +344,7 @@
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value=""
+                        value="0"
                         matInput
                         (blur)="matrizValueChange(myLQR, i, j, $event)"
                         placeholder="0"
@@ -370,14 +359,14 @@
                 (click)="calc_lqr()"
                 style="margin: 10px"
               >
-                Calcular controlador LQR
+                Fechar a malha!
               </button>
             </div>
 
             <div *ngIf="panelCalc_lqr">
               <div class="card-box" style="margin-top: 24px">
                 <mat-card-title class="title-card"
-                  >Resposta para controlador LQR</mat-card-title
+                  >Resposta da(s) saída(s) para o LQR</mat-card-title
                 >
                 <plotly-plot
                   [data]="this.yLQR[0]"
@@ -442,7 +431,7 @@
                         type="text"
                         id="cell_{{ i }}_{{ j }}"
                         appDecimalNumber
-                        value=""
+                        value="0"
                         matInput
                         (blur)="matrizValueChange(myLQI, i, j, $event)"
                         placeholder="0"
@@ -463,7 +452,9 @@
 
             <div *ngIf="panelCalc_lqi">
               <mat-card style="margin-top: 10px">
-                <mat-card-title>Resposta para controlador LQI</mat-card-title>
+                <mat-card-title
+                  >Resposta da(s) saída(s) para o LQI</mat-card-title
+                >
                 <plotly-plot
                   [data]="this.yLQI[0]"
                   [layout]="graphCI.layout"
@@ -531,7 +522,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(CI, i, j, $event)"
                             placeholder="0"
@@ -557,7 +548,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myLQG, i, j, $event)"
                             placeholder="0"
@@ -585,7 +576,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myKalman, i, j, $event)"
                             placeholder="0"
@@ -608,7 +599,9 @@
 
             <div *ngIf="panelCalc_lqg" style="margin-top: 24px">
               <mat-card style="margin-top: 10px">
-                <mat-card-title>Resposta para controlador LQG</mat-card-title>
+                <mat-card-title
+                  >Resposta da(s) saída(s) para o LQG</mat-card-title
+                >
 
                 <plotly-plot
                   [data]="this.yLQG[0]"
@@ -673,7 +666,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myLQGI, i, j, $event)"
                             placeholder="0"
@@ -700,7 +693,7 @@
                             type="text"
                             id="cell_{{ i }}_{{ j }}"
                             appDecimalNumber
-                            value=""
+                            value="0"
                             matInput
                             (blur)="matrizValueChange(myKalman, i, j, $event)"
                             placeholder="0"
@@ -726,7 +719,8 @@
             <div *ngIf="panelCalc_lqgi">
               <mat-card style="margin-top: 10px">
                 <mat-card-title
-                  >Resposta para controlador LQG com integrador</mat-card-title
+                  >Resposta da(s) saída(s) para o LQG com
+                  integrador</mat-card-title
                 >
                 <plotly-plot
                   [data]="this.yLQGI[0]"
