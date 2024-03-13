@@ -25,4 +25,5 @@ Projeto com o professor Rodrio Trentini, com base no TCC do Almir e Wesley
 
 ## URL DO PROJETO
 
+<https://easy--controller.firebaseapp.com/>
 <https://github.com/arielsam567/EASYCONTROLLER-FRONT>
