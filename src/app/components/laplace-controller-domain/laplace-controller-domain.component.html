@@ -187,8 +187,8 @@
           style="margin-top: 25px; padding-top: 35px"
         >
           <!-- Inserir imagem -->
-          <img
-            src="assets/png/pid1.png"
+          <img 
+            *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" 
             style="width: 100%; max-width: 500px; margin-bottom: 48px"
           />
           
@@ -274,6 +274,10 @@
 
             <!---COLUNA DA DIREITA--->
             <div class="columnExterna">
+              <mat-card-title style="font-size: 18px"
+                >Escolha o método de sintonia desejado</mat-card-title
+              >
+
               <mat-form-field style="margin-top: 25px">
                 <select matNativeControl (change)="selectMetodo($event)">
                   <option value="MANUAL-INSERT">
@@ -283,7 +287,7 @@
                   <option value="ZN2">Zigler-Nichols segundo método</option>
                 </select>
               </mat-form-field>
-              
+
               <mat-card-title style="font-size: 18px"
                 >Escolha a estrutura de controle</mat-card-title
               >
@@ -296,9 +300,6 @@
                   <option value="P">P</option>
                 </select>
               </mat-form-field>
-              <mat-card-title style="font-size: 18px"
-                >Escolha o método de sintonia desejado</mat-card-title
-              >
 
               <div *ngIf="isManualInsert()">
                 <!-- Kp-->

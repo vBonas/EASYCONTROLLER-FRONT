@@ -265,6 +265,33 @@ export class LaplaceControllerDomainComponent {
     this.selectedMetodo = selectedValue;
   }
 
+  selectedImage: string | null = null;
+
+  onSelectChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.updateSelectedImage(value);
+  }
+
+  updateSelectedImage(value: string) {
+    switch (value) {
+      case 'PID':
+        this.selectedImage = 'assets/png/PID.png';
+        break;
+      case 'PI':
+        this.selectedImage = 'assets/png/PI.png';
+        break;
+      case 'PD':
+        this.selectedImage = 'assets/png/PD.png';
+        break;
+      case 'P':
+        this.selectedImage = 'assets/png/P.png';
+        break;
+      default:
+        this.selectedImage = null;
+        break;
+    }
+  }
+
   isManualInsert(): boolean {
     return this.selectedMetodo === 'MANUAL-INSERT';
   }
