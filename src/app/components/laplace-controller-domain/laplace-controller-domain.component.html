@@ -274,10 +274,6 @@
 
             <!---COLUNA DA DIREITA--->
             <div class="columnExterna">
-              <mat-card-title style="font-size: 18px"
-                >Escolha a estrutura de controle</mat-card-title
-              >
-
               <mat-form-field style="margin-top: 25px">
                 <select matNativeControl (change)="selectMetodo($event)">
                   <option value="MANUAL-INSERT">
@@ -286,6 +282,11 @@
                   <option value="ZN1">Zigler-Nichols primeiro método</option>
                   <option value="ZN2">Zigler-Nichols segundo método</option>
                 </select>
+              </mat-form-field>
+              
+              <mat-card-title style="font-size: 18px"
+                >Escolha a estrutura de controle</mat-card-title
+              >
 
               <mat-form-field style="margin-top: 25px">
                 <select matNativeControl (change)="selectPID($event)">
@@ -299,7 +300,6 @@
                 >Escolha o método de sintonia desejado</mat-card-title
               >
 
-              </mat-form-field>
               <div *ngIf="isManualInsert()">
                 <!-- Kp-->
                 <mat-form-field *ngIf="hasP" appearance="fill">
