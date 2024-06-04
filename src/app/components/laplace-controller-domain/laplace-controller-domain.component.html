@@ -186,20 +186,21 @@
           class="card-box"
           style="margin-top: 25px; padding-top: 35px"
         >
-          <mat-card-title> Estrutura do controlador PID </mat-card-title>
-          <!-- Insetir image -->
+          <mat-card-title> Estrutura do controlador</mat-card-title><br>
+          <!-- Inserir imagem -->
           <img
             src="assets/png/pid1.png"
             style="width: 100%; max-width: 500px; margin-bottom: 48px"
           />
-
+          
+          
           <div class="row-controlabilidade">
             <!---COLUNA DA ESQUERDA-->
             <div style="max-width: 360px">
               <mat-card-title style="font-size: 18px">
                 Deseja inserir o Período de Amostragem (s)?
               </mat-card-title>
-              <!-- AMOSTRAGEM-->
+              <!--AMOSTRAGEM-->
               <div class="rowInputStepTwo" style="padding-top: 15px">
                 <mat-checkbox
                   [(ngModel)]="hasAmostragem"
@@ -272,22 +273,8 @@
 
             <div *ngIf="isLargeScreen" class="vlBig"></div>
 
-            <!---COLUNA DA DIREITA-->
+            <!---COLUNA DA DIREITA--->
             <div class="columnExterna">
-              <mat-card-title style="font-size: 18px"
-                >Escolha o método de sintonia desejado</mat-card-title
-              >
-
-              <mat-form-field style="margin-top: 25px">
-                <select matNativeControl (change)="selectMetodo($event)">
-                  <option value="ZN1">Zigler-Nichols primeiro método</option>
-                  <option value="ZN2">Zigler-Nichols segundo método</option>
-                  <option value="MANUAL-INSERT">
-                    Inserir ganhos manualmente
-                  </option>
-                </select>
-              </mat-form-field>
-
               <mat-card-title style="font-size: 18px"
                 >Escolha a estrutura de controle</mat-card-title
               >
@@ -298,6 +285,19 @@
                   <option value="PI">PI</option>
                   <option value="PD">PD</option>
                   <option value="P">P</option>
+                </select>
+              </mat-form-field>
+              <mat-card-title style="font-size: 18px"
+                >Escolha o método de sintonia desejado</mat-card-title
+              >
+
+              <mat-form-field style="margin-top: 25px">
+                <select matNativeControl (change)="selectMetodo($event)">
+                  <option value="MANUAL-INSERT">
+                    Inserir ganhos manualmente
+                  </option>
+                  <option value="ZN1">Zigler-Nichols primeiro método</option>
+                  <option value="ZN2">Zigler-Nichols segundo método</option>
                 </select>
               </mat-form-field>
               <div *ngIf="isManualInsert()">
@@ -314,28 +314,28 @@
                     id="input7"
                   />
                 </mat-form-field>
-                <!-- Ki-->
+                <!-- Ti-->
                 <mat-form-field *ngIf="hasI" appearance="fill">
                   <mat-label>Ti</mat-label>
                   <input
                     [(ngModel)]="inputI"
                     pattern="^\d*(\.\d{0,2})?$"
                     matInput
-                    placeholder="Ki"
+                    placeholder="Ti"
                     value=""
                     (keyup.enter)="focusNext('input9')"
                     id="input8"
                   />
                 </mat-form-field>
 
-                <!-- Kd-->
+                <!-- Td-->
                 <mat-form-field *ngIf="hasD" appearance="fill">
                   <mat-label>Td</mat-label>
                   <input
                     [(ngModel)]="inputD"
                     pattern="^\d*(\.\d{0,2})?$"
                     matInput
-                    placeholder="Kd"
+                    placeholder="Td"
                     value=""
                     (keyup.enter)="focusNext('input10')"
                     id="input9"

@@ -74,7 +74,7 @@ export class LaplaceControllerDomainComponent {
   hasAmostragem: boolean = true;
   inputSaturacao: string = '1';
   hasSaturacao: boolean = true;
-  inputReferencia: string = '10';
+  inputReferencia: string = '1';
 
   inputP: string = '';
   hasP: boolean = true;
@@ -111,7 +111,7 @@ export class LaplaceControllerDomainComponent {
         color: 'black',
       },
       xaxis: {
-        title: 'Tempo',
+        title: 'Tempo(s)',
         titlefont: {
           family: 'Arial, sans-serif',
           size: 15,
@@ -297,12 +297,12 @@ export class LaplaceControllerDomainComponent {
       fields.push({
         field: this.hasI,
         input: this.inputI,
-        fieldName: 'Ki',
+        fieldName: 'Ti',
       });
       fields.push({
         field: this.hasD,
         input: this.inputD,
-        fieldName: 'Kd',
+        fieldName: 'Td',
       });
     }
 
@@ -460,11 +460,12 @@ export class LaplaceControllerDomainComponent {
   }
 
   stringP() {
-    return `// Código gerado por EasyController - O Seu projetista de controlador\
-                                \n//\n Válido para família Arduino modelos Nano, Uno e Mega.\
-                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
-                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
-                                \n\
+    return `// *********************************************** //\
+                                \n//   Código gerado por EasyController for Arduino  //\
+                                \n//              www.easycontroller.com             //\
+                                \n// Usar com Arduinos baseados em processadores AVR //\
+                                \n// *********************************************** //\
+                                \
                                 \n#include <TimerThree.h> \
                                 \n\
                                 \ndouble kp=${this.outputKp};				//  kp-Inserir valor gerado\
@@ -518,10 +519,11 @@ export class LaplaceControllerDomainComponent {
   }
 
   stringPI() {
-    return `// Código gerado por EasyController - O Seu projetista de controlador\
-                                \n// Válido para família Arduino modelos Nano, Uno e Mega.\
-                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
-                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+    return `// *********************************************** //\
+                                \n//   Código gerado por EasyController for Arduino  //\
+                                \n//              www.easycontroller.com             //\
+                                \n// Usar com Arduinos baseados em processadores AVR //\
+                                \n// *********************************************** //\
                                 \
                                 \n#include <TimerThree.h>\
                                 \
@@ -582,10 +584,11 @@ export class LaplaceControllerDomainComponent {
   }
 
   stringPD() {
-    return ` // Código gerado por EasyController - O Seu projetista de controlador\
-                                \n// Válido para família Arduino modelos Nano, Uno e Mega.\
-                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
-                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+    return `// *********************************************** //\
+                                \n//   Código gerado por EasyController for Arduino  //\
+                                \n//              www.easycontroller.com             //\
+                                \n// Usar com Arduinos baseados em processadores AVR //\
+                                \n// *********************************************** //\
                                 \
                                 \n#include <TimerThree.h>\
                                 \
@@ -649,10 +652,11 @@ export class LaplaceControllerDomainComponent {
   }
 
   stringPID() {
-    return `// Código gerado por EasyController - O Seu projetista de controlador\
-                                \n// Válido para família Arduino modelos Nano, Uno e Mega.\
-                                \n// instalar bliblioteca disponivel em : https://www.arduino.cc/reference/en/libraries/timerthree/\
-                                \n// Definições de pinos como sensores entre outros deve ser feito pelo o usuário\
+    return `// *********************************************** //\
+                                \n//   Código gerado por EasyController for Arduino  //\
+                                \n//              www.easycontroller.com             //\
+                                \n// Usar com Arduinos baseados em processadores AVR //\
+                                \n// *********************************************** //\
                                 \
                                 \n#include <TimerThree.h>\
                                 \

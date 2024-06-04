@@ -518,7 +518,7 @@ export class TimeControllerDomainComponent implements OnInit {
 
         if (!this.isControlable()) {
           this.showMessageError(
-            'O sistema não é controlaver, Favor alterar matriz de entradas (B)'
+            'O sistema não é controlavel, Favor alterar matriz de entradas (B)'
           );
         }
         // @ts-ignore
@@ -608,7 +608,7 @@ export class TimeControllerDomainComponent implements OnInit {
         color: 'black',
       },
       xaxis: {
-        title: 'Tempo',
+        title: 'Tempo(s)',
         titlefont: {
           family: 'Arial, sans-serif',
           size: 15,
@@ -655,7 +655,7 @@ export class TimeControllerDomainComponent implements OnInit {
         color: 'black',
       },
       xaxis: {
-        title: 'Tempo',
+        title: 'Tempo(s)',
         titlefont: {
           family: 'Arial, sans-serif',
           size: 15,
