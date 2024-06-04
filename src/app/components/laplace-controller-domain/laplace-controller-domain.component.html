@@ -186,7 +186,6 @@
           class="card-box"
           style="margin-top: 25px; padding-top: 35px"
         >
-          <mat-card-title> Estrutura do controlador</mat-card-title><br>
           <!-- Inserir imagem -->
           <img
             src="assets/png/pid1.png"
@@ -280,6 +279,15 @@
               >
 
               <mat-form-field style="margin-top: 25px">
+                <select matNativeControl (change)="selectMetodo($event)">
+                  <option value="MANUAL-INSERT">
+                    Inserir ganhos manualmente
+                  </option>
+                  <option value="ZN1">Zigler-Nichols primeiro método</option>
+                  <option value="ZN2">Zigler-Nichols segundo método</option>
+                </select>
+
+              <mat-form-field style="margin-top: 25px">
                 <select matNativeControl (change)="selectPID($event)">
                   <option value="PID">PID</option>
                   <option value="PI">PI</option>
@@ -291,14 +299,6 @@
                 >Escolha o método de sintonia desejado</mat-card-title
               >
 
-              <mat-form-field style="margin-top: 25px">
-                <select matNativeControl (change)="selectMetodo($event)">
-                  <option value="MANUAL-INSERT">
-                    Inserir ganhos manualmente
-                  </option>
-                  <option value="ZN1">Zigler-Nichols primeiro método</option>
-                  <option value="ZN2">Zigler-Nichols segundo método</option>
-                </select>
               </mat-form-field>
               <div *ngIf="isManualInsert()">
                 <!-- Kp-->
