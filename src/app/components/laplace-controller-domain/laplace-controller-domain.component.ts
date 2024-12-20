@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LaplaceControllerDomainService } from './laplace-controller-domain.service';
 @Component({
   selector: 'app-laplace-controller-domain',
   templateUrl: './laplace-controller-domain.component.html',
-  styleUrls: ['./laplace-controller-domain.component.css'],
+  styleUrls: ['./laplace-controller-domain.component.css']
 })
-export class LaplaceControllerDomainComponent {
+export class LaplaceControllerDomainComponent implements OnInit, AfterViewInit {
   constructor(
     private laplaceControllerDomainService: LaplaceControllerDomainService,
     private http: HttpClient,
@@ -26,10 +26,28 @@ export class LaplaceControllerDomainComponent {
   public toggleMenu() {
     this.isExpanded = !this.isExpanded;
   }
+
+  @ViewChild('selectMetodoElement') selectMetodoElement!: ElementRef<HTMLSelectElement>;
+  @ViewChild('selectPIDElement') selectPIDElement!: ElementRef<HTMLSelectElement>;
+  @ViewChild('selectSaturacaoElement') selectSaturacaoElement!: ElementRef<HTMLSelectElement>;
+  @ViewChild('selectAmostragemElement') selectAmostragemElement!: ElementRef<HTMLSelectElement>;
+  ngOnInit() {
+    this.callSelectMetodoOnLoad();
+    this.callSelectPIDOnLoad();
+    this.callSelectSaturacaoOnLoad();
+    this.callSelectAmostragemOnLoad();
+    this.updateSelectedImage();
+  }
+
+  ngAfterViewInit() {
+    console.log(this.selectAmostragemElement.nativeElement);
+    console.log(this.selectSaturacaoElement.nativeElement);
+  }
+
   numeradorPs: string = '1';
   denominadorPs: string = '1,2';
   numeradorDs: string = '1';
-  denominadorDs: string = '1';
+  denominadorDs: string = '1,2';
   @ViewChild('numeradorEq1') numeradorElement!: ElementRef;
   @ViewChild('barraEq1') barraElement!: ElementRef;
   @ViewChild('denominadorEq1') denominadorElement!: ElementRef;
@@ -41,7 +59,8 @@ export class LaplaceControllerDomainComponent {
   outputKp: string = '0';
   outputKi: string = '0';
   outputKd: string = '0';
-  outputSaturation: string = '0';
+  outputSaturationSup: string = '0';
+  outputSaturationInf: string = '0';
   outputAmostragem: string = '0';
   outputReferencia: string = '0';
   // DEGRAU UNITARIO
@@ -72,7 +91,7 @@ export class LaplaceControllerDomainComponent {
 
   inputAmostragem: string = '0.01';
   hasAmostragem: boolean = true;
-  inputSaturacao: string = '1';
+  inputSaturacao: string = '-1,1';
   hasSaturacao: boolean = true;
   inputReferencia: string = '1';
 
@@ -83,14 +102,16 @@ export class LaplaceControllerDomainComponent {
   inputD: string = '';
   hasD: boolean = true;
 
-  selectedMetodo: string = 'ZN1'; // ZN1, ZN2, MANUAL-INSERT
+  selectedMetodo: string = 'MANUAL-INSERT'; // ZN1, ZN2, MANUAL-INSERT
+  selectedAmostragem: string = 'AMOST-MANUAL'; //AMOST-MANUAL, AMOST-AUTO
+  selectedSaturacao: string = 'SAT-MANUAL'; //SAT-MANUAL, SAT-AUTO
   selectedOptionPID: string = 'PID'; // PID, PI, PD, P
 
-  changeAmostragem() {
+ changeAmostragem() {
     if (!this.hasAmostragem) {
       this.inputAmostragem = 'N/A';
     } else {
-      this.inputAmostragem = '1';
+      this.inputAmostragem = '0.01';
     }
   }
 
@@ -98,7 +119,7 @@ export class LaplaceControllerDomainComponent {
     if (!this.hasSaturacao) {
       this.inputSaturacao = 'N/A';
     } else {
-      this.inputSaturacao = '1';
+      this.inputSaturacao = '-1,1';
     }
   }
 
@@ -238,9 +259,13 @@ export class LaplaceControllerDomainComponent {
     return this.stepOne;
   }
 
+  selectedImage: string = 'assets/png/PID.jpg';
+
   selectPID(event: any) {
     const selectedValue = event.target.value;
     this.selectedOptionPID = selectedValue;
+    console.log('Selected PID:', selectedValue);
+    this.updateSelectedImage();
     if (selectedValue === 'PID') {
       this.hasP = true;
       this.hasI = true;
@@ -260,60 +285,103 @@ export class LaplaceControllerDomainComponent {
     }
   }
 
+  updateSelectedImage() {
+    if (this.selectedOptionPID === 'PID') {
+      this.selectedImage = 'assets/png/PID.jpg';
+    } else if (this.selectedOptionPID === 'PI') {
+      this.selectedImage = 'assets/png/PI.jpg';
+    } else if (this.selectedOptionPID === 'PD') {
+      this.selectedImage = 'assets/png/PD.jpg';
+    } else if (this.selectedOptionPID === 'P') {
+      this.selectedImage = 'assets/png/P.jpg';
+    } else {
+      this.selectedImage = '';
+    }
+  }
+
+  callSelectPIDOnLoad() {
+    const selectElement = this.selectPIDElement.nativeElement;
+    const selectedOptionValue = selectElement.value;
+    const fakeEvent = { target: { value: selectedOptionValue } };
+    this.selectPID(fakeEvent);
+  }
+
+  callSelectSaturacaoOnLoad() {
+    const selectElement = this.selectSaturacaoElement.nativeElement;
+    const selectedOptionValue = selectElement.value;
+    const fakeEvent = { target: { value: selectedOptionValue } };
+    this.selectMetodo(fakeEvent);
+  }
+
+  callSelectAmostragemOnLoad() {
+    const selectElement = this.selectAmostragemElement.nativeElement;
+    const selectedOptionValue = selectElement.value;
+    const fakeEvent = { target: { value: selectedOptionValue } };
+    this.selectMetodo(fakeEvent);
+  }
+
+  callSelectMetodoOnLoad() {
+    const selectElement = this.selectMetodoElement.nativeElement;
+    const selectedOptionValue = selectElement.value;
+    const fakeEvent = { target: { value: selectedOptionValue } };
+    this.selectMetodo(fakeEvent);
+  }
+
   selectMetodo(event: any) {
     const selectedValue = event.target.value;
     this.selectedMetodo = selectedValue;
-  }
-
-  selectedImage: string | null = null;
-
-  onSelectChange(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    this.updateSelectedImage(value);
-  }
-
-  updateSelectedImage(value: string) {
-    switch (value) {
-      case 'PID':
-        this.selectedImage = 'assets/png/PID.png';
-        break;
-      case 'PI':
-        this.selectedImage = 'assets/png/PI.png';
-        break;
-      case 'PD':
-        this.selectedImage = 'assets/png/PD.png';
-        break;
-      case 'P':
-        this.selectedImage = 'assets/png/P.png';
-        break;
-      default:
-        this.selectedImage = null;
-        break;
-    }
+    console.log('Selected method:', selectedValue);
   }
 
   isManualInsert(): boolean {
     return this.selectedMetodo === 'MANUAL-INSERT';
   }
 
+  selectAmostragem(event: any) {
+    const selectedAmostragemValue = event.target.value;
+    this.selectedAmostragem = selectedAmostragemValue;
+    console.log('Selected method:', selectedAmostragemValue);
+  }
+
+  isManualAmostragem(): boolean {
+    return this.selectedAmostragem === 'AMOST-MANUAL';
+  }
+
+  selectSaturacao(event: any) {
+    const selectedSaturacaoValue = event.target.value;
+    this.selectedSaturacao = selectedSaturacaoValue;
+    console.log('Selected method:', selectedSaturacaoValue);
+  }
+
+  isManualSaturacao(): boolean {
+    return this.selectedSaturacao === 'SAT-MANUAL';
+  }
+
   validacaoStepTwo(): boolean {
+
     const fields = [
-      {
-        field: this.hasAmostragem,
-        input: this.inputAmostragem,
-        fieldName: 'Período de amostragem',
-      },
-      {
-        field: this.hasSaturacao,
-        input: this.inputSaturacao,
-        fieldName: 'Valor de saturação',
-      },
       {
         field: true,
         input: this.inputReferencia,
         fieldName: 'Valor de referência',
       },
     ];
+
+    if (this.isManualSaturacao()) {
+      fields.push({
+        field: this.hasSaturacao,
+        input: this.inputSaturacao,
+        fieldName: 'Valor de saturação'
+      });
+    }
+
+    if (this.isManualAmostragem()) {
+      fields.push({
+        field: this.hasAmostragem,
+        input: this.inputAmostragem,
+        fieldName: 'Período de amostragem'
+      });
+    }
 
     if (this.isManualInsert()) {
       fields.push({
@@ -333,7 +401,17 @@ export class LaplaceControllerDomainComponent {
       });
     }
 
-    const regex = /^[0-9]+(\.[0-9]+)?$/;
+    const regex2 = /^-?\d+,-?\d+$/; //validar a saturação
+    const regex = /^[0-9]+(\.[0-9]+)?$/; //validar os outros campos
+
+    for (const { field, input, fieldName } of fields) {
+      if (field && fieldName === 'Valor de saturação' && !regex2.test(input)) {
+        this.showMessageError(
+          `${fieldName} inválido. Digite dois números separados por vírgula. Exemplo: -1,1`
+        );
+        return false;
+      }
+    }
 
     for (const { field, input, fieldName } of fields) {
       if (field && input === '') {
@@ -342,10 +420,14 @@ export class LaplaceControllerDomainComponent {
       }
 
       if (field && !regex.test(input)) {
-        this.showMessageError(
-          `${fieldName} inválido. Digite apenas números decimais. Exemplo: 2.5`
-        );
-        return false;
+        if (fieldName === 'Valor de saturação')
+          continue;
+        else {
+          this.showMessageError(
+            `${fieldName} inválido. Digite apenas números decimais. Exemplo: 2.5`
+          );
+          return false;
+        }
       }
     }
 
@@ -354,12 +436,14 @@ export class LaplaceControllerDomainComponent {
 
   getBody(): any {
     return {
-      saturacao1: this.hasSaturacao ? 1 : 0,
-      amostragem1: this.hasAmostragem ? 1 : 0,
+      //saturacao1: this.hasSaturacao ? 1 : 0,
+      //amostragem1: this.hasAmostragem ? 1 : 0,
+      saturacao1: this.isManualSaturacao() && this.hasSaturacao ? 1 : 0,
+      amostragem1: this.isManualAmostragem() && this.hasAmostragem ? 1 : 0,
       controladores: this.getOptionPID(),
       amostragem: this.inputAmostragem === 'N/A' ? 0.01 : this.inputAmostragem,
       referencia: this.inputReferencia,
-      saturacao: this.inputSaturacao === 'N/A' ? 999999 : this.inputSaturacao,
+      saturacao: this.inputSaturacao === 'N/A' ? [-1000000,1000000] : this.inputSaturacao,
       kp: this.isManualInsert() && this.hasP ? this.inputP : 0,
       ti: this.isManualInsert() && this.hasI ? this.inputI : 0,
       td: this.isManualInsert() && this.hasD ? this.inputD : 0,
@@ -372,12 +456,16 @@ export class LaplaceControllerDomainComponent {
   calculaStepTwo() {
     this.stepTwo = true;
     if (!this.validacaoStepTwo()) {
+      console.log('AppComponent initialized');
       return;
     }
+
+    console.log(this.getBody());
 
     this.laplaceControllerDomainService
       .calculaStepTwo(this.getBody())
       .then((response: any) => {
+        console.log('Response:', response);
         const newEquacao = response.newG;
         const numeradorAux = newEquacao[1];
         const barraAux = newEquacao[2];
@@ -392,12 +480,14 @@ export class LaplaceControllerDomainComponent {
         let td2 = response.newtd;
         let referencia2 = response.newreferencia;
         let amostragem5 = response.newamostragem;
-        let saturacao5 = response.newsaturacao;
+        let saturacaoSUP = response.newsaturacaoSup;
+        let saturacaoINF = response.newsaturacaoInf;
 
         this.outputKp = kp2;
         this.outputKi = ti2;
         this.outputKd = td2;
-        this.outputSaturation = saturacao5;
+        this.outputSaturationSup = saturacaoSUP;
+        this.outputSaturationInf = saturacaoINF;
         this.outputAmostragem = amostragem5;
         this.outputReferencia = referencia2;
         let eixo_x = response.newtempo;
@@ -441,10 +531,6 @@ export class LaplaceControllerDomainComponent {
   }
 
   getOptionPID(): string {
-    // <option value="4">PID</option>
-    // <option value="2">PI</option>
-    // <option value="3">PD</option>
-    // <option value="1">P</option>
     if (this.selectedOptionPID === 'PID') {
       this.codes = this.stringPID();
       return '4';
@@ -473,9 +559,6 @@ export class LaplaceControllerDomainComponent {
   }
 
   getOptionControlador(): string {
-    // <option value="1">  Não calcular parâmetros automáticos
-    // <option value="2"> Zigler-Nichols primeiro método
-    // <option value="3"> Zigler-Nichols Segundo método
     if (this.selectedMetodo === 'MANUAL-INSERT') {
       return '1';
     } else if (this.selectedMetodo === 'ZN1') {
@@ -497,7 +580,8 @@ export class LaplaceControllerDomainComponent {
                                 \n\
                                 \ndouble kp=${this.outputKp};				//  kp-Inserir valor gerado\
                                 \ndouble T=${this.outputAmostragem};				// Período de amostragem-Inserir valor gerado\
-                                \ndouble lim_sup=${this.outputSaturation};			// Saturação - Inserir valor gerado\
+                                \ndouble lim_sup=${this.outputSaturationSup};			// Saturação superior\
+                                \ndouble lim_inf=${this.outputSaturationInf};			// Saturação inferior\
                                 \ndouble ref=${this.outputReferencia};				// Define referência - Inserir valor gerado\
                                 \
                                 \ndouble erro;				// Vetor de erro\
@@ -557,7 +641,8 @@ export class LaplaceControllerDomainComponent {
                                 \ndouble kp=${this.outputKp};				// kp-Inserir valor gerado\
                                 \ndouble Ti=${this.outputKi};				// Ti- Inserir valor gerado\
                                 \ndouble T=${this.outputAmostragem};				// Período de amostragem- Inserir valor gerado\
-                                \ndouble lim_sup=${this.outputSaturation};			// Saturação superior- Inserir valor gerado\
+                                \ndouble lim_sup=${this.outputSaturationSup};			// Saturação superior\
+                                \ndouble lim_inf=${this.outputSaturationInf};			// Saturação inferior\
                                 \ndouble ref=${this.outputReferencia};				// Define referência- Inserir valor gerado\
                                 \
                                 \ndouble erro;				// Vetor de erro\
@@ -622,7 +707,8 @@ export class LaplaceControllerDomainComponent {
                                 \ndouble kp=${this.outputKd};				// kp-Inserir valor gerado\
                                 \ndouble Ti=${this.outputKi};				// td- Inserir valor gerado\
                                 \ndouble T=${this.outputAmostragem};				// Período de amostragem- Inserir valor gerado\
-                                \ndouble lim_sup=${this.outputSaturation};			// Saturação superior- Inserir valor gerado\
+                                \ndouble lim_sup=${this.outputSaturationSup};			// Saturação superior\
+                                \ndouble lim_inf=${this.outputSaturationInf};			// Saturação inferior\
                                 \ndouble ref=${this.outputReferencia};				// Define referência- Inserir valor gerado\
                                 \
                                 \ndouble erro;				// Vetor de erro\
@@ -691,19 +777,19 @@ export class LaplaceControllerDomainComponent {
                                 \ndouble Ti=${this.outputKi};				// Tempo integral [s]\
                                 \ndouble Td=${this.outputKd};				// Tempo derivativo [s]\
                                 \ndouble T=${this.outputAmostragem};				// Período de amostragem\
-                                \ndouble lim_sup=${this.outputSaturation};			// Saturação superior\
-                                \ndouble lim_inf=;			// Saturação inferior\
+                                \ndouble lim_sup=${this.outputSaturationSup};			// Saturação superior\
+                                \ndouble lim_inf=${this.outputSaturationInf};			// Saturação inferior\
                                 \ndouble ref=${this.outputReferencia};				// Define referência\
                                 \
-                                \ndouble erro;				// Vetor de erro\
-                                \ndouble u;				// Vetor de controle\
-                                \ndouble du;				// Variação do sinal de controle\
+                                \ndouble erro[0] = {0,0,0};				// Vetor de erro\
+                                \ndouble u[2] = {0,0};				// Vetor de controle\
+                                \ndouble du = 0;				// Variação do sinal de controle\
                                 \ndouble y;				// Saída medida do sistema\
                                 \
                                 \
                                 \n// Constantes para controle\
-                                \ndouble r0 = kp +kp*Td/T;\
-                                \ndouble r1 = -kp +kp*T/Ti;\
+                                \ndouble r0 = kp+kp*Td/T;\
+                                \ndouble r1 = -kp+kp*T/Ti-2*Td*kp/2;\
                                 \ndouble r2 = kp*Td/T;\
                                 \
                                 \n// Para saída PWM\
@@ -715,12 +801,13 @@ export class LaplaceControllerDomainComponent {
                                 \
                                 \n// Setup\
                                 \nvoid setup() {\
-                                  \nTimer3.initialize(T*1000);		// Inicializa Timer3 com período de amostragem (em us)\
+                                  \nTimer3.initialize(T*1000000);		// Inicializa Timer3 com período de amostragem (em us)\
                                   \nTimer3.attachInterrupt(controlePID);	// Define a interrupção de tempo\
                                 \n}\
                                 \
                                 \n// Interrupção de tempo\
                                 \nvoid controlePID() {\
+                                  \ny= leitura;\
                                   \nerro[0] = ref -y;\
                                 \
                                   \ndu = r0*erro[0] +r1*erro[1] +r2*erro[2];\
@@ -735,14 +822,17 @@ export class LaplaceControllerDomainComponent {
                                 \
                                   \n// Mapeamento (float) do sinal de controle para a saída PWM\
                                   \nu_pwm = mapf(u[0],lim_inf,lim_sup,minPWM,maxPWM);\
+                                  \n
+                                  \nu[1] = u[0];\
+                                  \nerro[2] = erro[1];\
+                                  \nerro[1] = erro[0];\
                                 \
                                   \nanalogWrite(Pino,u_pwm);		// Indicar o número do Pino da saída PWM\
                                 \n}\
                                 \
                                 \n// Loop principal\
                                 \nvoid loop() {\
-                                  \n// Escrever aqui as leituras, conversões de sinal, etc.\
-                                  \ny = ...\
+                                  \nleitura = ...// Escrever aqui as leituras, conversões de sinal, etc.\
                                 \n}`;
   }
 }

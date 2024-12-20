@@ -5,11 +5,12 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class LaplaceControllerDomainService {
   constructor(private http: HttpClient) {}
-  url = 'https://easycontroller.onrender.com/';
+  url = 'https://easycontroller.onrender.com/laplace';
+  // url = 'http://127.0.0.1:8000/';
   headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET',
-    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': '*'
   };
   async calculaStepOne(data: any) {
     let queryString = Object.keys(data)

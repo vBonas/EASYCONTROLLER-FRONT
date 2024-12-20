@@ -39,7 +39,6 @@
                 [(ngModel)]="numeradorPs"
                 matInput
                 placeholder="1,2,3"
-                value=""
                 (keyup.enter)="focusNext('input1')"
                 id="input0"
               />
@@ -53,7 +52,6 @@
                 [(ngModel)]="denominadorPs"
                 matInput
                 placeholder="1,2,3"
-                value=""
                 (keyup.enter)="focusNext('input2')"
                 id="input1"
               />
@@ -155,7 +153,7 @@
 
         <div *ngIf="hasStepOne()" class="card-box">
           <div>
-            <h4 class="title-card">A Função de Transferência da planta é:</h4>
+            <h4 class="title-card">Função de Transferência da planta</h4>
             <div
               class="al"
               style="
@@ -171,7 +169,7 @@
             </div>
 
             <h5 class="title-card">
-              A resposta da saída da planta ao degrau unitário é:
+              Resposta da saída da planta ao degrau unitário
             </h5>
 
             <plotly-plot
@@ -186,75 +184,78 @@
           class="card-box"
           style="margin-top: 25px; padding-top: 35px"
         >
+          <mat-card-title style="display: flex; align-items: center; justify-content: center;">Estrutura do Controlador</mat-card-title>
           <!-- Inserir imagem -->
-          <img 
-            *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" 
-            style="width: 100%; max-width: 500px; margin-bottom: 48px"
-          />
-          
+          <div class="image-container" *ngIf="selectedImage">
+            <img [src]="selectedImage" alt="Selected Image" class="centered-image" [ngClass]="{'big-image': selectedOptionPID === 'P'}"/>
+          </div>
           
           <div class="row-controlabilidade">
             <!---COLUNA DA ESQUERDA-->
             <div style="max-width: 360px">
               <mat-card-title style="font-size: 18px">
-                Deseja inserir o Período de Amostragem (s)?
+                Período de Amostragem (s)
               </mat-card-title>
               <!--AMOSTRAGEM-->
-              <div class="rowInputStepTwo" style="padding-top: 15px">
-                <mat-checkbox
-                  [(ngModel)]="hasAmostragem"
-                  (ngModelChange)="changeAmostragem()"
-                  class="checkboxEnable"
-                  color="primary"
-                ></mat-checkbox>
-
-                <mat-form-field appearance="fill">
-                  <mat-label>Periodo do amostragem (seg)</mat-label>
-                  <input
-                    [(ngModel)]="inputAmostragem"
-                    pattern="^\d*(\.\d{0,2})?$"
-                    matInput
-                    placeholder="Periodo do amostragem (seg)"
-                    value=""
-                    (keyup.enter)="focusNext('input5')"
-                    id="input4"
-                    [disabled]="!hasAmostragem"
-                  />
+              <div class="rowInputStepTwo">
+                
+                <mat-form-field style="margin-top: 25px" >
+                  <select matNativeControl (change)="selectAmostragem($event)" #selectAmostragemElement>
+                    <option value="AMOST-MANUAL">Manual</option>
+                    <option value="AMOST-AUTO">Automático</option>
+                  </select>
                 </mat-form-field>
+
+                <div *ngIf="isManualAmostragem()">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Periodo de amostragem (s)</mat-label>
+                    <input
+                      [(ngModel)]="inputAmostragem"
+                      pattern="^\d*(\.\d{0,2})?$"
+                      matInput
+                      placeholder="Periodo do amostragem (s)"
+                      value=""
+                      id="amostragem"
+                      [disabled]="!hasAmostragem"
+                    />
+                  </mat-form-field>
+                </div>
               </div>
 
               <mat-card-title style="font-size: 18px">
-                Deseja inserir os valores de saturação do sinal de controle?
+                Saturação do sinal de controle
               </mat-card-title>
               <!-- SATURACAO -->
               <div class="rowInputStepTwo">
-                <mat-checkbox
-                  [(ngModel)]="hasSaturacao"
-                  (ngModelChange)="changeSaturacao()"
-                  class="checkboxEnable"
-                  color="primary"
-                ></mat-checkbox>
-                <mat-form-field appearance="fill">
-                  <mat-label>Valor de saturação</mat-label>
-                  <input
-                    [(ngModel)]="inputSaturacao"
-                    pattern="^\d*(\.\d{0,2})?$"
-                    matInput
-                    placeholder="Valor de saturação"
-                    value=""
-                    (keyup.enter)="focusNext('input6')"
-                    id="input5"
-                    [disabled]="!hasSaturacao"
-                  />
+                
+                <mat-form-field style="margin-top: 25px">
+                  <select matNativeControl (change)="selectSaturacao($event)" #selectSaturacaoElement>
+                    <option value="SAT-MANUAL">Limitado</option>
+                    <option value="SAT-AUTO">Ilimitado</option>
+                  </select>
                 </mat-form-field>
+                
+                <div *ngIf="isManualSaturacao()" style="width: 100%;">
+                  <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Inferior e Superior (separados por virgula)</mat-label>
+                    <input
+                      [(ngModel)]="inputSaturacao"
+                      matInput
+                      placeholder="Valores de Saturação"
+                      value=""
+                      id="saturacao"
+                      [disabled]="!hasSaturacao"
+                    />
+                  </mat-form-field>
+                </div>
               </div>
 
               <!-- REFERENCIA -->
               <mat-card-title style="font-size: 18px"
-                >Qual é o valor da referência/set-point?</mat-card-title
+                >Valor de referência/set-point</mat-card-title
               >
 
-              <div style="margin-left: 40px; margin-top: 28px">
+              <div style="margin-top: 25px">
                 <mat-form-field appearance="fill">
                   <mat-label>Valor de referência</mat-label>
                   <input
@@ -279,7 +280,7 @@
               >
 
               <mat-form-field style="margin-top: 25px">
-                <select matNativeControl (change)="selectMetodo($event)">
+                <select matNativeControl (change)="selectMetodo($event)" #selectMetodoElement>
                   <option value="MANUAL-INSERT">
                     Inserir ganhos manualmente
                   </option>
@@ -293,7 +294,7 @@
               >
 
               <mat-form-field style="margin-top: 25px">
-                <select matNativeControl (change)="selectPID($event)">
+                <select matNativeControl (change)="selectPID($event)" #selectPIDElement>
                   <option value="PID">PID</option>
                   <option value="PI">PI</option>
                   <option value="PD">PD</option>

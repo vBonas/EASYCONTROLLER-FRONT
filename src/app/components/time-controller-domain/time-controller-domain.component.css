@@ -1,0 +1,29 @@
+/* Ajusta o tamanho da linha que separa as duas colunas*/
+.vlBig {
+    border-left: 1px solid black;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 0;
+}
+
+.row-controlabilidade {
+    display: flex;
+    position: relative;
+}
+
+/* .modal {
+    display: none; 
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+  
+.modal.show {
+    display: block;
+} */

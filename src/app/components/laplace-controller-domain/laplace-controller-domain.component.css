@@ -5,6 +5,7 @@
 
 .rowInputStepTwo {
   display: flex;
+  flex-direction: column;
 }
 
 .checkboxEnable {
@@ -31,4 +32,38 @@ td {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
   font-size: 18px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.centered-image {
+  max-width: 500px;
+  max-height: 350px;
+  object-fit: cover; 
+  margin-bottom: 28px;
+}
+
+/* Ajusta a Imagem do Controle P (para que ela fique do mesmo tamanho das outras)*/
+.big-image {
+  max-width: 350px; 
+  height: auto; 
+}
+
+.row-controlabilidade {
+  display: flex;
+  position: relative;
+}
+
+/* Ajusta o tamanho da linha que separa as duas colunas*/
+.vlBig {
+  border-left: 1px;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 0;
 }

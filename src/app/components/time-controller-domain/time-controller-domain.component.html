@@ -113,6 +113,14 @@
               <mat-icon>delete</mat-icon>
             </button>
           </div>
+          <button
+            mat-raised-button
+            color="primary"
+            style="margin-left: 25px; margin-top: 25px; bottom: 20px"
+            routerLink="/"
+          >
+            Voltar para Home
+          </button>
         </div>
       </div>
     </section>
@@ -261,18 +269,125 @@
                   <p style="margin-top: 6px; font-size: 26px" class="text-card">
                     {{ obsv_rankShow }}
                   </p>
+                  <!-- </div> -->
+                  <br>
+                  <br>
+                  <!-- <div style="max-width: 360px"> -->
+                  <mat-card-title style="font-size: 18px">
+                    Período de Amostragem (s)
+                  </mat-card-title>
+                  <!--AMOSTRAGEM-->
+                  <div class="rowInputStepTwo">
+                    
+                    <mat-form-field style="margin-top: 25px" >
+                      <select matNativeControl (change)="selectAmostragem($event)" #selectAmostragemElement>
+                        <option value="AMOST-AUTO">Automático</option>
+                        <option value="AMOST-MANUAL">Manual</option>
+                      </select>
+                    </mat-form-field>
+    
+                    <div *ngIf="isManualAmostragem()">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Periodo de amostragem (s)</mat-label>
+                        <input
+                          [(ngModel)]="inputAmostragem"
+                          pattern="^\d*(\.\d{0,2})?$"
+                          matInput
+                          placeholder="Periodo do amostragem (s)"
+                          value=""
+                          id="amostragem"
+                          [disabled]="!hasAmostragem"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+    
+                  <mat-card-title style="font-size: 18px">
+                    Saturação do sinal de controle
+                  </mat-card-title>
+                  <!-- SATURACAO -->
+                  <div class="rowInputStepTwo">
+                    
+                    <mat-form-field style="margin-top: 25px">
+                      <select matNativeControl (change)="selectSaturacao($event)" #selectSaturacaoElement>
+                        <option value="SAT-AUTO">Ilimitado</option>
+                        <option value="SAT-MANUAL">Limitado</option>
+                      </select>
+                    </mat-form-field>
+                    
+                    <div *ngIf="isManualSaturacao()" style="width: 100%;">
+                      <div *ngFor="let SAT of matriz_SA">
+                        <h4 class="text-card" style="margin-top: 24px">Condições de Saturação</h4>
+                        <table>
+                          <tr *ngFor="let vx of SAT.values; let i = index">
+                            <td *ngFor="let vy of vx; let j = index; trackBy: trackByFilter">
+                              <input
+                                class="inputMatriz"
+                                type="text"
+                                id="cell_{{ i }}_{{ j }}"
+                                appDecimalNumber
+                                [value]="vy"
+                                matInput
+                                (blur)="matrizValueChange(SAT, i, j, $event)"
+                                placeholder="0"
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div *ngIf="isLQI_LQGI()">
+                    <!-- REFERENCIA -->
+                      <mat-card-title style="font-size: 18px">
+                        Referência/set-point
+                      </mat-card-title>
+                    <div class="rowInputStepTwo">
+                      <mat-form-field style="margin-top: 25px">
+                        <select matNativeControl (change)="selectReferencia($event)" #selectReferenciaElement>
+                          <option value="REF-AUTO">Unitário</option>
+                          <option value="REF-MANUAL">Inserir</option>
+                        </select>
+                      </mat-form-field>
+                      
+                      <div *ngIf="isManualReferencia()" style="width: 100%;">
+                        <div *ngFor="let REF of matriz_REF">
+                          <h4 class="text-card" style="margin-top: 24px">Valor de Referência/set-point</h4>
+                          <table>
+                            <tr *ngFor="let vx of REF.values; let i = index">
+                              <td *ngFor="let vy of vx; let j = index; trackBy: trackByFilter">
+                                <input
+                                  class="inputMatriz"
+                                  type="text"
+                                  id="cell_{{ i }}_{{ j }}"
+                                  appDecimalNumber
+                                  [value]="vy"
+                                  matInput
+                                  (blur)="matrizValueChange(REF, i, j, $event)"
+                                  placeholder="0"
+                                />
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="isControlable() && isLargeScreen" class="vl"></div>
+
+                <div *ngIf="isControlable() && isLargeScreen" class="vlBig"></div>
                 <div *ngIf="!isLargeScreen" class="vlMobile"></div>
                 <!-- divisor na vertical -->
                 <div *ngIf="isControlable()" class="col">
-                  <mat-card-title class="title-card"
+                  <mat-card-title class="title-card" style="font-size: 18px"
                     >Escolha o controlador<br
                   /></mat-card-title>
                   <mat-form-field style="margin-top: 25px">
                     <select
                       matNativeControl
-                      (change)="selectValueChanged($event)"
+                      (change)="selectValueChanged($event)" 
+                      #selectLQI_LQGIElement
                     >
                       <option value="LQR">LQR</option>
                       <option value="LQR_Integrador">LQR + Integrador</option>
@@ -287,7 +402,7 @@
                     <img
                       src="{{ imageControl }}"
                       alt="Controlador"
-                      style="margin-top: 10px; max-width: 300px"
+                      style="margin-top: 10px; max-width: 400px; max-height: 250px; object-fit: cover;"
                     />
                   </div>
                 </div>

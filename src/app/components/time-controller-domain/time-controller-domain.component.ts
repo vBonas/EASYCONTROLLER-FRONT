@@ -4,6 +4,8 @@ import {
   HostListener,
   OnInit,
   ViewEncapsulation,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { Matriz } from './Matriz';
 import { TimeControllerDomainService } from './time-controller-domain.service';
@@ -37,6 +39,8 @@ export class TimeControllerDomainComponent implements OnInit {
   matriz_custo: Matriz[] = [new Matriz('Q'), new Matriz('R')];
   matriz_kalman: Matriz[] = [new Matriz('QN'), new Matriz('RN')];
   initialCond: Matriz[] = [new Matriz('CI')];
+  matriz_SA: Matriz[] = [new Matriz('SAT')]; //Saturação
+  matriz_REF: Matriz[] = [new Matriz('REF')]; //Referência
   graphData: object[] = [];
   graph = {
     data: this.graphData,
@@ -88,6 +92,21 @@ export class TimeControllerDomainComponent implements OnInit {
   L: any = [];
   panelState: boolean = false;
 
+  @ViewChild('selectAmostragemElement') selectAmostragemElement!: ElementRef<HTMLSelectElement>;
+
+  stepTwo: boolean = false;
+  outputAmostragem: string = '0';
+  inputAmostragem: string = '0.01';
+  hasAmostragem: boolean = true;
+  hasSaturacao: boolean = true;
+  hasReferencia: boolean = true;
+  selectedAmostragem: string = 'AMOST-AUTO'; //AMOST-MANUAL, AMOST-AUTO
+  selectedSaturacao: string = 'SAT-AUTO'; //SAT-MANUAL, SAT-AUTO
+  selectedReferencia: string = 'REF-AUTO'; //REF-MANUAL, REF-AUTO
+  selectedLQI_LQGI: string = 'LQI_LQGI';
+
+  mensagemErro: string | null = null;
+
   constructor(
     private timeControllerDomainService: TimeControllerDomainService,
     private http: HttpClient,
@@ -98,6 +117,96 @@ export class TimeControllerDomainComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log('Loading app - time-controller-domain');
+    this.selectedAmostragem = 'AMOST-AUTO';
+    this.callSelectAmostragemOnLoad();
+  }
+
+  callSelectAmostragemOnLoad() {
+    const selectElement = this.selectAmostragemElement.nativeElement;
+    const selectedOptionValue = selectElement.value;
+    const fakeEvent = { target: { value: selectedOptionValue } };
+    this.selectAmostragem(fakeEvent);
+  }
+
+ changeAmostragem() {
+    if (!this.hasAmostragem) {
+      this.inputAmostragem = 'N/A';
+    } else {
+      this.inputAmostragem = '0.01';
+    }
+  }
+
+  selectAmostragem(event: any) {
+    const selectedAmostragemValue = event.target.value;
+    this.selectedAmostragem = selectedAmostragemValue;
+    // console.log('Selected method:', selectedAmostragemValue);
+  }
+
+  isManualAmostragem(): boolean {
+    return this.selectedAmostragem === 'AMOST-MANUAL';
+  }
+
+  selectSaturacao(event: any) {
+    const selectedSaturacaoValue = event.target.value;
+    this.selectedSaturacao = selectedSaturacaoValue;
+    // console.log('Selected method:', selectedSaturacaoValue);
+  }
+
+  isManualSaturacao(): boolean {
+    return this.selectedSaturacao === 'SAT-MANUAL';
+  }
+
+  selectReferencia(event: any) {
+    const selectedReferenciaValue = event.target.value;
+    this.selectedReferencia = selectedReferenciaValue;
+    // console.log('Selected method:', selectedReferenciaValue);
+  }
+
+  isManualReferencia(): boolean {
+    return this.selectedReferencia === 'REF-MANUAL';
+  }
+
+  isLQI_LQGI(): boolean {
+    return this.selectedLQI_LQGI === 'LQR_Integrador' || this.selectedLQI_LQGI === 'LQG_Integrador';
+  }
+
+  validacaoStepTwo(): boolean {
+
+    const fields = [];
+
+    if (this.isManualAmostragem()) {
+      fields.push({
+        field: this.hasAmostragem,
+        input: this.inputAmostragem,
+        fieldName: 'Período de amostragem'
+      });
+    }
+
+    const regex = /^[0-9]+(\.[0-9]+)?$/; //validar os outros campos
+
+    for (const { field, input, fieldName } of fields) {
+      if (field && input === '') {
+        this.showMessageError(`Informe o ${fieldName}`);
+        return false;
+      }
+
+      if (field && !regex.test(input)) {
+        this.showMessageError(
+          `${fieldName} inválido. Digite apenas números decimais. Exemplo: 2.5`
+        );
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  getBody(): any {
+    return {
+      saturacao1: this.isManualSaturacao() && this.hasSaturacao ? '1' : '0',
+      referencia1: this.isManualReferencia() && this.hasReferencia ? '1' : '0',
+      amostragem: this.isManualAmostragem() && this.hasAmostragem ? this.inputAmostragem : 0,
+    };
   }
 
   showCode() {
@@ -155,6 +264,11 @@ export class TimeControllerDomainComponent implements OnInit {
   }
 
   calc_lqr() {
+    this.stepTwo = true;
+    if (!this.validacaoStepTwo()) {
+      // console.log('AppComponent initialized');
+      return;
+    }
     this.panelCalc_lqr = true;
     this.panelCalc_lqi = false;
     this.panelCalc_lqg = false;
@@ -167,6 +281,9 @@ export class TimeControllerDomainComponent implements OnInit {
       Q: this.matriz_custo[0].values,
       R: this.matriz_custo[1].values,
       CI: this.initialCond[0].values,
+      SAT: this.matriz_SA[0].values,
+
+      getbody: this.getBody(),
     };
 
     this.timeControllerDomainService.calc_lqr(matriz_custo_lqr).then((data) => {
@@ -233,6 +350,9 @@ export class TimeControllerDomainComponent implements OnInit {
       };
       this.yLQR.push(this.graphCI.data);
       this.codes.lqr = this.getCodeLQR(matriz_custo_lqr, data);
+
+      // console.log(this.u_enc);
+
     });
   }
 
@@ -248,6 +368,10 @@ export class TimeControllerDomainComponent implements OnInit {
       Q: this.matriz_custo[0].values,
       R: this.matriz_custo[1].values,
       CI: this.initialCond[0].values,
+      SAT: this.matriz_SA[0].values,
+      REF: this.matriz_REF[0].values,
+
+      getbody: this.getBody(),
     };
 
     this.timeControllerDomainService.calc_lqi(matriz_custo_lqi).then((data) => {
@@ -330,6 +454,9 @@ export class TimeControllerDomainComponent implements OnInit {
       R: this.matriz_custo[1].values,
       QN: this.matriz_kalman[0].values,
       RN: this.matriz_kalman[1].values,
+      SAT: this.matriz_SA[0].values,
+
+      getbody: this.getBody(),
     };
 
     this.timeControllerDomainService.calc_lqg(matriz_custo_lqg).then((data) => {
@@ -414,6 +541,10 @@ export class TimeControllerDomainComponent implements OnInit {
       R: this.matriz_custo[1].values,
       QN: this.matriz_kalman[0].values,
       RN: this.matriz_kalman[1].values,
+      SAT: this.matriz_SA[0].values,
+      REF: this.matriz_REF[0].values,
+
+      getbody: this.getBody(),
     };
 
     this.timeControllerDomainService.calc_lqgi(matriz_custo_lqgi).then(
@@ -518,14 +649,14 @@ export class TimeControllerDomainComponent implements OnInit {
 
         if (!this.isControlable()) {
           this.showMessageError(
-            'O sistema não é controlavel, Favor alterar matriz de entradas (B)'
+            'O sistema não é controlável, Favor alterar matriz de entradas (B)'
           );
         }
         // @ts-ignore
         this.obsv_rank = data['obsv_rank'];
         if (!this.isOberservable()) {
           this.showMessageError(
-            'O sistema não é observavel, Favor alterar matriz de entradas (C)'
+            'O sistema não é observável, Favor alterar matriz de entradas (C)'
           );
         } else {
           this.costMatrixLqr();
@@ -569,7 +700,7 @@ export class TimeControllerDomainComponent implements OnInit {
         this.stepMA.push(this.graph.data);
       })
       .catch((err) => {
-        this.showMessageError('Ocorreu um erro, sistema não calculavel');
+        this.showMessageError('Ocorreu um erro, sistema não calculável');
       });
   }
 
@@ -584,6 +715,7 @@ export class TimeControllerDomainComponent implements OnInit {
 
   selectValueChanged(event: any) {
     const selectedValue = event.target.value;
+    this.selectedLQI_LQGI = selectedValue;
     if (selectedValue === 'LQR') {
       this.imageControl = 'assets/png/LQR.png';
       this.costMatrixLqr();
@@ -594,7 +726,7 @@ export class TimeControllerDomainComponent implements OnInit {
       this.imageControl = 'assets/png/LQG.png';
       this.costMatrixLqg();
     } else if (selectedValue === 'LQG_Integrador' && this.isOberservable()) {
-      this.imageControl = 'assets/png/LQGI.png';
+      this.imageControl = 'assets/png/LQGI.jpg';
       this.costMatrixLqgi();
     }
   }
@@ -608,7 +740,7 @@ export class TimeControllerDomainComponent implements OnInit {
         color: 'black',
       },
       xaxis: {
-        title: 'Tempo(s)',
+        title: 'Tempo',
         titlefont: {
           family: 'Arial, sans-serif',
           size: 15,
@@ -655,7 +787,7 @@ export class TimeControllerDomainComponent implements OnInit {
         color: 'black',
       },
       xaxis: {
-        title: 'Tempo(s)',
+        title: 'Tempo',
         titlefont: {
           family: 'Arial, sans-serif',
           size: 15,
@@ -701,10 +833,11 @@ export class TimeControllerDomainComponent implements OnInit {
       if (CI.label === 'CI') {
         CI.lines = 1;
         CI.cols = this.quadN;
+        CI.values = Array(CI.lines).fill(0).map(() => Array(CI.cols).fill(0));
       }
-      for (let i = 0; i < CI.lines; i++) {
+      for (let k = 0; k < CI.lines; k++) {
         for (let j = 0; j < CI.cols; j++) {
-          CI.values[i][j] = 0;
+          CI.values[k][j] = 0;
         }
       }
     }
@@ -729,6 +862,31 @@ export class TimeControllerDomainComponent implements OnInit {
       for (let i = 0; i < myLQR.lines; i++) {
         for (let j = 0; j < myLQR.cols; j++) {
           myLQR.values[i][j] = 0;
+        }
+      }
+    }
+    for (let i = 0; i < this.matriz_SA.length; i++) {
+      const mySA = this.matriz_SA[i];
+      if (mySA.label === 'SAT') {
+        // Define duas linhas
+        mySA.lines = 2;
+        
+        // Define o número de colunas igual ao número de colunas da matriz B
+        const matrizB = this.matrizes.find(mat => mat.label === 'B');
+        if (matrizB) {
+          mySA.cols = matrizB.cols;
+        } else {
+          mySA.cols = 0; // Ou algum valor padrão se B não for encontrado
+        }
+        
+        mySA.values = Array.from(
+          Array(mySA.lines),
+          () => new Array(mySA.cols)
+        );
+        for (let i = 0; i < mySA.lines; i++) {
+          for (let j = 0; j < mySA.cols; j++) {
+            mySA.values[i][j] = 0;
+          }
         }
       }
     }
@@ -766,6 +924,52 @@ export class TimeControllerDomainComponent implements OnInit {
       for (let i = 0; i < myLQI.lines; i++) {
         for (let j = 0; j < myLQI.cols; j++) {
           myLQI.values[i][j] = 0;
+        }
+      }
+    }
+    for (let i = 0; i < this.matriz_SA.length; i++) {
+      const mySA = this.matriz_SA[i];
+      if (mySA.label === 'SAT') {
+        // Define duas linhas
+        mySA.lines = 2;
+        
+        // Define o número de colunas igual ao número de colunas da matriz B
+        const matrizB = this.matrizes.find(mat => mat.label === 'B');
+        if (matrizB) {
+          mySA.cols = matrizB.cols;
+        } else {
+          mySA.cols = 0; // Ou algum valor padrão se B não for encontrado
+        }
+        
+        mySA.values = Array.from(
+          Array(mySA.lines),
+          () => new Array(mySA.cols)
+        );
+        for (let i = 0; i < mySA.lines; i++) {
+          for (let j = 0; j < mySA.cols; j++) {
+            mySA.values[i][j] = 0;
+          }
+        }
+      }
+    }
+    const matrizC = this.matrizes.find(mat => mat.label === 'C');
+
+    if (matrizC) {
+      // Ajustar matriz_REF
+      for (let i = 0; i < this.matriz_REF.length; i++) {
+        const myREF = this.matriz_REF[i];
+        if (myREF.label === 'REF') {
+          // Define o número de linhas igual ao número de linhas da matriz C
+          myREF.lines = matrizC.lines;
+          
+          // Define o número de colunas como 1
+          myREF.cols = 1;
+
+          // Inicializa a matriz com zeros
+          myREF.values = Array.from(
+            Array(myREF.lines),
+            () => new Array(myREF.cols).fill(0)
+          );
         }
       }
     }
