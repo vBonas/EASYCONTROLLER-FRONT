@@ -10,7 +10,7 @@ export class LaplaceControllerDomainService {
   headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-    'Access-Control-Allow-Headers': '*'
+    'Access-Control-Allow-Headers': '*',
   };
   async calculaStepOne(data: any) {
     let queryString = Object.keys(data)

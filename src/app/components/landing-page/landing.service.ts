@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 export class LandingService {
   constructor(private http: HttpClient) {}
   // url = 'https://easycontroller.onrender.com/';
-    url = 'http://127.0.0.1:8000/';
+  url = 'http://127.0.0.1:8000/';
   headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
